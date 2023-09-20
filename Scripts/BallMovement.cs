@@ -21,36 +21,5 @@ public class BallMovement : MonoBehaviour
     {
         
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Reflect the ball's direction upon collision with other objects
-        ballMovementDataObj.startingDirection = Vector2.Reflect(rb.velocity.normalized, collision.contacts[0].normal);
-        rb.velocity = ballMovementDataObj.startingDirection * ballMovementDataObj.initialSpeed;
-
-        /*public void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag("Wall"))
-            {
-                SetDirection(Vector3.Reflect(direction, other.transform.forward));
-            }
-        }
-
-        public void OnCollisionEnter(Collision other)
-        {
-            if (other.gameObject.CompareTag("Wall"))
-            {
-                SetDirection(Vector3.Reflect(direction, other.contacts[0].normal));
-            }
-        }
-        public void SetDirection(Vector3 newDirection)
-        {
-            direction = newDirection.normalized;
-        }
-
-        public void IncreaseSpeed()
-        {
-            speed = Mathf.Clamp(speed + ballMovementDataObj.speedIncreaseRate, ballMovementDataObj.initialSpeed, ballMovementDataObj.maxSpeed);
-        }*/
-    }
+    
 }
