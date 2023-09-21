@@ -3,7 +3,7 @@ using UnityEngine;
 public class BallMovement : MonoBehaviour
 {
     public BallMovementData ballMovementDataObj;
-    private Rigidbody rb;
+    public Rigidbody rb;
     private Vector3 direction;
     private float speed;
 
