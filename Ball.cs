@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class BallMovement : MonoBehaviour
+public class Ball: MonoBehaviour
 {
-    public BallMovementData ballMovementDataObj;
     public Rigidbody rb;
     private Vector3 direction;
     private float speed = 500f;
+    public vector3Data vector3DataObj;
 
     private void Awake()
     {
@@ -13,9 +13,14 @@ public class BallMovement : MonoBehaviour
     }
     void Start()
     {
+        ResetBall();
+    }
+
+    public void ResetBall()
+    {
+        transform.position = vector3DataObj.value;
+        rb.velocity = Vector3.zero;
         Invoke(nameof(SetRandomTrajectory), 1f);
-        //direction = ballMovementDataObj.startingDirection.normalized;
-        //rb.velocity = ballMovementDataObj.startingDirection.normalized * ballMovementDataObj.initialSpeed;
     }
     
     private void SetRandomTrajectory()
