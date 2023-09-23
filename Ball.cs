@@ -5,7 +5,7 @@ public class Ball: MonoBehaviour
 {
     public Rigidbody rb;
     private Vector3 direction;
-    private float speed = 10f;
+    public float speed = 10f;
     public float maxSpeed;
     public vector3Data vector3DataObj;
     private bool goingLeft;

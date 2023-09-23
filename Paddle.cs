@@ -33,21 +33,26 @@ public class Paddle : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!collision.gameObject.CompareTag("Ball")) {
-            return;
+        Ball ball = collision.gameObject.GetComponent<Ball>();
+
+        if (ball != null)
+        {
+            Vector3 paddlePosition = transform.position;
+            Vector2 ballPosition = collision.transform.position;
+
+            float offset = paddlePosition.x - ballPosition.x;
+            float width = collision.collider.bounds.size.x / 2;
+
+            float currentAngle = Vector2.SignedAngle(Vector2.up, ball.rb.velocity);
+            float bounceAngle = (offset / width) * maxBounceAngle;
+            float newAngle = Mathf.Clamp(currentAngle + bounceAngle, -maxBounceAngle, maxBounceAngle);
+            
+            Quaternion rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
+            ball.rb.velocity = rotation * Vector2.up * ball.rb.velocity.magnitude;
         }
-
-        Rigidbody ball = collision.rigidbody;
-        Collider paddle = collision.collider;
-
-        Vector2 ballDirection = ball.velocity.normalized;
-        Vector2 contactDistance = paddle.bounds.center - ball.transform.position;
-        
-        float relativeContactPoint = Mathf.Clamp(contactDistance.x / paddle.bounds.size.x, -1f, 1f);
-        float bounceAngle = Mathf.Lerp(-maxBounceAngle, maxBounceAngle, (relativeContactPoint + 1f) * 0.5f);
-        ballDirection = Quaternion.AngleAxis(bounceAngle, Vector3.up) * ballDirection;
-
-        ball.velocity = ballDirection * ball.velocity.magnitude;
+        {
+            
+        }
     }
 }
 

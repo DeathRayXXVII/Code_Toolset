@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     void NewGame()
     {
         newGameEvent.Invoke();
-        loadLevel(0);
+        loadLevel(1);
     }
     
     public void loadLevel(int level)
