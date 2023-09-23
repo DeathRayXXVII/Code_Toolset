@@ -4,50 +4,50 @@ public class Paddle : MonoBehaviour
 {
 
     public Rigidbody rb;
-    public Vector3 direction = Vector3.zero;
+    public Vector2 direction;
     public float maxBounceAngle = 75.0f;
+    public float speed = 30.0f;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
-    
+
+    private void Start()
+    {
+        ResetPaddle();
+    }
+
     public void ResetPaddle()
     {
-        transform.position = new Vector3(0f, transform.position.y, 0f);
-        rb.velocity = Vector3.zero;
+        rb.velocity = Vector2.zero;
+        transform.position = new Vector2(0f, transform.position.y);
     }
 
     private void FixedUpdate()
     {
-        if (direction != Vector3.zero)
-        {
-            rb.AddForce(direction);
+        if (direction != Vector2.zero) {
+            rb.AddForce(direction * speed);
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        
-        Ball ball = collision.gameObject.GetComponent<Ball>();
-
-        if (ball != null )
-        {   
-            
-            Vector3 paddlePosition = transform.position;
-            Vector3 contactPoint = collision.GetContact(0).point;
-
-            float offset = paddlePosition.x - contactPoint.x;
-            float width = collision.collider.bounds.size.x / 2;
-
-            float currentAngle = Vector3.SignedAngle(Vector3.down, ball.rb.velocity, Vector3.forward);
-            float bounceAngle = (offset / width) * maxBounceAngle;
-            float newAngle = Mathf.Clamp(currentAngle + bounceAngle, -maxBounceAngle, maxBounceAngle);
-            
-            Quaternion rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
-            ball.rb.velocity = rotation * Vector3.up * ball.rb.velocity.magnitude;
-
+        if (!collision.gameObject.CompareTag("Ball")) {
+            return;
         }
+
+        Rigidbody ball = collision.rigidbody;
+        Collider paddle = collision.collider;
+
+        Vector2 ballDirection = ball.velocity.normalized;
+        Vector2 contactDistance = paddle.bounds.center - ball.transform.position;
+        
+        float relativeContactPoint = Mathf.Clamp(contactDistance.x / paddle.bounds.size.x, -1f, 1f);
+        float bounceAngle = Mathf.Lerp(-maxBounceAngle, maxBounceAngle, (relativeContactPoint + 1f) * 0.5f);
+        ballDirection = Quaternion.AngleAxis(bounceAngle, Vector3.up) * ballDirection;
+
+        ball.velocity = ballDirection * ball.velocity.magnitude;
     }
 }
 

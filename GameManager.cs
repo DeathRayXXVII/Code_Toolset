@@ -1,40 +1,42 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
     public Ball ball;
     public Paddle paddle;
     public int level;
-    public int score;
-    public int lives;
+    public intData life;
     public Brick[] bricks;
+    public UnityEvent newGameEvent;
+    public Vector3DataList brickPosition;
+    public int instancerDataListObj;
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
         SceneManager.sceneLoaded += OnlevelLoaded;
     }
-
     
-
     void Start()
     {
         NewGame();
     }
-
+    
 
     void NewGame()
     {
-        this.score = 0;
-        this.lives = 3;
-        
-        loadLevel(1);
+        newGameEvent.Invoke();
+        loadLevel(0);
     }
     
     public void loadLevel(int level)
     {
         this.level = level;
         SceneManager.LoadScene(level);
+        instancerDataListObj = Random.Range(bricks.Length, bricks.Length);
     }
     private void OnlevelLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -45,6 +47,17 @@ public class GameManager : MonoBehaviour
     {
         ball.ResetBall();
         paddle.ResetPaddle();
+    }
+    public void LoseLife()
+    {
+        if (life.value <= 0)
+        {
+            NewGame();
+        }
+        else
+        {
+            ResetLevel();
+        }
     }
 
     public void Hit(Brick brick)
