@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class Ball: MonoBehaviour
@@ -10,6 +11,7 @@ public class Ball: MonoBehaviour
     public vector3Data vector3DataObj;
     private bool goingLeft;
     private bool goingDown;
+    public UnityEvent ballEvent;
 
     private void Awake()
     {
@@ -36,6 +38,11 @@ public class Ball: MonoBehaviour
         force.y = -1f;
 
         rb.AddForce(force.normalized * speed, ForceMode.Impulse);
+    }
+
+    public void OnCollisionEnter(Collision other)
+    {
+        ballEvent.Invoke();
     }
 
     private void FixedUpdate()

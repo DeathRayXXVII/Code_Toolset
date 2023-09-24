@@ -9,6 +9,7 @@ public class Brick : MonoBehaviour
     private Renderer rend;
     private int materialIndex;
     public float maxBounceAngle = 75.0f;
+    public float spawnWeight = 1f;
 
     private void Start()
     {
