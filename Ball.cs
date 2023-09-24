@@ -18,11 +18,6 @@ public class Ball: MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Start()
-    {
-        ResetBall();
-    }
-
     public void ResetBall()
     {
         rb.velocity = Vector3.zero;

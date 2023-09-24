@@ -1,5 +1,3 @@
-using System;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -23,13 +21,7 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded += OnlevelLoaded;
     }
     
-    void Start()
-    {
-        NewGame();
-    }
-    
-
-    void NewGame()
+    public void NewGame()
     {
         newGameEvent.Invoke();
         SpawnBricks();
@@ -80,7 +72,7 @@ public class GameManager : MonoBehaviour
                 return false;
             }
         }
-        loadLevel(level);
+        //loadLevel(level);
         return true;
     }
     
