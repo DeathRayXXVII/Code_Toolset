@@ -14,9 +14,10 @@ public class GameManager : MonoBehaviour
     public UnityEvent newGameEvent;
     public Vector3DataList brickPosition;
     public int instancerDataListObj;
+    public UnityEvent noLifeEvent;
     private void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
         SceneManager.sceneLoaded += OnlevelLoaded;
     }
     
@@ -36,7 +37,7 @@ public class GameManager : MonoBehaviour
     {
         this.level = level;
         SceneManager.LoadScene(level);
-        instancerDataListObj = Random.Range(bricks.Length, bricks.Length);
+        //instancerDataListObj = Random.Range(bricks.Length, bricks.Length);
     }
     private void OnlevelLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -52,7 +53,7 @@ public class GameManager : MonoBehaviour
     {
         if (life.value <= 0)
         {
-            NewGame();
+            noLifeEvent.Invoke();
         }
         else
         {

@@ -50,9 +50,6 @@ public class Paddle : MonoBehaviour
             Quaternion rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
             ball.rb.velocity = rotation * Vector2.up * ball.rb.velocity.magnitude;
         }
-        {
-            
-        }
     }
 }
 
