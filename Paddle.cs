@@ -24,12 +24,12 @@ public class Paddle : MonoBehaviour
         transform.position = new Vector2(0f, transform.position.y);
     }
 
-    private void FixedUpdate()
+    /*private void FixedUpdate()
     {
         if (direction != Vector2.zero) {
             rb.AddForce(direction * speed);
         }
-    }
+    }*/
 
     private void OnCollisionEnter(Collision collision)
     {
