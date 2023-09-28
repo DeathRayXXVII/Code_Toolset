@@ -28,6 +28,9 @@ public class DragableBehaviour : MonoBehaviour
         while (draggable)
         {
             yield return new WaitForFixedUpdate(); //wait a couple seconds 
+            //Vector3 newPosition = cameraObj.ScreenToWorldPoint(Input.mousePosition);
+            //newPosition.z = transform.position.z;
+            //newPosition.y = transform.position.y;
             position = cameraObj.ScreenToWorldPoint(Input.mousePosition) + offset; //refining the mouse input position with the camera
             transform.position = position;
         }
