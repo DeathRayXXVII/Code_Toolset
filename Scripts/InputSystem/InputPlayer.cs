@@ -1,39 +1,28 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-
-
-public class InputTouch : MonoBehaviour
+public class InputPlayer : MonoBehaviour
 {
-    [SerializeField] 
-    private GameObject player;
-   
-    private PlayerInput playerInput;
-    private InputAction touchPositionAction;
-    private InputAction touchPressAction;
-
+    public GameInputsSO controls;
+    private Vector2 move, movement;
+    public floatData speed;
     private void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
-        touchPressAction = playerInput.actions["TouchPress"];
-        touchPositionAction = playerInput.actions["TouchPosition"];
+        controls.gameInputsObj.KeyActionMap.Vertical.performed += ctx => move = ctx.ReadValue<Vector2>();
+        controls.gameInputsObj.KeyActionMap.Vertical.canceled += ctx => move = Vector2.zero;
     }
-   
+ 
     private void OnEnable()
     {
-        touchPressAction.performed += TouchPress;
-        //touchPositionAction.performed += OnTouchPosition;
+        controls.gameInputsObj.KeyActionMap.Enable();
     }
-   
     private void OnDisable()
     {
-        touchPressAction.performed -= TouchPress;
-        //touchPositionAction.performed -= OnTouchPosition;
+        controls.gameInputsObj.KeyActionMap.Disable();
     }
-    private void TouchPress(InputAction.CallbackContext context)
+    
+    private void FixedUpdate()
     {
-        Vector3 position = Camera.main.ScreenToWorldPoint(touchPositionAction.ReadValue<Vector2>());
-        position.z = player.transform.position.z;
-        position.y = player.transform.position.y;
-        player.transform.position = position;
+        movement.Set(move.x, move.y);
+        movement *= speed.value * UnityEngine.Time.deltaTime;
+        transform.Translate(movement, Space.World);
     }
 }
