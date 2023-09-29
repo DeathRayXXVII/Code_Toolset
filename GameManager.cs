@@ -24,7 +24,11 @@ public class GameManager : MonoBehaviour
     public void NewGame()
     {
         newGameEvent.Invoke();
-        SpawnBricks();
+        //SpawnBricks();
+        ResetLevel();
+        for (int i = 0; i < bricks.Length; i++) {
+            bricks[i].ResetBrick();
+        }
     }
     
     public void loadLevel(int level)
@@ -39,10 +43,12 @@ public class GameManager : MonoBehaviour
         ball = FindObjectOfType<Ball>();
         paddle = FindObjectOfType<Paddle>();
     }
-    private void ResetLevel()
+    public void ResetLevel()
     {
         ball.ResetBall();
         paddle.ResetPaddle();
+
+         
     }
     public void LoseLife()
     {
@@ -96,7 +102,7 @@ public class GameManager : MonoBehaviour
             GameObject selectedPrefab = ChooseRandomPrefab();
 
             // Randomly select a spawn position
-           // Vector3 randomPosition = brickPosition.positionList[Random.Range(0, brickPosition.positionList.Count)];
+            //Vector3t randomPosition = brickPosition.positionList[Random.Range(0, brickPosition.positionList.Count)];
 
             // Spawn the selected prefab at the random position
             //Instantiate(selectedPrefab, randomPosition, Quaternion.identity);

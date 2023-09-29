@@ -18,6 +18,17 @@ public class Brick : MonoBehaviour
         Hit();
         
     }
+    
+    public void ResetBrick()
+        {
+            if (health >= 0 && !unbreakable)
+            {
+                gameObject.SetActive(true);
+                health = materials.Length;
+                rend.material = materials[rend.materials.Length - 1];
+            }
+        }
+
     private void OnCollisionEnter(Collision collision)
         {
             Ball ball = collision.gameObject.GetComponent<Ball>();
