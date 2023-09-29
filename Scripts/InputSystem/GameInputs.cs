@@ -83,7 +83,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""b05d6f58-002b-4b4a-a188-ebd24dbe68cd"",
-                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""path"": ""<Touchscreen>/primaryTouch/delta/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -94,7 +94,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""aeb8e8bf-9a0c-4d0d-bc29-9b671e46d06f"",
-                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""path"": ""<Touchscreen>/primaryTouch/delta/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
