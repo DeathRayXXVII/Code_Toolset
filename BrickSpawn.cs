@@ -16,12 +16,13 @@ public class BrickSpawn : MonoBehaviour
         {
             // Instantiate the object at the position
             GameObject spawnedObject = Instantiate(objectPrefab, spawnPosition, Quaternion.identity);
+            //Instantiate(objectPrefab[num], spawnPosition, Quaternion.identity);
 
             // Get a random material from the list
             Material material = materialsList.GetRandomMaterial();
 
             // Set the object's material
-            Renderer rend = spawnedObject.GetComponent<Renderer>();
+            Renderer rend = objectPrefab.GetComponent<Renderer>();
             if (rend != null)
             {
                 rend.material = material;
