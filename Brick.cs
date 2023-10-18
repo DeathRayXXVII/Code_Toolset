@@ -7,6 +7,7 @@ public class Brick : MonoBehaviour
     public bool unbreakable;
     public Material[] materials;
     private Renderer rend;
+    public MaterialList materialsList;
     private int materialIndex;
     public float maxBounceAngle = 75.0f;
     public float spawnWeight = 1f;
@@ -28,6 +29,10 @@ public class Brick : MonoBehaviour
                 rend.material = materials[rend.materials.Length - 1];
             }
         }
+    public void SetHealth(int value)
+    {
+        health = value;
+    }
 
     private void OnCollisionEnter(Collision collision)
         {
