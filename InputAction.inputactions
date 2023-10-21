@@ -28,7 +28,7 @@
                 {
                     "name": "",
                     "id": "b73c6481-673d-42fa-9ac8-5c82a8977672",
-                    "path": "<Touchscreen>/position",
+                    "path": "<Touchscreen>/primaryTouch/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -38,7 +38,7 @@
                 },
                 {
                     "name": "",
-                    "id": "e63caaa3-aba6-42da-8198-04675ef3856d",
+                    "id": "27f100be-21ce-4c85-9968-ec26e10bd406",
                     "path": "<Touchscreen>/Press",
                     "interactions": "",
                     "processors": "",
