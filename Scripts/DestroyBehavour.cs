@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DestroyBehavour : MonoBehaviour
@@ -12,5 +13,7 @@ public class DestroyBehavour : MonoBehaviour
         yield return wfsObj;
         Destroy(gameObject); //destroying itself
     }
+    
+    
 
 }
