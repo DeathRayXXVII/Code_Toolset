@@ -29,7 +29,7 @@ public class BrickSpawn : MonoBehaviour
             
 
             // Set the object's health based on the material
-            if (materialHealthMap.TryGetValue(material, out int health))
+             if (materialHealthMap.TryGetValue(material, out int health))
             {
                 Brick healthComponent = spawnedObject.GetComponent<Brick>();
                 if (healthComponent == null)
