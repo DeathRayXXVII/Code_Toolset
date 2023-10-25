@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -9,12 +10,17 @@ public class GameManager : MonoBehaviour
     public Paddle paddle;
     public int level;
     public intData life;
-    public Brick[] bricks;
+    public Brick bricks;
+    public List<GameObject> spawnedObjects = new List<GameObject>();
+    private BrickSpawn brickSpawn;
     public UnityEvent newGameEvent, winEvent;
-    public Vector3DataList brickPosition;
+    //public Vector3DataList brickPosition;
     //public int instancerDataListObj;
     public UnityEvent noLifeEvent;
-    public float spawnWeight = 1f;
+    //public float spawnWeight = 1f;
+    private BrickData brickData;
+    private BrickSpawn bS;
+    
     private void Awake()
     {
         //DontDestroyOnLoad(this.gameObject);
@@ -26,8 +32,8 @@ public class GameManager : MonoBehaviour
         newGameEvent.Invoke();
         //SpawnBricks();
         ResetLevel();
-        for (int i = 0; i < bricks.Length; i++) {
-            bricks[i].ResetBrick();
+        for (int i = 0; i < spawnedObjects.Count; i++) {
+            bricks.ResetBrick();
         }
     }
     
@@ -35,7 +41,8 @@ public class GameManager : MonoBehaviour
     {
         this.level = level;
         SceneManager.LoadScene(level);
-        SpawnBricks();
+        bS.SpawnBricks();
+        //SpawnBricks();
         //instancerDataListObj = Random.Range(bricks.Length, bricks.Length);
     }
     private void OnlevelLoaded(Scene scene, LoadSceneMode mode)
@@ -71,9 +78,9 @@ public class GameManager : MonoBehaviour
     }
     private bool ClearedLevel()
     {
-        for (int i = 0; i < bricks.Length; i++)
+        for (int i = 0; i < spawnedObjects.Count; i++)
         {
-            if (bricks[i].gameObject.activeInHierarchy && !bricks[i].unbreakable)
+            if (spawnedObjects[i].gameObject.activeInHierarchy && !bricks.unbreakable)
             {
                 return false;
             }
@@ -82,7 +89,7 @@ public class GameManager : MonoBehaviour
         return true;
     }
     
-    void SpawnBricks()
+    /*void SpawnBricks()
     {
         if (bricks == null || bricks.Length == 0)
         {
@@ -130,6 +137,6 @@ public class GameManager : MonoBehaviour
         }
 
         return bricks[bricks.Length - 1].gameObject;
-    }
+    }*/
     
 }

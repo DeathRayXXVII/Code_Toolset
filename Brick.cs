@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Brick : MonoBehaviour
@@ -5,12 +6,12 @@ public class Brick : MonoBehaviour
     public int health;
     public int maxHealth;
     public bool unbreakable;
-    public Material[] materials;
+    public List<Material> materials;
     private Renderer rend;
-    public MaterialList materialsList;
+    //public MaterialList materialsList;
     private int materialIndex;
     public float maxBounceAngle = 75.0f;
-    public float spawnWeight = 1f;
+    private BrickData brickData;
 
     private void Start()
     {
@@ -25,7 +26,7 @@ public class Brick : MonoBehaviour
             if (health >= 0 && !unbreakable)
             {
                 gameObject.SetActive(true);
-                health = materials.Length;
+                health = materials.Count;
                 rend.material = materials[rend.materials.Length - 1];
             }
         }
@@ -71,7 +72,7 @@ public class Brick : MonoBehaviour
     {
         health = Mathf.Clamp(health, 0, maxHealth);
         materialIndex = maxHealth - health;
-        if (materialIndex >= 0 && materialIndex < materials.Length)
+        if (materialIndex >= 0 && materialIndex < materials.Count)
         {
             rend.material = materials[materialIndex];
         }

@@ -3,7 +3,7 @@ using UnityEngine;
 public class IteamDrop : MonoBehaviour
 {
     public GameObject itemPrefab;
-    public float dropChance = 0.5f;
+    private float dropChance = 0.8f;
 
     private void OnCollisionEnter(Collision collision)
     {
