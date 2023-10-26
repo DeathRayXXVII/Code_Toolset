@@ -32,8 +32,14 @@ public class GameManager : MonoBehaviour
         newGameEvent.Invoke();
         //SpawnBricks();
         ResetLevel();
-        for (int i = 0; i < spawnedObjects.Count; i++) {
-            bricks.ResetBrick();
+        
+        foreach (GameObject obj in spawnedObjects)
+        {
+            Brick brick = obj.GetComponent<Brick>();
+            if (!brick.gameObject.activeInHierarchy)
+            {
+                brick.ResetBrick();
+            }
         }
     }
     
@@ -42,8 +48,6 @@ public class GameManager : MonoBehaviour
         this.level = level;
         SceneManager.LoadScene(level);
         bS.SpawnBricks();
-        //SpawnBricks();
-        //instancerDataListObj = Random.Range(bricks.Length, bricks.Length);
     }
     private void OnlevelLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -74,19 +78,22 @@ public class GameManager : MonoBehaviour
         if (ClearedLevel())
         {
             winEvent.Invoke();
+            Debug.Log("You win!");
         }
     }
     private bool ClearedLevel()
     {
-        for (int i = 0; i < spawnedObjects.Count; i++)
+        bool cleared = true;
+        foreach (GameObject obj in spawnedObjects)
         {
-            if (spawnedObjects[i].gameObject.activeInHierarchy && !bricks.unbreakable)
+            Brick brick = obj.GetComponent<Brick>();
+            if (brick.gameObject.activeInHierarchy && !brick.unbreakable)
             {
-                return false;
+                cleared = false;
+                break;
             }
         }
-        //loadLevel(level);
-        return true;
+        return cleared;
     }
     
     /*void SpawnBricks()

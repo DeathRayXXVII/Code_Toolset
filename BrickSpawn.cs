@@ -5,7 +5,6 @@ public class BrickSpawn : MonoBehaviour
 {
     public Vector3DataList spawnPositionsList;
     public GameObject objectPrefab;
-    //public List<GameObject> spawnedObjects = new List<GameObject>();
     public GameManager gameManager;
     public MaterialList materialsList;
     public Dictionary<Material, int> materialHealthMap;
@@ -23,8 +22,7 @@ public class BrickSpawn : MonoBehaviour
         {
             
             // Instantiate the object at the position
-            GameObject spawnedObject = Instantiate(objectPrefab, spawnPosition, Quaternion.identity);
-            
+            GameObject spawnedObject = Instantiate(objectPrefab, spawnPosition, Quaternion.Euler(0,90,0));
             
             // Add the object to the list
             gameManager.spawnedObjects.Add(spawnedObject);
@@ -46,8 +44,6 @@ public class BrickSpawn : MonoBehaviour
             {
                 Debug.LogError("The spawned object does not have a Brick component for materials.");
             }
-            // Set the Brick object's health to the number of materials in the BrickData object
-            //bricks.Start();
             
             // Set the object's material based on the BrickData object
             Renderer rend = spawnedObject.GetComponent<Renderer>();

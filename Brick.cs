@@ -7,14 +7,16 @@ public class Brick : MonoBehaviour
     public int maxHealth;
     public bool unbreakable;
     public List<Material> materials;
-    private Renderer rend;
-    //public MaterialList materialsList;
+    public Renderer rend;
     private int materialIndex;
     public float maxBounceAngle = 75.0f;
     private BrickData brickData;
+    public GameManager gameManager;
+    public BrickDataList brickDataList;
 
     private void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
         health = maxHealth;
         rend = GetComponent<Renderer>();
         Hit();
@@ -23,12 +25,44 @@ public class Brick : MonoBehaviour
     
     public void ResetBrick()
         {
-            if (health >= 0 && !unbreakable)
+            
+            gameObject.SetActive(true);
+            
+            materials.Clear();
+            // Get a random BrickData object from the list
+            int randomIndex = Random.Range(0, brickDataList.brickData.Count);
+            BrickData randomBrickData = brickDataList.brickData[randomIndex];
+            
+            // Add the BrickData object's materials to the Brick object's material list
+            //Brick brickComponent = spawnedObject.GetComponent<Brick>();
+            if (gameObject != null)
+            {
+                materials.AddRange(randomBrickData.material);
+                health = randomBrickData.health;
+                maxHealth = randomBrickData.maxHealth;
+                unbreakable = randomBrickData.unbreakable;
+            }
+            else
+            {
+                Debug.LogError("The spawned object does not have a Brick component for materials.");
+            }
+            
+            // Set the object's material based on the BrickData object
+            //Renderer rend = spawnedObject.GetComponent<Renderer>();
+            if (rend != null)
+            {
+                rend.material = randomBrickData.material[0];
+            }
+            else
+            {
+                Debug.LogError("The spawned object does not have a Renderer component for material.");
+            }
+            /*if (health >= 0 && !unbreakable)
             {
                 gameObject.SetActive(true);
-                health = materials.Count;
-                rend.material = materials[rend.materials.Length - 1];
-            }
+                health = maxHealth;
+                rend.material = materials[0];
+            }*/
         }
     public void SetHealth(int value)
     {
@@ -77,5 +111,10 @@ public class Brick : MonoBehaviour
             rend.material = materials[materialIndex];
         }
                 
+    }
+    
+    public void ManagerHit()
+    {
+        gameManager.Hit();
     }
 }
