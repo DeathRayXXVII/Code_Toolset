@@ -20,11 +20,15 @@ public class InputTouch : MonoBehaviour
    private void OnEnable()
    {
       touchPressAction.performed += TouchPressed;
+      touchPositionAction.performed += TouchPositionChanged;
+      touchPositionAction.canceled += TouchPositionChanged;
    }
 
    private void OnDisable()
    {
       touchPressAction.performed -= TouchPressed;
+      touchPositionAction.performed -= TouchPositionChanged;
+      touchPositionAction.canceled -= TouchPositionChanged;
    }
 
    private void TouchPressed(InputAction.CallbackContext context)
@@ -32,7 +36,7 @@ public class InputTouch : MonoBehaviour
       UpdateFollowTargetPosition();
    }
 
-   private void LateUpdate()
+   private void TouchPositionChanged(InputAction.CallbackContext context)
    {
       UpdateFollowTargetPosition();
    }
@@ -40,10 +44,12 @@ public class InputTouch : MonoBehaviour
    private void UpdateFollowTargetPosition()
    {
       Vector3 position = touchPositionAction.ReadValue<Vector2>();
-      //position.z = 30;
+      position.z = mainCamera.nearClipPlane;
       position = mainCamera.ScreenToWorldPoint(position);
-      position.y = followTarget.transform.position.y;
-      position.z = followTarget.transform.position.z;
-      followTarget.transform.position = position;
+      var position1 = followTarget.transform.position;
+      position.y = position1.y;
+      position.z = position1.z;
+      position1 = position;
+      followTarget.transform.position = position1;
    }
 }

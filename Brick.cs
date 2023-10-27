@@ -85,7 +85,7 @@ public class Brick : MonoBehaviour
                 float newAngle = Mathf.Clamp(currentAngle + bounceAngle, -maxBounceAngle, maxBounceAngle);
             
                 Quaternion rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
-                ball.rb.velocity = rotation * Vector2.up * ball.rb.velocity.magnitude;
+                ball.rb.velocity = rotation * Vector2.up / ball.rb.velocity.magnitude;
             }
             if (ball)
             {
