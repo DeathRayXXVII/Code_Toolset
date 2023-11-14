@@ -48,12 +48,21 @@ public class BrickSpawn : MonoBehaviour
             // Set the object's material based on the BrickData object
             Renderer rend = spawnedObject.GetComponent<Renderer>();
             /*if (Random.value < unbreackChance)
+<<<<<<< Updated upstream
             {
                 brickData.unbreakable = true;
                 rend.material = material;
             } */
             if (rend != null)
             {
+=======
+            {
+                brickData.unbreakable = true;
+                rend.material = material;
+            } */
+            if (rend != null)
+            {
+>>>>>>> Stashed changes
                 rend.material = randomBrickData.material[0];
             }
             else
@@ -61,5 +70,25 @@ public class BrickSpawn : MonoBehaviour
                 Debug.LogError("The spawned object does not have a Renderer component for material.");
             }
         } 
+<<<<<<< Updated upstream
+=======
+    }
+    
+    public void DeactivateBricks()
+    {
+        foreach (GameObject obj in gameManager.spawnedObjects)
+        {
+            obj.SetActive(false);
+        }
+    }
+    
+    public void DestroyBricks()
+    {
+        foreach (GameObject obj in gameManager.spawnedObjects)
+        {
+            Destroy(obj);
+        }
+        gameManager.spawnedObjects.Clear();
+>>>>>>> Stashed changes
     }
 }
