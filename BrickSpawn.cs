@@ -62,4 +62,19 @@ public class BrickSpawn : MonoBehaviour
             }
         } 
     }
+    public void DeactivateBricks()
+    {
+        foreach (GameObject obj in gameManager.spawnedObjects)
+        {
+            obj.SetActive(false);
+        }
+    }
+    public void DestroyBricks()
+    {
+        foreach (GameObject obj in gameManager.spawnedObjects)
+        {
+            Destroy(obj);
+        }
+        gameManager.spawnedObjects.Clear();
+    }
 }
