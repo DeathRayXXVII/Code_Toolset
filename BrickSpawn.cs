@@ -69,6 +69,13 @@ public class BrickSpawn : MonoBehaviour
             obj.SetActive(false);
         }
     }
+    public void ActivateBricks()
+    {
+        foreach (GameObject obj in gameManager.spawnedObjects)
+        {
+            obj.SetActive(true);
+        }
+    }
     public void DestroyBricks()
     {
         foreach (GameObject obj in gameManager.spawnedObjects)
