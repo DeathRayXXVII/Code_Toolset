@@ -22,7 +22,7 @@ namespace Tools.MatchingGameScripts
             label.text = obj.value.ToString(CultureInfo.InvariantCulture);
         }
 
-        public void UpdateLabel(intData obj)
+        public void UpdateLabel(IntData obj)
         {
             label.text = obj.value.ToString(CultureInfo.InvariantCulture);
         }

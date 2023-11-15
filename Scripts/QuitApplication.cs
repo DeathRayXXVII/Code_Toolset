@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QuitApplication : MonoBehaviour
 {
-    public intData scoreKey;
+    public IntData scoreKey;
     public void QuitAplication()
     {
     #if UNITY_EDITOR

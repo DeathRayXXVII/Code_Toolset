@@ -10,7 +10,7 @@ namespace Tools.MatchingGameScripts.Scripts
         public UnityEvent startEvent, startCountEvent, repeatCountEvent, endCountEvent, repeatUntilFalseEvent;
 
         public bool canRun;
-        public intData counterNum;
+        public IntData counterNum;
         public float seconds = 3.0f;
         private WaitForSeconds wfsObj;
         private WaitForFixedUpdate wffuObj;

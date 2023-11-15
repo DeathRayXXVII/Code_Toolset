@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [CreateAssetMenu(menuName = "Single Variables/IntData")]
-public class intData : ScriptableObject
+public class IntData : ScriptableObject
 {
     public int value;
 
@@ -13,7 +13,7 @@ public class intData : ScriptableObject
         value = num;
     }
 
-    public void CompareValue(intData obj)
+    public void CompareValue(IntData obj)
     {
         if (value >= obj.value)
         {
@@ -30,7 +30,7 @@ public class intData : ScriptableObject
         value += num;
     }
 
-    public void SetValue(intData obj)
+    public void SetValue(IntData obj)
     {
         value = obj.value;
     }

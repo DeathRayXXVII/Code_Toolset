@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public Ball ball;
     public Paddle paddle;
     public int level;
-    public intData life;
+    public IntData life;
     public Brick bricks;
     public List<GameObject> spawnedObjects = new List<GameObject>();
     private BrickSpawn brickSpawn;
