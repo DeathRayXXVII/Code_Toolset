@@ -13,15 +13,10 @@ public class Paddle : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Start()
-    {
-        ResetPaddle();
-    }
-
     public void ResetPaddle()
     {
         rb.velocity = Vector2.zero;
-        transform.position = new Vector2(0f, transform.position.y);
+        transform.position = new Vector2(0f, -7.1f);
     }
 
     /*private void FixedUpdate()

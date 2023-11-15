@@ -10,6 +10,7 @@ public class BrickData : ScriptableObject
     public int health;
     public int maxHealth;
     public bool unbreakable = false;
+    public Material unbreakableMaterial;
     public int score;
     public float spawnWeight = 1f;
 
@@ -21,5 +22,6 @@ public class BrickData : ScriptableObject
     public void Unbreakable()
     {
         unbreakable = true;
+        
     }
 }

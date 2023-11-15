@@ -21,7 +21,7 @@ public class Ball: MonoBehaviour
     public void ResetBall()
     {
         rb.velocity = Vector3.zero;
-        transform.position = Vector3.zero;
+        transform.position = new Vector3(0, -4, 0);
 
         Invoke(nameof(SetRandomTrajectory), 1f);
     }

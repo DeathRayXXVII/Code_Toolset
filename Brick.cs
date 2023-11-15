@@ -74,7 +74,8 @@ public class Brick : MonoBehaviour
             Ball ball = collision.gameObject.GetComponent<Ball>();
             if (ball != null)
             {
-                Vector3 paddlePosition = transform.position;
+                ball.rb.velocity = Vector3.Reflect(ball.rb.velocity, collision.contacts[0].normal);
+               /* Vector3 paddlePosition = transform.position;
                 Vector2 ballPosition = collision.transform.position;
 
                 float offset = paddlePosition.x - ballPosition.x;
@@ -85,7 +86,7 @@ public class Brick : MonoBehaviour
                 float newAngle = Mathf.Clamp(currentAngle + bounceAngle, -maxBounceAngle, maxBounceAngle);
             
                 Quaternion rotation = Quaternion.AngleAxis(newAngle, Vector3.forward);
-                ball.rb.velocity = rotation * Vector2.up / ball.rb.velocity.magnitude;
+                ball.rb.velocity = rotation * Vector2.up / ball.rb.velocity.magnitude;*/
             }
             if (ball)
             {
