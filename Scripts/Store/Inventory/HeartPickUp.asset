@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fef72ee1b95948a7a76c065548ea42e, type: 3}
   m_Name: HeartPickUp
   m_EditorClassIdentifier: 
-  price: 0
-  purchased: 0
+  price: 100
+  purchased: 1
   previewArt: {fileID: 0}
   previewMesh: {fileID: 0}
+  previewObj: {fileID: 0}

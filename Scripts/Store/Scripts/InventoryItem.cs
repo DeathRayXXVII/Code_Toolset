@@ -8,6 +8,7 @@ public class InventoryItem : ScriptableObject, IStoreItem
     [SerializeField]private bool purchased;
     [SerializeField]private Sprite previewArt;
     [SerializeField]private Mesh previewMesh;
+    [SerializeField]private GameObject previewObj;
 
     int IStoreItem.Price
     {

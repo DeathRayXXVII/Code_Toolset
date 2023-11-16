@@ -11,9 +11,10 @@ public class CollisionEventBehaviour : MonoBehaviour
     {
         
         
-        if (player == LayerMask.NameToLayer("Player"))
+        if (other.gameObject.layer == player.value)
         {
-            Debug.Log("You have entered");
+            Debug.Log("Player has collided");
+            playerCollisionEvent.Invoke();
         }
         
         collisionEvent.Invoke();
