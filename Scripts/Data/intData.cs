@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,31 +5,101 @@ using UnityEngine.Events;
 public class IntData : ScriptableObject
 {
     public int value;
+    private int currentValue;
+    public UnityEvent decrementEvent, valueChangeEvent,atZeroEvent, compareTrueEvent, enableEvent, atMinValue;
 
-    public void SetValue(int num)
+    private void OnEnable()
     {
-        value = num;
+        enableEvent?.Invoke();
     }
 
-    public void CompareValue(IntData obj)
+    public void SetValue(int amount)
     {
-        if (value >= obj.value)
+        value = amount;
+        valueChangeEvent.Invoke();
+    }
+    public void UpdateFromCurrentValue()
+    {
+        value = currentValue;
+        valueChangeEvent.Invoke();
+    }
+
+    public void UpdateCurrentValue()
+    {
+        currentValue = value;
+        valueChangeEvent.Invoke();
+    }
+    
+    public void UpdateValue(int amount)
+    {
+        value += amount;
+        valueChangeEvent.Invoke();
+    }
+    
+    public void IncrementValue()
+    {
+        value++;
+        valueChangeEvent.Invoke();
+    }
+
+    public void DecrementToZero()
+    {
+        if (value > 0)
         {
-            
+            value--;
+            decrementEvent.Invoke();
         }
-        else
+        if (value == 0){
+            atZeroEvent.Invoke();
+        }
+    }
+
+    public void UpdateValue(Object data)
+    {
+        var newData = data as IntData;
+        if (newData != null) value += newData.value;
+        valueChangeEvent.Invoke();
+    }
+    
+    public void SetValue(Object data)
+    {
+        var newData = data as IntData;
+        if (newData == null) return;
+        value = newData.value;
+        valueChangeEvent.Invoke();
+    }
+
+    public void CompareValue(IntData data)
+    {
+        if (value < data.value)
         {
-            value = obj.value;
+            value = data.value;
+            valueChangeEvent.Invoke();
+        }
+        if (value == data.value)
+        {
+            compareTrueEvent.Invoke();
+        }
+    }
+    
+    public void CompareValue(int num)
+    {
+        if (value < num)
+        {
+            value = num;
+        }
+        if (value == num)
+        {
+            compareTrueEvent.Invoke();
         }
     }
 
-    public void UpdateValue(int num)
+    public void CheckMinValue(int num)
     {
-        value += num;
-    }
-
-    public void SetValue(IntData obj)
-    {
-        value = obj.value;
+        if (value <= num)
+        {
+            value = num;
+            atMinValue.Invoke();
+        }
     }
 }

@@ -7,6 +7,7 @@ public class InventoryItem : ScriptableObject, IStoreItem
     [SerializeField]private int price;
     [SerializeField]private bool purchased;
     [SerializeField]private Sprite previewArt;
+    [SerializeField]private Mesh previewMesh;
 
     int IStoreItem.Price
     {
@@ -36,5 +37,10 @@ public class InventoryItem : ScriptableObject, IStoreItem
     public Sprite GetSprite()
     {
         return previewArt;
+    }
+
+    public Mesh GetMesh()
+    {
+        return previewMesh;
     }
 }

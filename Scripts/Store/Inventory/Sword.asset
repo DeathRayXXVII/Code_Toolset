@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   price: 100
   purchased: 0
-  previewArt: {fileID: 3625043607559282579, guid: 4e025a6fc3a554119ad9351d5e69b73e, type: 3}
+  previewArt: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  previewMesh: {fileID: 0}
