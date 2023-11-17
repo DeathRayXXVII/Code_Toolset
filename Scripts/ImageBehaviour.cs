@@ -1,29 +1,44 @@
-using System;
+using Scripts.Data;
+using Scripts.UnityActions;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Image))]
-public class ImageBehaviour : MonoBehaviour
+namespace Scripts
 {
-  public gameAction GameActionObj;
-  private Image img;
-  public UnityEvent startEvent;
-
-  private void Start()
+  [RequireComponent(typeof(Image))]
+  public class ImageBehaviour : MonoBehaviour
   {
-    GameActionObj.raise  += RunStartEvent;
-    img = GetComponent<Image>();
-    startEvent.Invoke();
-  }
+    public GameAction GameActionObj;
+    private Image imageObj;
+    public GameAction updateAction;
+    public UnityEvent startEvent, updateImageEvent;
+    
+    private void Start()
+    {
+      imageObj = GetComponent<Image>();
+      updateAction.raiseNoArgs += OnUpdate;
+      startEvent.Invoke();
+    }
 
-  private void RunStartEvent()
-  {
-    startEvent.Invoke();
-  }
+    public void OnUpdate()
+    {
+      updateImageEvent.Invoke();
+    }
 
-  public void UpdateImage(floatData obj)
-  {
-    img.fillAmount = obj.value;
+    public void UpdateWithFloatData(FloatData dataObj)
+    {
+      imageObj.fillAmount = dataObj.value;
+    }
+
+    private void RunStartEvent()
+    {
+      startEvent.Invoke();
+    }
+
+    public void UpdateImage(FloatData obj)
+    {
+      imageObj.fillAmount = obj.value;
+    }
   }
 }

@@ -1,19 +1,27 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ColliderBehaviour : MonoBehaviour
+namespace Scripts
 {
-    private Collider colliderObj;
-    public UnityEvent startEvent, triggerEnterEvent;
-    protected virtual void Start()
+    public class ColliderBehaviour : MonoBehaviour
     {
-        colliderObj = GetComponent<Collider>();
-        colliderObj.isTrigger = true;
-        startEvent.Invoke();
-    }
+        private Collider colliderObj;
+        public UnityEvent startEvent, triggerEnterEvent;
+        protected virtual void Start()
+        {
+            colliderObj = GetComponent<Collider>();
+            colliderObj.isTrigger = true;
+            startEvent.Invoke();
+        }
     
-    private void OnTriggerEnter(Collider other)
-    {
-        triggerEnterEvent.Invoke();
+        private void OnTriggerEnter(Collider other)
+        {
+            triggerEnterEvent.Invoke();
+        }
+
+        protected virtual void OnTriggerExit(Collider other)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

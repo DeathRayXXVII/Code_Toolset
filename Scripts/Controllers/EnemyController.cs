@@ -1,65 +1,66 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using Scripts.Managers;
 using UnityEngine;
 using UnityEngine.AI;
 
-
-public class EnemyController: MonoBehaviour
+namespace Scripts.Controllers
 {
-    public float lookRadius = 10f;
-    private NavMeshAgent agent;
-    public float remainingDistanceNum = 0.5f;
-    public List<Transform> patrolPointList;
-    private int i;
-    public int seconds;
-    public WaitForSeconds wfsObj;
-
-    private Transform target;
-
-    void Start()
+    public class EnemyController: MonoBehaviour
     {
-        target = PlayerManager.instance.player.transform;
-        agent = GetComponent<NavMeshAgent>();
-        wfsObj = new WaitForSeconds(seconds);
-    }
+        public float lookRadius = 10f;
+        private NavMeshAgent agent;
+        public float remainingDistanceNum = 0.5f;
+        public List<Transform> patrolPointList;
+        private int i;
+        public int seconds;
+        public WaitForSeconds wfsObj;
 
-    private void Update()
-    {
-        float distacne = Vector3.Distance(target.position, transform.position);
-                    
-        if (distacne <= lookRadius)
+        private Transform target;
+
+        void Start()
         {
-            agent.SetDestination((target.position));
+            target = PlayerManager.instance.player.transform;
+            agent = GetComponent<NavMeshAgent>();
+            wfsObj = new WaitForSeconds(seconds);
+        }
+
+        private void Update()
+        {
+            float distacne = Vector3.Distance(target.position, transform.position);
                     
-            if (distacne <= agent.stoppingDistance)
+            if (distacne <= lookRadius)
             {
-                // Attack the target
-                FaceTarget();
+                agent.SetDestination((target.position));
+                    
+                if (distacne <= agent.stoppingDistance)
+                {
+                    // Attack the target
+                    FaceTarget();
+                }
+            }
+            else
+            {
+
+                if (agent.pathPending || !(agent.remainingDistance < remainingDistanceNum)) return;
+                agent.destination = patrolPointList[i].position;
+                i = (i + 1) % patrolPointList.Count;
             }
         }
-        else
+
+    
+
+        void FaceTarget()
         {
-
-            if (agent.pathPending || !(agent.remainingDistance < remainingDistanceNum)) return;
-            agent.destination = patrolPointList[i].position;
-            i = (i + 1) % patrolPointList.Count;
+            Vector3 direction = (target.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.x));
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
         }
-    }
 
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, lookRadius);
+        }
     
-
-                    void FaceTarget()
-    {
-        Vector3 direction = (target.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.x));
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, lookRadius);
-    }
-    
 }

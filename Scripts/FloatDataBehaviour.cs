@@ -1,25 +1,26 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Scripts.Data;
 using UnityEngine;
 
-public class FloatDataBehaviour : MonoBehaviour
+namespace Scripts
 {
-   public float value;
-   public floatData floatDataObj;
+   public class FloatDataBehaviour : MonoBehaviour
+   {
+      public float value;
+      public FloatData floatDataObj;
 
-   public void UpdateValue(floatData obj)
-   {
-      value += obj.value;
-   }
-   public void UpdateFloatData(float number)
-   {
-      floatDataObj.UpdateValue(number);
-   }
+      public void UpdateValue(FloatData obj)
+      {
+         value += obj.value;
+      }
+      public void UpdateFloatData(float number)
+      {
+         floatDataObj.UpdateValue(number);
+      }
 
-   private void OnTriggerEnter(Collider other)
-   {
-      var newObj = other.GetComponent<FloatDataContainer>().DataObj;
-      UpdateValue(newObj);
+      private void OnTriggerEnter(Collider other)
+      {
+         var newObj = other.GetComponent<FloatDataContainer>().DataObj;
+         UpdateValue(newObj);
+      }
    }
 }

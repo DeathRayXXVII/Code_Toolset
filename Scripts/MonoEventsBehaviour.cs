@@ -2,50 +2,53 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MonoEventsBehaviour : MonoBehaviour
+namespace Scripts
 {
-    public float holdTime = 0.1f;
-    public UnityEvent onCallEvent, awakeEvent, startEvent, runEvent, disableEvent, destroyEvent, applicationQuitEvent;
-
-    public void RunOnCall()
+    public class MonoEventsBehaviour : MonoBehaviour
     {
-        StartCoroutine(OnCall());
-    }
+        public float holdTime = 0.1f;
+        public UnityEvent onCallEvent, awakeEvent, startEvent, runEvent, disableEvent, destroyEvent, applicationQuitEvent;
+
+        public void RunOnCall()
+        {
+            StartCoroutine(OnCall());
+        }
     
-    private IEnumerator OnCall()
-    {
-        yield return new WaitForSeconds(holdTime);
-        onCallEvent.Invoke();
-    }
+        private IEnumerator OnCall()
+        {
+            yield return new WaitForSeconds(holdTime);
+            onCallEvent.Invoke();
+        }
     
-    private void Awake()
-    {
-        awakeEvent.Invoke();
-    }
+        private void Awake()
+        {
+            awakeEvent.Invoke();
+        }
 
-    private IEnumerator Start()
-    {
-        yield return new WaitForSeconds(holdTime);
-        startEvent.Invoke();
-    }
+        private IEnumerator Start()
+        {
+            yield return new WaitForSeconds(holdTime);
+            startEvent.Invoke();
+        }
 
-    public void Run()
-    {
-        runEvent.Invoke();
-    }   
+        public void Run()
+        {
+            runEvent.Invoke();
+        }   
 
-    private void OnDisable()
-    {
-        disableEvent.Invoke();
-    }
+        private void OnDisable()
+        {
+            disableEvent.Invoke();
+        }
 
-    private void OnDestroy()
-    {
-        destroyEvent.Invoke();
-    }
+        private void OnDestroy()
+        {
+            destroyEvent.Invoke();
+        }
 
-    private void OnApplicationQuit()
-    {
-        applicationQuitEvent.Invoke();
+        private void OnApplicationQuit()
+        {
+            applicationQuitEvent.Invoke();
+        }
     }
 }

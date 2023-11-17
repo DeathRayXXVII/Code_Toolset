@@ -1,11 +1,14 @@
-using UnityEngine;
+using Scripts.Data;
 
-public class CoiorIDBehavour : IDContanerBehavour
+namespace Scripts
 {
-    public ColorIDDataList colorIDDataListObj;
-
-    public void Awake()
+    public class CoiorIDBehavour : IDContanerBehavour
     {
-        idObj = colorIDDataListObj.currentColor;
+        public ColorIDDataList colorIDDataListObj;
+
+        public void Awake()
+        {
+            idObj = colorIDDataListObj.currentColor;
+        }
     }
 }

@@ -1,19 +1,22 @@
 using UnityEngine;
 
-public class CharacterClass : MonoBehaviour, IMove
+namespace Scripts
 {
-    public float moveSpeed = 1.0f;
-    private Vector3 diraction;
-    private CharacterController characterControllerObj;
-
-    private void Awake()
+    public class CharacterClass : MonoBehaviour, IMove
     {
-        characterControllerObj = GetComponent<CharacterController>();
-    }
+        public float moveSpeed = 1.0f;
+        private Vector3 diraction;
+        private CharacterController characterControllerObj;
 
-    public void Move()
-    {
-        diraction.x = moveSpeed;
-        characterControllerObj.Move(diraction);
+        private void Awake()
+        {
+            characterControllerObj = GetComponent<CharacterController>();
+        }
+
+        public void Move()
+        {
+            diraction.x = moveSpeed;
+            characterControllerObj.Move(diraction);
+        }
     }
 }

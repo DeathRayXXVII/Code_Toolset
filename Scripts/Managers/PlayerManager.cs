@@ -1,21 +1,20 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+namespace Scripts.Managers
 {
-  #region Singleton
-
-  public static PlayerManager instance;
-
-  private void Awake()
+  public class PlayerManager : MonoBehaviour
   {
-    instance = this;
+    #region Singleton
+
+    public static PlayerManager instance;
+
+    private void Awake()
+    {
+      instance = this;
+    }
+
+    #endregion
+
+    public GameObject player;
   }
-
-  #endregion
-
-  public GameObject player;
 }

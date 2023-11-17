@@ -1,29 +1,29 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-public class BulletBehaviour : MonoBehaviour
+namespace Scripts
 {
-    public float force = 100;
-    private Rigidbody rigidbodyObj;
-    void Awake()
+    [RequireComponent(typeof(Rigidbody))]
+    public class BulletBehaviour : MonoBehaviour
     {
-        rigidbodyObj = GetComponent<Rigidbody>();
+        public float force = 100;
+        private Rigidbody rigidbodyObj;
+        void Awake()
+        {
+            rigidbodyObj = GetComponent<Rigidbody>();
         
-        gameObject.SetActive(false);
-    }
+            gameObject.SetActive(false);
+        }
     
 
-    private void OnEnable()
-    {
-        rigidbodyObj.AddForce(Vector3.left*force);
-    }
+        private void OnEnable()
+        {
+            rigidbodyObj.AddForce(Vector3.left*force);
+        }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        rigidbodyObj.Sleep();
-        gameObject.SetActive(false);
+        private void OnTriggerEnter(Collider other)
+        {
+            rigidbodyObj.Sleep();
+            gameObject.SetActive(false);
+        }
     }
 }

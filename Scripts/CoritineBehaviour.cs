@@ -1,9 +1,9 @@
-using System;
 using System.Collections;
+using Scripts.Data;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Tools.MatchingGameScripts.Scripts
+namespace Scripts
 {
     public class CoritineBehaviour : MonoBehaviour
     {

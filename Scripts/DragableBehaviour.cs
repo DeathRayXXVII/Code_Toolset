@@ -2,43 +2,46 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class DragableBehaviour : MonoBehaviour
+namespace Scripts
 {
-
-    private Camera cameraObj;
-
-    public bool draggable;
-
-    public Vector3 position, offset;
-
-    public UnityEvent startDragEvent, endDragEvemt;
-    // Start is called before the first frame update
-    void Start()
+    public class DragableBehaviour : MonoBehaviour
     {
-        cameraObj = Camera.main; //setting the camera to the main camera
-    }
 
-    public IEnumerator OnMouseDown()
-    {
-        offset = transform.position - cameraObj.ScreenToWorldPoint(Input.mousePosition);//getting the position of the mouse input 
-        draggable = true; //makes draggable true
-        startDragEvent.Invoke();
-        yield return new WaitForFixedUpdate();//wait a couple seconds 
-        
-        while (draggable)
+        private Camera cameraObj;
+
+        public bool draggable;
+
+        public Vector3 position, offset;
+
+        public UnityEvent startDragEvent, endDragEvemt;
+        // Start is called before the first frame update
+        void Start()
         {
-            yield return new WaitForFixedUpdate(); //wait a couple seconds 
-            //Vector3 newPosition = cameraObj.ScreenToWorldPoint(Input.mousePosition);
-            //newPosition.z = transform.position.z;
-            //newPosition.y = transform.position.y;
-            position = cameraObj.ScreenToWorldPoint(Input.mousePosition) + offset; //refining the mouse input position with the camera
-            transform.position = position;
+            cameraObj = Camera.main; //setting the camera to the main camera
         }
-    }
 
-    public void OnMouseUp()
-    {
-        draggable = false; //makes draggale false
-        endDragEvemt.Invoke();
+        public IEnumerator OnMouseDown()
+        {
+            offset = transform.position - cameraObj.ScreenToWorldPoint(Input.mousePosition);//getting the position of the mouse input 
+            draggable = true; //makes draggable true
+            startDragEvent.Invoke();
+            yield return new WaitForFixedUpdate();//wait a couple seconds 
+        
+            while (draggable)
+            {
+                yield return new WaitForFixedUpdate(); //wait a couple seconds 
+                //Vector3 newPosition = cameraObj.ScreenToWorldPoint(Input.mousePosition);
+                //newPosition.z = transform.position.z;
+                //newPosition.y = transform.position.y;
+                position = cameraObj.ScreenToWorldPoint(Input.mousePosition) + offset; //refining the mouse input position with the camera
+                transform.position = position;
+            }
+        }
+
+        public void OnMouseUp()
+        {
+            draggable = false; //makes draggale false
+            endDragEvemt.Invoke();
+        }
     }
 }

@@ -1,24 +1,28 @@
+using Scripts.Data;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
-public class SpriteBehaviour : MonoBehaviour
+namespace Scripts
 {
-    private SpriteRenderer rendererObj;
-
-    // Start is called before the first frame update
-    void Awake()
+    [RequireComponent(typeof(SpriteRenderer))]
+    public class SpriteBehaviour : MonoBehaviour
     {
-        rendererObj = GetComponent<SpriteRenderer>();
-    }
+        private SpriteRenderer rendererObj;
 
-    public void ChangeRendererColor(ColorID obj)
-    {
-        rendererObj.color = obj.value;
-    }
+        // Start is called before the first frame update
+        void Awake()
+        {
+            rendererObj = GetComponent<SpriteRenderer>();
+        }
 
-    public void ChangeRendererColor(ColorIDDataList obj)
-    {
-        rendererObj.color = obj.currentColor.value;
+        public void ChangeRendererColor(ColorID obj)
+        {
+            rendererObj.color = obj.value;
+        }
+
+        public void ChangeRendererColor(ColorIDDataList obj)
+        {
+            rendererObj.color = obj.currentColor.value;
+        }
     }
 }
 

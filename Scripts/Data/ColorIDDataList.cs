@@ -1,17 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Single Variables/ColorData")]
-public class ColorIDDataList : ScriptableObject
+namespace Scripts.Data
 {
-    public List<ColorID> colorIDList;
-    public ColorID  currentColor;
-
-    private int num;
-
-    public void SetCurrentColorRandomly()
+    [CreateAssetMenu(menuName = "Single Variables/ColorData")]
+    public class ColorIDDataList : ScriptableObject
     {
-        num = Random.Range(0, colorIDList.Count);
-        currentColor = colorIDList[num];
+        public List<ColorID> colorIDList;
+        public ColorID  currentColor;
+
+        private int num;
+
+        public void SetCurrentColorRandomly()
+        {
+            num = Random.Range(0, colorIDList.Count);
+            currentColor = colorIDList[num];
+        }
     }
 }

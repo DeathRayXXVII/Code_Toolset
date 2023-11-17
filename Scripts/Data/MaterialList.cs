@@ -1,12 +1,15 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Single Variables/MaterialList")]
-public class MaterialList : ScriptableObject
+namespace Scripts.Data
 {
-    public Material[] materials;
-
-    public Material GetRandomMaterial()
+    [CreateAssetMenu(menuName = "Single Variables/MaterialList")]
+    public class MaterialList : ScriptableObject
     {
-        return materials[Random.Range(0, materials.Length)];
+        public Material[] materials;
+
+        public Material GetRandomMaterial()
+        {
+            return materials[Random.Range(0, materials.Length)];
+        }
     }
 }

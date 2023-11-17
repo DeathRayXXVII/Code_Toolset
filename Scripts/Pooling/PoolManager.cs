@@ -1,10 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolManager : MonoBehaviour
+namespace Scripts.Pooling
 {
-     public List<GameObject> pool;
+    public class PoolManager : MonoBehaviour
+    {
+        public List<GameObject> pool;
         private int i;
         
         public void UseNext()
@@ -20,4 +21,5 @@ public class PoolManager : MonoBehaviour
                 i = 0;
             }
         }
+    }
 }

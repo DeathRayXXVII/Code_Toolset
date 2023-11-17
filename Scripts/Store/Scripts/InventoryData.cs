@@ -1,35 +1,46 @@
 using System.Collections.Generic;
+using Scripts.Data;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu (fileName = "InventoryData", menuName = "Store/InventoryData")]
 public class InventoryData : ScriptableObject
 {
     public IntData cash;
-    [SerializeField]private List<ScriptableObject> inventory;
-    public List<IStoreItem> InventoryDataObj;
-    
+    [SerializeField] private List<ScriptableObject> inventory;
+    public readonly List<IInventoryItem> inventoryDataObjList = new List<IInventoryItem>();
+    public readonly List<IStoreItem> storeDataObjList = new List<IStoreItem>();
+
     private void OnEnable()
     {
-        UpdateStoreItemsInventory();
+        SynchronizeInventory();
     }
 
     public void AddToInventory(ScriptableObject obj)
     {
-        inventory.Add(obj);
+        if (!inventory.Contains(obj))
+        {
+            inventory.Add(obj);
+            SynchronizeInventory();
+        }
     }
 
     public void ClearInventory()
     {
         inventory.Clear();
-        InventoryDataObj.Clear();
+        SynchronizeInventory();
     }
-    public void UpdateStoreItemsInventory()
+
+    private void SynchronizeInventory()
     {
-        InventoryDataObj = new List<IStoreItem>();
+        inventoryDataObjList.Clear();
+        storeDataObjList.Clear();
+
         foreach (var item in inventory)
         {
-            if(item is IStoreItem storeItem)                                                                                                                                                                                                
-                InventoryDataObj.Add(storeItem);
+            if (item is IInventoryItem inventoryItem)
+                inventoryDataObjList.Add(inventoryItem);
+            if (item is IStoreItem storeItem)
+                storeDataObjList.Add(storeItem);
         }
     }
 }

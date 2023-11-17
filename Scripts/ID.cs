@@ -1,7 +1,10 @@
 using UnityEngine;
 
-[CreateAssetMenu]
-public class ID : ScriptableObject
+namespace Scripts
 {
+    [CreateAssetMenu]
+    public class ID : ScriptableObject
+    {
 
+    }
 }

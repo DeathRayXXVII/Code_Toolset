@@ -1,14 +1,16 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class IDContanerBehavour : MonoBehaviour
+namespace Scripts
 {
-  public ID idObj;
-  public UnityEvent startEvent;
-
-  public void Start()
+  public class IDContanerBehavour : MonoBehaviour
   {
-    startEvent.Invoke();
+    public ID idObj;
+    public UnityEvent startEvent;
+
+    public void Start()
+    {
+      startEvent.Invoke();
+    }
   }
 }

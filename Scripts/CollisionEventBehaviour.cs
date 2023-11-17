@@ -1,22 +1,25 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CollisionEventBehaviour : MonoBehaviour
+namespace Scripts
 {
-    public UnityEvent collisionEvent, playerCollisionEvent;
-    
-    public LayerMask player;
-    
-    private void OnCollisionEnter(Collision other)
+    public class CollisionEventBehaviour : MonoBehaviour
     {
-        
-        
-        if (other.gameObject.layer == player.value)
+        public UnityEvent collisionEvent, playerCollisionEvent;
+    
+        public LayerMask player;
+    
+        private void OnCollisionEnter(Collision other)
         {
-            Debug.Log("Player has collided");
-            playerCollisionEvent.Invoke();
-        }
         
-        collisionEvent.Invoke();
+        
+            if (other.gameObject.layer == player.value)
+            {
+                Debug.Log("Player has collided");
+                playerCollisionEvent.Invoke();
+            }
+        
+            collisionEvent.Invoke();
+        }
     }
 }

@@ -1,9 +1,11 @@
+using Scripts.Data;
+using Scripts.InputSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class TouchInputMovement : MonoBehaviour
 {
-    public floatData speed;
+    public FloatData speed;
     public GameInputsSO controls;
     private Vector2 touchStartPosition;
     private bool isTouching;

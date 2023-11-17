@@ -1,23 +1,23 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class UserInput : MonoBehaviour
+namespace Scripts
 {
-    public CharacterClass characterObj;
-    public IMove moveObj;
-
-    private void Awake()
+    public class UserInput : MonoBehaviour
     {
-        moveObj = characterObj;
-    }
+        public CharacterClass characterObj;
+        public IMove moveObj;
 
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
+        private void Awake()
         {
-            moveObj.Move();
+            moveObj = characterObj;
+        }
+
+        public void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                moveObj.Move();
+            }
         }
     }
 }

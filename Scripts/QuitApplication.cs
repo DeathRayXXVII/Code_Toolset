@@ -1,27 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
+using Scripts.Data;
 using UnityEngine;
 
-public class QuitApplication : MonoBehaviour
+namespace Scripts
 {
-    public IntData scoreKey;
-    public void QuitAplication()
+    public class QuitApplication : MonoBehaviour
     {
-    #if UNITY_EDITOR
+        public IntData scoreKey;
+        public void QuitAplication()
+        {
+#if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-    #else
+#else
 		    Application.Quit ();
-    #endif
-    }
+#endif
+        }
 
-    public void SaveData()
-    {
-        //PlayerPrefs.SetInt(scoreKey);
-        PlayerPrefs.Save();
-    }
+        public void SaveData()
+        {
+            //PlayerPrefs.SetInt(scoreKey);
+            PlayerPrefs.Save();
+        }
 
-    public void LoadData()
-    {
+        public void LoadData()
+        {
         
+        }
     }
 }

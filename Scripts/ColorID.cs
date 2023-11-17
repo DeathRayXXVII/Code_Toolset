@@ -1,6 +1,10 @@
 using UnityEngine;
-[CreateAssetMenu]
-public class ColorID : ID
+
+namespace Scripts
 {
-    public Color value = Color.red;
+    [CreateAssetMenu]
+    public class ColorID : ID
+    {
+        public Color value = Color.red;
+    }
 }

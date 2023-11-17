@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Scripts.Data;
 using UnityEngine;
 
 public class BrickSpawn : MonoBehaviour

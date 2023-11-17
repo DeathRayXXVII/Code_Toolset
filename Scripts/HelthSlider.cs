@@ -1,23 +1,24 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Scripts.Data;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 
-public class HelthSlider : MonoBehaviour
+namespace Scripts
 {
-    public UnityEvent StartEvent;
-    public Slider slider;
-
-    private void Start()
+    public class HelthSlider : MonoBehaviour
     {
-        slider = GetComponent<Slider>();
-        StartEvent.Invoke();
-    }
+        public UnityEvent StartEvent;
+        public Slider slider;
 
-    public void UpdateSlider(floatData obj)
-    {
-        slider.value = obj.value;
+        private void Start()
+        {
+            slider = GetComponent<Slider>();
+            StartEvent.Invoke();
+        }
+
+        public void UpdateSlider(FloatData obj)
+        {
+            slider.value = obj.value;
+        }
     }
 }

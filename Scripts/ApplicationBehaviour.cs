@@ -1,14 +1,17 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ApplicationBehaviour : MonoBehaviour
+namespace Scripts
 {
-    public int sceneToLoad;
-
-    public void StartGame()
+    public class ApplicationBehaviour : MonoBehaviour
     {
-        SceneManager.LoadScene(sceneToLoad);
-        Time.timeScale = 1f;
-    }
+        public int sceneToLoad;
+
+        public void StartGame()
+        {
+            SceneManager.LoadScene(sceneToLoad);
+            Time.timeScale = 1f;
+        }
     
+    }
 }

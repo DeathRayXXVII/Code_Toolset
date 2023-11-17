@@ -1,12 +1,15 @@
 using UnityEngine;
 
-[CreateAssetMenu]
-public class GameInputsSO : ScriptableObject
+namespace Scripts.InputSystem
 {
-    public GameInputs gameInputsObj;
-
-    private void OnEnable()
+    [CreateAssetMenu]
+    public class GameInputsSO : ScriptableObject
     {
-        gameInputsObj = new GameInputs();
+        public GameInputs gameInputsObj;
+
+        private void OnEnable()
+        {
+            gameInputsObj = new GameInputs();
+        }
     }
 }

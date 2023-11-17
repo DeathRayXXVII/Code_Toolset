@@ -1,14 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolBehavior2 : MonoBehaviour
+namespace Scripts.Pooling
 {
-    private bool canSpawn;
-    public float randomSpawningTime = 10; 
-    public PoolController poolControlObj;
+    public class PoolBehavior2 : MonoBehaviour
+    {
+        private bool canSpawn;
+        public float randomSpawningTime = 10; 
+        public PoolController poolControlObj;
 
-    /*private void OnTriggerEnter(Collider other)
+        /*private void OnTriggerEnter(Collider other)
     {
         canSpawn = true;
         StartCoroutine(ActivatePooling()); 
@@ -27,8 +27,9 @@ public class PoolBehavior2 : MonoBehaviour
             poolControlObj.ActivateObj(transform.position);
         }
     }*/
-    public void ActivatePooling()
-    {
-        poolControlObj.ActivateObj(transform.position);
+        public void ActivatePooling()
+        {
+            poolControlObj.ActivateObj(transform.position);
+        }
     }
 }

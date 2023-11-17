@@ -1,10 +1,13 @@
 using UnityEngine;
 
-[CreateAssetMenu]
-public class Debugger : ScriptableObject
+namespace Scripts.Data
 {
-    public void OnDebug(string obj)
+    [CreateAssetMenu]
+    public class Debugger : ScriptableObject
     {
-        Debug.Log(obj);
+        public void OnDebug(string obj)
+        {
+            Debug.Log(obj);
+        }
     }
 }

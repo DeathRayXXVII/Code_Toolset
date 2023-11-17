@@ -1,10 +1,13 @@
 using UnityEngine;
 
-public class Billboard : MonoBehaviour
+namespace Scripts
 {
-    public Transform cam;
-    private void LateUpdate()
+    public class Billboard : MonoBehaviour
     {
-        transform.LookAt(transform.position + cam.forward);
+        public Transform cam;
+        private void LateUpdate()
+        {
+            transform.LookAt(transform.position + cam.forward);
+        }
     }
 }

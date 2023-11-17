@@ -1,37 +1,87 @@
+using System;
+using System.Collections;
 using System.Globalization;
+using Scripts.Data;
+using Scripts.UnityActions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Tools.MatchingGameScripts
+namespace Scripts
 {
     [RequireComponent(typeof(TextMeshProUGUI))]
     public class TextLabelBehavior : MonoBehaviour
     {
-        public TextMeshProUGUI label;
-        public UnityEvent startEvent;
+        private TextMeshProUGUI textObj;
+        private TimeSpan timeSpanObj;
+        public GameAction gameActionObj;
+        private int currentNum, tempDifference;
+        private WaitForFixedUpdate waitObj;
+        public UnityEvent awakeEvent, raiseEvent;
 
-        private void Start()
+        protected void Start()
         {
-            label = GetComponent<TextMeshProUGUI>();
-            startEvent.Invoke();
+            waitObj = new WaitForFixedUpdate();
+            gameActionObj.raiseNoArgs += Raise;
+            textObj = GetComponent<TextMeshProUGUI>();
+            awakeEvent.Invoke();
         }
 
-        public void UpdateLabel(floatData obj)
+        private void Raise()
         {
-            label.text = obj.value.ToString(CultureInfo.InvariantCulture);
+            raiseEvent.Invoke();
         }
 
-        public void UpdateLabel(IntData obj)
+        public new void UpdateText(StringList stringListDataObj)
         {
-            label.text = obj.value.ToString(CultureInfo.InvariantCulture);
+            textObj.text = stringListDataObj.ReturnCurrentLine();
         }
 
-        public void UpdateText(StringListData obj)
+        public new void UpdateText(IntData intDataObj)
         {
-            label.text = obj.currentValue;
-            
+            textObj.text = intDataObj.value.ToString();
         }
 
+        public new void UpdateText(string obj)
+        {
+            textObj.text = obj;
+        }
+
+        public new void UpdateText(FloatData obj)
+        {
+            textObj.text = obj.value.ToString(CultureInfo.CurrentCulture);
+        }
+
+        public void UpdateTextWithTime(FloatData obj)
+        {
+            timeSpanObj = TimeSpan.FromSeconds(obj.value);
+            textObj.text = timeSpanObj.Minutes + ":" + timeSpanObj.Seconds;
+        }
+
+        public new void UpdateTextAsMoney(IntData obj)
+        {
+            textObj.text = obj.value.ToString("C0");
+        }
+
+        public void StoreIntDataValue(IntData obj)
+        {
+            currentNum = obj.value;
+        }
+
+        public void StartUpdateNumberCount(IntData obj)
+        {
+            tempDifference = currentNum - obj.value;
+            StartCoroutine(UpdateNumberCount(obj));
+        }
+
+        private IEnumerator UpdateNumberCount(IntData intData)
+        {
+            while (intData.value != currentNum)
+            {
+                currentNum -= 5;
+                textObj.text = currentNum.ToString("C0");
+                yield return waitObj;
+            }
+        }
     }
 }

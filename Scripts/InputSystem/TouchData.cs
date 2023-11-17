@@ -1,8 +1,11 @@
 using UnityEngine;
 
-[CreateAssetMenu]
-public class TouchData : ScriptableObject
+namespace Scripts.InputSystem
 {
-    [HideInInspector] public float timeStart, timeEnd, force;
-    [HideInInspector] public Vector2 positionStart, positionEnd, direction;
+    [CreateAssetMenu]
+    public class TouchData : ScriptableObject
+    {
+        [HideInInspector] public float timeStart, timeEnd, force;
+        [HideInInspector] public Vector2 positionStart, positionEnd, direction;
+    }
 }

@@ -1,7 +1,10 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Single Variables/BoolData")]
-public class BoolData : ScriptableObject
+namespace Scripts.Data
 {
-    public bool value;
+    [CreateAssetMenu(menuName = "Single Variables/BoolData")]
+    public class BoolData : ScriptableObject
+    {
+        public bool value;
+    }
 }

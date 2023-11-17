@@ -1,25 +1,26 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class ObjectMove : MonoBehaviour
+namespace Scripts
 {
-    public float speed;
-    private float moveVelocity;
-    private Rigidbody rigidbody;
-    public Animator anim;
-
-    private void Start()
+    public class ObjectMove : MonoBehaviour
     {
-        rigidbody = GetComponent<Rigidbody>();
-        //anim = GetComponent<Animation>();
-        anim.SetBool("Spin",true);
-    }
+        public float speed;
+        private float moveVelocity;
+        private Rigidbody rigidbody;
+        public Animator anim;
+
+        private void Start()
+        {
+            rigidbody = GetComponent<Rigidbody>();
+            //anim = GetComponent<Animation>();
+            anim.SetBool("Spin",true);
+        }
     
 
-    private void Update()
-    {
-        rigidbody.velocity = new Vector2(-speed, rigidbody.velocity.y);
-        moveVelocity = speed;
+        private void Update()
+        {
+            rigidbody.velocity = new Vector2(-speed, rigidbody.velocity.y);
+            moveVelocity = speed;
+        }
     }
 }

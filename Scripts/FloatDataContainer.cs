@@ -1,8 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using Scripts.Data;
 using UnityEngine;
 
-public class FloatDataContainer : MonoBehaviour
+namespace Scripts
 {
-    public floatData DataObj;
+    public class FloatDataContainer : MonoBehaviour
+    {
+        public FloatData DataObj;
+    }
 }

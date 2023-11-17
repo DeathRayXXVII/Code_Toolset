@@ -1,12 +1,13 @@
 using UnityEngine;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 
-public class SaveSystem : MonoBehaviour
+namespace Scripts
 {
-    public static void SavePlayer()
+    public class SaveSystem : MonoBehaviour
     {
+        public static void SavePlayer()
+        {
 
+        }
     }
 }
   

@@ -1,9 +1,12 @@
-public interface IMove
+namespace Scripts
 {
-    public void Move();
-}
+    public interface IMove
+    {
+        public void Move();
+    }
 
-public interface ITrigger
-{
-    public void OnTriggerEnter();
+    public interface ITrigger
+    {
+        public void OnTriggerEnter();
+    }
 }

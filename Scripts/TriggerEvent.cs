@@ -1,40 +1,40 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UIElements;
 
-[RequireComponent(typeof(Collider))]
-public class TriggerEvent : MonoBehaviour
+namespace Scripts
 {
-    public UnityEvent triggerEnterEvent, triggerColorEvent, clickEvent;
-    public LayerMask coin;
-    public LayerMask player;
-    private Collider colliderObj;
-
-    private void Start()
+    [RequireComponent(typeof(Collider))]
+    public class TriggerEvent : MonoBehaviour
     {
-        colliderObj = GetComponent<Collider>();
-        colliderObj.isTrigger = true;
-    }
+        public UnityEvent triggerEnterEvent, triggerColorEvent, clickEvent;
+        public LayerMask coin;
+        public LayerMask player;
+        private Collider colliderObj;
 
-    private void OnTriggerEnter(Collider col)
-    {
-        if (coin == LayerMask.NameToLayer("Coin"))
+        private void Start()
         {
-            Debug.Log("You have entered");
-            
+            colliderObj = GetComponent<Collider>();
+            colliderObj.isTrigger = true;
         }
-        if (LayerMask.NameToLayer("Player") == player)
-        {
-            
-        }
-        triggerEnterEvent.Invoke();
-        triggerColorEvent.Invoke();
-    }
 
-    void OnButtonClick()
-    {
-        clickEvent.Invoke();
+        private void OnTriggerEnter(Collider col)
+        {
+            if (coin == LayerMask.NameToLayer("Coin"))
+            {
+                Debug.Log("You have entered");
+            
+            }
+            if (LayerMask.NameToLayer("Player") == player)
+            {
+            
+            }
+            triggerEnterEvent.Invoke();
+            triggerColorEvent.Invoke();
+        }
+
+        void OnButtonClick()
+        {
+            clickEvent.Invoke();
+        }
     }
 }

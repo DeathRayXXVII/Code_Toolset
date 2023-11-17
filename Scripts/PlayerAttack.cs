@@ -1,30 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
+using Scripts.Data;
 using UnityEngine;
 
-
-public class PlayerAttack : MonoBehaviour
+namespace Scripts
 {
-    [Header ("Player Attack")]
-    public floatData damage;
-    public float attackRange;
-    public float attackRate;
-    private float lastAttackTime;
-    public LayerMask enemyLayer;
-    private Vector2 direction;
-    public GameObject wepon;
-    private AudioSource source;
-    public AudioClip marker;
+    public class PlayerAttack : MonoBehaviour
+    {
+        [Header ("Player Attack")]
+        public FloatData damage;
+        public float attackRange;
+        public float attackRate;
+        private float lastAttackTime;
+        public LayerMask enemyLayer;
+        private Vector2 direction;
+        public GameObject wepon;
+        private AudioSource source;
+        public AudioClip marker;
 
     
-    void Start()
-    {
-        wepon.SetActive(false);
-        source = GetComponent<AudioSource>();
-    }
-    private void OnTriggerEnter3D (Collider other)
-    {
-        lastAttackTime = Time.time;
+        void Start()
+        {
+            wepon.SetActive(false);
+            source = GetComponent<AudioSource>();
+        }
+        private void OnTriggerEnter3D (Collider other)
+        {
+            lastAttackTime = Time.time;
+        }
     }
 }
 

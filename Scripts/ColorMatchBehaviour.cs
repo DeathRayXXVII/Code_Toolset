@@ -1,17 +1,21 @@
+using Scripts.Data;
 using UnityEngine;
 
-public class ColorMatchBehaviour : MatchBehaviour
+namespace Scripts
 {
-    public ColorIDDataList colorIDDataListObj;
-
-    public void Awake()
+    public class ColorMatchBehaviour : MatchBehaviour
     {
-        if (colorIDDataListObj != null) idObj = colorIDDataListObj.currentColor;
-    }
+        public ColorIDDataList colorIDDataListObj;
 
-    public void ChangeColor(SpriteRenderer renderer)
-    {
-        var newColor = idObj as ColorID;
-        renderer.color = newColor.value;
+        public void Awake()
+        {
+            if (colorIDDataListObj != null) idObj = colorIDDataListObj.currentColor;
+        }
+
+        public void ChangeColor(SpriteRenderer renderer)
+        {
+            var newColor = idObj as ColorID;
+            renderer.color = newColor.value;
+        }
     }
 }

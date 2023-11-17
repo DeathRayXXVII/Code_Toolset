@@ -1,23 +1,26 @@
-using System;
+using Scripts.Data;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
-public class NaveAgintBehaviour : MonoBehaviour
+namespace Scripts.AI
 {
-    private NavMeshAgent agent;
-    //public vector3Data playerLoc;
-    public vector3Data playerLoc;
-
-
-    private void Start()
+    [RequireComponent(typeof(NavMeshAgent))]
+    public class NaveAgintBehaviour : MonoBehaviour
     {
-        agent = GetComponent<NavMeshAgent>();
-    }
+        private NavMeshAgent agent;
+        //public vector3Data playerLoc;
+        public vector3Data playerLoc;
 
-    void Update()
-    {
-        agent.destination = playerLoc.value;
+
+        private void Start()
+        {
+            agent = GetComponent<NavMeshAgent>();
+        }
+
+        void Update()
+        {
+            agent.destination = playerLoc.value;
         
+        }
     }
 }

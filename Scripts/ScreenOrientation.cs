@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class ScreenOrientation : MonoBehaviour
+namespace Scripts
 {
-    void Start()
+    public class ScreenOrientation : MonoBehaviour
     {
-        //Screen.orientation = UnityEngine.ScreenOrientation.Portrait;
-        Screen.orientation = UnityEngine.ScreenOrientation.LandscapeLeft;
+        void Start()
+        {
+            //Screen.orientation = UnityEngine.ScreenOrientation.Portrait;
+            Screen.orientation = UnityEngine.ScreenOrientation.LandscapeLeft;
         
-    }
+        }
 
+    }
 }
