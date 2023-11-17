@@ -22,8 +22,8 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
 
     private void HandleButtonClick()
     {
-        if (InventoryItemObj == null) return;
-        InventoryItemObj.UsedOrPurchase = false;
-        ButtonObj.interactable = false;
+        //if (InventoryItemObj == null) return;
+        //InventoryItemObj.UsedOrPurchase = false;
+        //ButtonObj.interactable = false;
     }
 }

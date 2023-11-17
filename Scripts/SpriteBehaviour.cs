@@ -1,5 +1,7 @@
 using Scripts.Data;
+using Scripts.UnityActions;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Scripts
 {
@@ -7,11 +9,19 @@ namespace Scripts
     public class SpriteBehaviour : MonoBehaviour
     {
         private SpriteRenderer rendererObj;
+        public Sprite spriteObj;
+        public GameAction gameActionObj;
+        public UnityEvent raiseEvent;
 
         // Start is called before the first frame update
         void Awake()
         {
             rendererObj = GetComponent<SpriteRenderer>();
+            gameActionObj.raiseNoArgs += Raise;
+        }
+        private void Raise()
+        {
+            raiseEvent.Invoke();
         }
 
         public void ChangeRendererColor(ColorID obj)
@@ -22,6 +32,11 @@ namespace Scripts
         public void ChangeRendererColor(ColorIDDataList obj)
         {
             rendererObj.color = obj.currentColor.value;
+        }
+        
+        public void ChangeRenererSprite()
+        {
+            rendererObj.sprite = spriteObj;
         }
     }
 }
