@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: InventoryData
   m_EditorClassIdentifier: 
   cash: {fileID: 0}
-  inventory: []
+  inventory:
+  - {fileID: 0}

@@ -11,6 +11,7 @@ public class InventoryItem : ScriptableObject, IStoreItem, IInventoryItem
     [SerializeField] private int intLevel;
     [SerializeField] private float floatLevel; // Changed to float
     [SerializeField] private GameObject gameArt;
+    [SerializeField] private Material previewMaterial;
     [SerializeField] private bool usedOrPurchase;
     [SerializeField] private GameAction gameActionObj;
 
@@ -21,6 +22,7 @@ public class InventoryItem : ScriptableObject, IStoreItem, IInventoryItem
     public float FloatLevel { get => floatLevel; set => floatLevel = value; } // Corrected type
     public Sprite PreviewArt { get => previewArt; set => previewArt = value; }
     public GameObject GameArt { get => gameArt; set => gameArt = value; }
+    public Material PreviewMaterial { get => previewMaterial; set => previewMaterial = value; }
     public string ThisName
     {
         get => name; // Directly return the scriptable object's name

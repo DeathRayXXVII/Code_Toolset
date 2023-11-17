@@ -9,7 +9,6 @@ namespace Scripts
     public class SpriteBehaviour : MonoBehaviour
     {
         private SpriteRenderer rendererObj;
-        public Sprite spriteObj;
         public GameAction gameActionObj;
         public UnityEvent raiseEvent;
 
@@ -36,7 +35,7 @@ namespace Scripts
         
         public void ChangeRenererSprite()
         {
-            rendererObj.sprite = spriteObj;
+            rendererObj.sprite = gameActionObj.spriteObj.sprite;
         }
     }
 }

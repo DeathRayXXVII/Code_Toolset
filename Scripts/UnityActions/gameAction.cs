@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,11 +10,23 @@ namespace Scripts.UnityActions
         //public UnityAction raise;
         public UnityAction<object> raise;
         public UnityAction raiseNoArgs;
+        public SpriteRenderer spriteObj;
+        public MeshRenderer meshObj;
     
     
         public void Raise()
         {
             raiseNoArgs?.Invoke();
+        }
+
+        public void ExecuteAction(Sprite sprite)
+        {
+            spriteObj.sprite = sprite;
+        }
+        
+        public void ExecuteAction(Material texture)
+        {
+            meshObj.material = texture;
         }
         public void Raise(object obj)
         {

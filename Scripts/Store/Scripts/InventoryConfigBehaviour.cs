@@ -44,6 +44,7 @@ public class InventoryConfigBehaviour : MonoBehaviour
             var elementData = element.GetComponent<InventoryUIButtonBehaviour>();
             if (elementData == null) return;
             elementData.ButtonObj.image.sprite = inventoryItem.PreviewArt;
+            elementData.ButtonObj.image.material = inventoryItem.PreviewMaterial;
             elementData.Label.text = inventoryItem.ThisName;
             elementData.ButtonObj.interactable = inventoryItem.UsedOrPurchase;
             elementData.InventoryItemObj = inventoryItem as InventoryItem;
