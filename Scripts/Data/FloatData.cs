@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace Scripts.Data
 {
-    [ExecuteInEditMode]
+    //[ExecuteInEditMode]
     [CreateAssetMenu(menuName = "Single Variables/FloatData")]
     public class FloatData : ScriptableObject
     {
