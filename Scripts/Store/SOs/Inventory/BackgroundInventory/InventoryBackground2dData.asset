@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4c14d231fbc64037880ab11962719fc, type: 3}
-  m_Name: InventoryData
+  m_Name: InventoryBackground2dData
   m_EditorClassIdentifier: 
-  cash: {fileID: 0}
+  cash: {fileID: 11400000, guid: 36dcc5bc39f45024f9aa2b31ecae5dce, type: 2}
   inventory:
-  - {fileID: 0}
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: 50dc04b17c9ec204daa337053e019707, type: 2}

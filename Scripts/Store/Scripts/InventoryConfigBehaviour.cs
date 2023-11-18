@@ -37,8 +37,9 @@ public class InventoryConfigBehaviour : MonoBehaviour
     private void ConfigureElement<T>(GameObject element, T item)
     {
         Vector3 toggelScaleFactor = Vector3.one * 4;
-        Vector3 lableMoveFactor = new Vector3(0, -3, 0);
+        Vector3 lableMoveFactor = new Vector3(0, -1.56f, -.1f);
         Vector3 toggelMoveFactor = new Vector3(2, .5f, 0);
+        Vector3 buttonMoveFactor = new Vector3(0, 0, -.1f);
         if (item is IInventoryItem inventoryItem)
         {
             var elementData = element.GetComponent<InventoryUIButtonBehaviour>();
@@ -56,6 +57,7 @@ public class InventoryConfigBehaviour : MonoBehaviour
             }
             
             elementData.Label.transform.position += lableMoveFactor;
+            elementData.ButtonObj.transform.position += buttonMoveFactor;
         }
 
         if (item is not IStoreItem storeItem) return;
@@ -73,6 +75,7 @@ public class InventoryConfigBehaviour : MonoBehaviour
             elementData.ToggleObj.transform.localScale = toggelScaleFactor;
             elementData.ToggleObj.transform.position += toggelMoveFactor;
             elementData.Label.transform.position += lableMoveFactor;
+            elementData.ButtonObj.transform.position += buttonMoveFactor;
         }
     }
 

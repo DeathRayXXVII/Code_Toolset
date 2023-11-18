@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fef72ee1b95948a7a76c065548ea42e, type: 3}
-  m_Name: BrickSpace
+  m_Name: MossRock
   m_EditorClassIdentifier: 
   price: 0
   own: 0
-  previewArt: {fileID: 21300000, guid: 2aa59986ea2a5dc40afe1db6f614f718, type: 3}
+  previewArt: {fileID: 0}
   intLevel: 0
   floatLevel: 0
   gameArt: {fileID: 0}
-  previewMaterial: {fileID: 0}
-  usedOrPurchase: 1
+  previewMaterial: {fileID: 2100000, guid: 07078a22ef0323940b4add239957fa27, type: 2}
+  usedOrPurchase: 0
   gameActionObj: {fileID: 0}

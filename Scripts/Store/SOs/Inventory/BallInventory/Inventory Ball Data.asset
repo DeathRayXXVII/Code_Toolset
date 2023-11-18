@@ -10,10 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4c14d231fbc64037880ab11962719fc, type: 3}
-  m_Name: 0 Store Data
+  m_Name: Inventory Ball Data
   m_EditorClassIdentifier: 
-  cash: {fileID: 11400000, guid: 36dcc5bc39f45024f9aa2b31ecae5dce, type: 2}
-  inventory:
-  - {fileID: 11400000, guid: 0fe9c65ca073750458b8bbd15243dc04, type: 2}
-  - {fileID: 11400000, guid: 50dc04b17c9ec204daa337053e019707, type: 2}
-  - {fileID: 11400000, guid: 548d2bf522fa6c843b4a4289f8afc472, type: 2}
+  cash: {fileID: 0}
+  inventory: []
