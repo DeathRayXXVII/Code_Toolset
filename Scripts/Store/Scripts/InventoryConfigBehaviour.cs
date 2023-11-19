@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -21,6 +22,7 @@ public class InventoryConfigBehaviour : MonoBehaviour
         foreach (var item in items)
         {
             GameObject element = null;
+            
             if (item is IInventoryItem { UsedOrPurchase: true })
             {
                 element = Instantiate(inventoryUIPrefab.gameObject, transform);
@@ -30,8 +32,14 @@ public class InventoryConfigBehaviour : MonoBehaviour
             {
                 element = Instantiate(storeUIPrefab.gameObject, transform);
             }
-            
+
             ConfigureElement(element, item);
+            
+            //var storeButton = element.GetComponent<StoreUIButtonBehaviour>();
+            //if (item is not IStoreItem)
+            //{
+                //storeButton.purchaseEvent.AddListener(UpdateIventoryUI);
+            //}
         }
     }
 
@@ -123,5 +131,10 @@ public class InventoryConfigBehaviour : MonoBehaviour
             if (!item.UsedOrPurchase || item is not IInventoryItem storeItem ) continue;
             i = ConfigureGameObject(storeItem, i);
         }
+    }
+    
+    public void UpdateIventoryUI()
+    {
+        //AddAllInventoryItemsToUI();
     }
 }

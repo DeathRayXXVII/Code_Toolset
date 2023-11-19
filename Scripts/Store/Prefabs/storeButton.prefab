@@ -329,6 +329,7 @@ GameObject:
   - component: {fileID: 8456886031509015116}
   - component: {fileID: 1603044380216341327}
   - component: {fileID: 5412739403429779018}
+  - component: {fileID: 7665599623515888769}
   m_Layer: 0
   m_Name: storeButton
   m_TagString: Untagged
@@ -476,6 +477,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7665599623515888769}
+        m_TargetAssemblyTypeName: ReloadScene, Assembly-CSharp
+        m_MethodName: Reload
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   noPurchaseEvent:
     m_PersistentCalls:
       m_Calls:
@@ -492,6 +505,18 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   cash: {fileID: 11400000, guid: 36dcc5bc39f45024f9aa2b31ecae5dce, type: 2}
+--- !u!114 &7665599623515888769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807348865092631073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e6fcc92033b294ba5bd734dbce4060, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6062888167021909034
 GameObject:
   m_ObjectHideFlags: 0

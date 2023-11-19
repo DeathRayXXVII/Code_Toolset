@@ -12,8 +12,6 @@ public class StoreUIButtonBehaviour : InventoryUIButtonBehaviour
     public Toggle ToggleObj { get; private set; }
     public IStoreItem StoreItemObj { get; set; }
     
-    //public InventoryUIButtonBehaviour inventoryUIButtonBehaviour;
-    
     protected override void Awake()
     {
         base.Awake();
@@ -30,6 +28,7 @@ public class StoreUIButtonBehaviour : InventoryUIButtonBehaviour
             ToggleObj.isOn = true;
             cash.UpdateValue(-StoreItemObj.Price);
             ButtonObj.interactable = false;
+            GameState.Instance.CurrentAction = "Purchase";
             purchaseEvent?.Invoke();
         }
         else
