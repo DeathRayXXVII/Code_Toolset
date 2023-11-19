@@ -7,8 +7,8 @@ public class Ball: MonoBehaviour
 {
     public Rigidbody rb;
     private Vector3 direction;
-    public float speed = 10f;
-    public float maxSpeed;
+    public FloatData speed ;
+    public FloatData maxSpeed;
     public vector3Data vector3DataObj;
     private bool goingLeft;
     private bool goingDown;
@@ -21,6 +21,8 @@ public class Ball: MonoBehaviour
 
     public void ResetBall()
     {
+        speed.value = maxSpeed.value;
+        gameObject.SetActive(true);
         rb.velocity = Vector3.zero;
         transform.position = new Vector3(0, -4, 0);
 
@@ -33,7 +35,7 @@ public class Ball: MonoBehaviour
         force.x = Random.Range(-1f, 1f);
         force.y = -1f;
 
-        rb.AddForce(force.normalized * speed, ForceMode.Impulse);
+        rb.AddForce(force.normalized * speed.value, ForceMode.Impulse);
     }
 
     public void OnCollisionEnter(Collision other)
@@ -43,6 +45,6 @@ public class Ball: MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = rb.velocity.normalized * speed;
+        rb.velocity = rb.velocity.normalized * speed.value;
     }
 }

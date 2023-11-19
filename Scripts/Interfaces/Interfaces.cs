@@ -15,6 +15,7 @@ public interface IStoreItem
     int Price { get; set; }
     bool UsedOrPurchase { get; set; }
     Sprite PreviewArt { get; set; }
+    GameObject GameArt { get; set; }
     Material PreviewMaterial { get; set; }
     string ThisName { get; set; }
 }

@@ -13,7 +13,7 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
     [SerializeField] private Sprite backgroundImage;
     [SerializeField] private Material backgroundMaterial;
     
-    public InventoryItem InventoryItemObj { get; set; }
+    public IInventoryItem InventoryItemObj { get; set; }
 
     protected virtual void Awake()
     {
@@ -43,14 +43,9 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
                 gameActionMaterialObj.ExecuteAction(ButtonObj.image.material);
                 materialRiseEvent.Invoke();
             }
-                
-            
-
-                
-            
         }
         //if (InventoryItemObj == null) return;
         //InventoryItemObj.UsedOrPurchase = false;
-        //ButtonObj.interactable = false;
+        //ButtonObj.interactable = false
     }
 }

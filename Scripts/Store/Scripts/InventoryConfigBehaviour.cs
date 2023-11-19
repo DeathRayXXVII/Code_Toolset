@@ -8,6 +8,7 @@ public class InventoryConfigBehaviour : MonoBehaviour
     public UnityEvent buttonEvent;
     public InventoryData inventoryDataObj;
     public InventoryUIButtonBehaviour inventoryUIPrefab;
+    public StoreUIButtonBehaviour storeUIPrefab;
 
     private void Start()
     {
@@ -27,7 +28,7 @@ public class InventoryConfigBehaviour : MonoBehaviour
             
             if (item is IStoreItem { UsedOrPurchase: false } )
             {
-                element = Instantiate(inventoryUIPrefab.gameObject, transform);
+                element = Instantiate(storeUIPrefab.gameObject, transform);
             }
             
             ConfigureElement(element, item);
@@ -40,6 +41,7 @@ public class InventoryConfigBehaviour : MonoBehaviour
         Vector3 lableMoveFactor = new Vector3(0, -1.56f, -.1f);
         Vector3 toggelMoveFactor = new Vector3(2, .5f, 0);
         Vector3 buttonMoveFactor = new Vector3(0, 0, -.1f);
+
         if (item is IInventoryItem inventoryItem)
         {
             var elementData = element.GetComponent<InventoryUIButtonBehaviour>();
@@ -53,7 +55,7 @@ public class InventoryConfigBehaviour : MonoBehaviour
                 elementData.ButtonObj.onClick.AddListener(inventoryItem.Raise);
             else
             {
-                elementData.ButtonObj.interactable = false;
+                elementData.ButtonObj.interactable = true;
             }
             
             elementData.Label.transform.position += lableMoveFactor;
@@ -100,6 +102,7 @@ public class InventoryConfigBehaviour : MonoBehaviour
         elementData.inventoryItemObj = item as InventoryItem;
         elementData.gameActionObj = item.GameActionObj;
         elementData.gameObject.transform.position = Vector3.left * ++i * -3;
+        elementData.gameObject.transform.localScale = Vector3.one / 2;
         return i;
     }
 

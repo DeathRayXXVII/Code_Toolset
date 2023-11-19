@@ -15,6 +15,7 @@ public class Paddle : MonoBehaviour
 
     public void ResetPaddle()
     {
+        gameObject.SetActive(true);
         rb.velocity = Vector2.zero;
         transform.position = new Vector2(0f, -7.1f);
     }

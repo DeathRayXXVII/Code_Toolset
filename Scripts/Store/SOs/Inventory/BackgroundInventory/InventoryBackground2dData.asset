@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cash: {fileID: 11400000, guid: 36dcc5bc39f45024f9aa2b31ecae5dce, type: 2}
   inventory:
-  - {fileID: 11400000}
+  - {fileID: 11400000, guid: 0fe9c65ca073750458b8bbd15243dc04, type: 2}
   - {fileID: 11400000, guid: 50dc04b17c9ec204daa337053e019707, type: 2}

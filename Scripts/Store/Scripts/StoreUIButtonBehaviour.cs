@@ -12,6 +12,8 @@ public class StoreUIButtonBehaviour : InventoryUIButtonBehaviour
     public Toggle ToggleObj { get; private set; }
     public IStoreItem StoreItemObj { get; set; }
     
+    //public InventoryUIButtonBehaviour inventoryUIButtonBehaviour;
+    
     protected override void Awake()
     {
         base.Awake();

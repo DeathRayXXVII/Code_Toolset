@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BrickSpace
   m_EditorClassIdentifier: 
   price: 0
-  own: 1
+  own: 0
   previewArt: {fileID: 21300000, guid: 2aa59986ea2a5dc40afe1db6f614f718, type: 3}
   intLevel: 0
   floatLevel: 0
