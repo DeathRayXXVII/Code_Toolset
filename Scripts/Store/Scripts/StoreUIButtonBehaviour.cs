@@ -28,7 +28,7 @@ public class StoreUIButtonBehaviour : InventoryUIButtonBehaviour
             ToggleObj.isOn = true;
             cash.UpdateValue(-StoreItemObj.Price);
             ButtonObj.interactable = false;
-            GameState.Instance.CurrentAction = "Purchase";
+            //GameState.Instance.CurrentAction = "Purchase";
             purchaseEvent?.Invoke();
         }
         else

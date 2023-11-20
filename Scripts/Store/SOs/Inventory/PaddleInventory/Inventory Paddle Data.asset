@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: Inventory Paddle Data
   m_EditorClassIdentifier: 
   cash: {fileID: 11400000, guid: 36dcc5bc39f45024f9aa2b31ecae5dce, type: 2}
-  inventory: []
+  inventory:
+  - {fileID: 11400000, guid: 585f874c1f0452a4b82f44cfba9cccab, type: 2}
+  - {fileID: 11400000, guid: c9780e8ffef35984ba84b1c48dfe2fac, type: 2}
+  - {fileID: 11400000, guid: 9eaff16012dcc524abd909108712ecbe, type: 2}
+  - {fileID: 11400000, guid: 5d43615da6b06fa428df6d3fa30542ff, type: 2}
+  - {fileID: 11400000, guid: 4af078aa2b80ea34581d9f82c77e7b38, type: 2}

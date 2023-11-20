@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fef72ee1b95948a7a76c065548ea42e, type: 3}
-  m_Name: RedPaddle
+  m_Name: GreenCrystal
   m_EditorClassIdentifier: 
   price: 100
   own: 0
@@ -18,6 +18,6 @@ MonoBehaviour:
   intLevel: 0
   floatLevel: 0
   gameArt: {fileID: 0}
-  previewMaterial: {fileID: -6645802548077303276, guid: f0f082f7f1d724b489e1244c15a5e60f, type: 3}
-  usedOrPurchase: 0
+  previewMaterial: {fileID: 2100000, guid: 6169bd3737e43f342a9e07c2ae2c7927, type: 2}
+  usedOrPurchase: 1
   gameActionObj: {fileID: 0}
