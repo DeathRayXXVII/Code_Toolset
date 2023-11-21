@@ -31,6 +31,12 @@ public class InventoryConfigBehaviour : MonoBehaviour
             if (item is IStoreItem { UsedOrPurchase: false } )
             {
                 element = Instantiate(storeUIPrefab.gameObject, transform);
+                var storeButton = element.GetComponent<StoreUIButtonBehaviour>();
+                if (storeButton != null)
+                {
+                    storeButton.inventoryConfigBehaviour = this;
+                    storeButton.inventoryDataObj = inventoryDataObj;
+                }   
             }
 
             ConfigureElement(element, item);

@@ -6,7 +6,7 @@ using UnityEngine;
 public class InventoryData : ScriptableObject
 {
     public IntData cash;
-    [SerializeField] private List<ScriptableObject> inventory;
+    [SerializeField] public List<ScriptableObject> inventory;
     public readonly List<IInventoryItem> inventoryDataObjList = new List<IInventoryItem>();
     public readonly List<IStoreItem> storeDataObjList = new List<IStoreItem>();
 

@@ -39,4 +39,15 @@ public class InventoryItem : ScriptableObject, IStoreItem, IInventoryItem
     {
         if (gameActionObj != null) gameActionObj.Raise();
     }
+    
+    public void OnPurchase(InventoryData inventoryDataObj)
+    {
+        int currentPosition = inventoryDataObj.inventoryDataObjList.IndexOf(this);
+        
+        inventoryDataObj.inventory.Remove(this);
+        
+        int newPosition = 0;
+        
+        inventoryDataObj.inventory.Insert(newPosition, this);
+    }
 }
