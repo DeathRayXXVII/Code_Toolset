@@ -19,5 +19,7 @@ MonoBehaviour:
   floatLevel: 0
   gameArt: {fileID: 497624854678910184, guid: 73a9296b753681148bdcf1292c991faf, type: 3}
   previewMaterial: {fileID: 0}
-  usedOrPurchase: 0
+  usedOrPurchase: 1
   gameActionObj: {fileID: 0}
+  gameObject: {fileID: 497624854678910184, guid: 73a9296b753681148bdcf1292c991faf, type: 3}
+  dropChance: 0.01

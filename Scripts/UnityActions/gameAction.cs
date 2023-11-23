@@ -12,11 +12,16 @@ namespace Scripts.UnityActions
         public UnityAction raiseNoArgs;
         public SpriteRenderer spriteObj;
         public MeshRenderer meshObj;
+        public UnityEvent <IInventoryItem> response;
     
     
         public void Raise()
         {
             raiseNoArgs?.Invoke();
+        }
+        public void Raise(IInventoryItem item)
+        {
+            response.Invoke(item);
         }
 
         public void ExecuteAction(Sprite sprite)

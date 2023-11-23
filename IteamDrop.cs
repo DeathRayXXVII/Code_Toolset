@@ -1,18 +1,77 @@
+using System.Collections.Generic;
+using Scripts.UnityActions;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class IteamDrop : MonoBehaviour
 {
-    public GameObject itemPrefab;
-    private float dropChance = 0.1f;
-
-    private void OnCollisionEnter(Collision collision)
+    public List <InventoryItem> itemPrefabs;
+    public InventoryData itemPrefabsObj;
+    public GameAction gameAction;
+    //public UnityEvent addToListEvent;
+    public float skipChance = .98f;
+    public Brick brickObj;
+    
+    
+    private void Awake()
     {
-        if (collision.gameObject.CompareTag("Ball"))
+        gameAction.response.AddListener(AddToList);
+    }
+   private void OnCollisionEnter(Collision collision)
+{
+    if (collision.gameObject.CompareTag("Ball") &&  brickObj.unbreakable != true)
+    {
+        if (Random.value < skipChance)
         {
-            if (Random.value < dropChance)
+            return;
+        }
+        // Create a cumulative list of drop chances
+        List<float> cumulative = new List<float>();
+        float total = 0;
+        if (itemPrefabsObj != null && itemPrefabsObj.inventory != null)
+        { 
+            foreach (var item in itemPrefabsObj.inventory)
             {
-                Instantiate(itemPrefab, transform.position, Quaternion.identity);
+                if (item is IInventoryItem inventoryItem)
+                {
+                    total += inventoryItem.DropChance;
+                    cumulative.Add(total);
+                }
+            }
+        }
+        // Generate a random number
+        float random = Random.value * total;
+
+        // Find the first item where the cumulative drop chance is greater than the random number
+        for (int i = 0; i < cumulative.Count; i++)
+        {
+            if (random < cumulative[i])
+            {
+                // Instantiate the item's GameObject
+                if (itemPrefabsObj.inventory[i] is IInventoryItem inventoryItem)
+                {
+                    Instantiate(inventoryItem.GameArt, transform.position, Quaternion.identity);
+                    i = 0;
+                }
+                break;
             }
         }
     }
+}
+   public void AddToList(IInventoryItem item)
+{
+    Debug.Log("ItemDrop");
+    if (item is InventoryItem inventoryItem)
+    {
+        itemPrefabs.Add(inventoryItem);
+    }
+}
+   public void RemoveFromList(IInventoryItem item)
+   {
+       if (item is InventoryItem inventoryItem)
+       {
+           itemPrefabs.Remove(inventoryItem);
+       }
+   }
 }

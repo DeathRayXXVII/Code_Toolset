@@ -7,12 +7,9 @@ using UnityEngine.UI;
 public class InventoryUIButtonBehaviour : MonoBehaviour
 {
     public Button ButtonObj { get; private set; }
-    public GameAction gameActionSpriteObj, gameActionMaterialObj;
-    public UnityEvent spritRaiseEvent, materialRiseEvent;
+    public GameAction gameActionSpriteObj, gameActionMaterialObj, gameActionItemDropObj;
+    public UnityEvent spriteRaiseEvent, materialRiseEvent, itemDropRaiseEvent;
     public TextMeshProUGUI Label { get; private set; }
-    [SerializeField] private Sprite backgroundImage;
-    [SerializeField] private Material backgroundMaterial;
-    
     public IInventoryItem InventoryItemObj { get; set; }
 
     protected virtual void Awake()
@@ -34,7 +31,7 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
             {
                 ButtonObj.image.sprite = InventoryItemObj.PreviewArt;
                 gameActionSpriteObj.ExecuteAction(ButtonObj.image.sprite);
-                spritRaiseEvent.Invoke();
+                spriteRaiseEvent.Invoke();
             }
 
             if (InventoryItemObj.PreviewMaterial != null)
@@ -42,6 +39,14 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
                 ButtonObj.image.material = InventoryItemObj.PreviewMaterial;
                 gameActionMaterialObj.ExecuteAction(ButtonObj.image.material);
                 materialRiseEvent.Invoke();
+            }
+
+            if (InventoryItemObj.GameArt != null)
+            {  
+                Debug.Log("GameArt is not null");
+                IInventoryItem item = InventoryItemObj;
+                gameActionItemDropObj.Raise(item);
+                Debug.Log("Art Worked");
             }
         }
         //if (InventoryItemObj == null) return;

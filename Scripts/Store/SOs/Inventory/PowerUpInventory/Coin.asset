@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fef72ee1b95948a7a76c065548ea42e, type: 3}
-  m_Name: PurpleCrystal
+  m_Name: Coin
   m_EditorClassIdentifier: 
-  price: 100
+  price: 0
   own: 0
   previewArt: {fileID: 0}
   intLevel: 0
   floatLevel: 0
-  gameArt: {fileID: 0}
-  previewMaterial: {fileID: 2100000, guid: 6b6499e8ee731c140a7f7741b364477e, type: 2}
-  usedOrPurchase: 0
+  gameArt: {fileID: 4805326021041496219, guid: 048d13327301c75458a4f9f1be1f1d81, type: 3}
+  previewMaterial: {fileID: 0}
+  usedOrPurchase: 1
   gameActionObj: {fileID: 0}
   gameObject: {fileID: 0}
-  dropChance: 0
+  dropChance: 0.1

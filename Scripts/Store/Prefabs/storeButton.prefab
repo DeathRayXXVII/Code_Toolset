@@ -454,14 +454,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameActionSpriteObj: {fileID: 11400000, guid: 17c20cf62621e10408703e5e65c9c4d9, type: 2}
   gameActionMaterialObj: {fileID: 11400000, guid: 01b4d2d331b1fb9498f4497b69b20d69, type: 2}
+  gameActionItemDropObj: {fileID: 11400000, guid: 4afd4dc5d1ad3d643b0a070af07fae94, type: 2}
   spritRaiseEvent:
     m_PersistentCalls:
       m_Calls: []
   materialRiseEvent:
     m_PersistentCalls:
       m_Calls: []
-  backgroundImage: {fileID: 0}
-  backgroundMaterial: {fileID: 0}
+  itemDropRaiseEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  iteamDrop: {fileID: 0}
   purchaseEvent:
     m_PersistentCalls:
       m_Calls:
@@ -505,6 +508,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   cash: {fileID: 11400000, guid: 36dcc5bc39f45024f9aa2b31ecae5dce, type: 2}
+  inventoryDataObj: {fileID: 0}
+  inventoryConfigBehaviour: {fileID: 0}
 --- !u!114 &7665599623515888769
 MonoBehaviour:
   m_ObjectHideFlags: 0

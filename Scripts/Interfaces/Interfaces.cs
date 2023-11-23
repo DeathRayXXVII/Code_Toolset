@@ -29,6 +29,7 @@ public interface IInventoryItem
     Sprite PreviewArt { get; set; }
     GameObject GameArt { get; set; }
     Material PreviewMaterial { get; set; }
+    float DropChance { get; set; }
     string ThisName { get; set; }
     
     public GameAction GameActionObj { get; set; }

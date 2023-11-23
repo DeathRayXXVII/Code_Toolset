@@ -21,3 +21,5 @@ MonoBehaviour:
   previewMaterial: {fileID: 2100000, guid: 6169bd3737e43f342a9e07c2ae2c7927, type: 2}
   usedOrPurchase: 0
   gameActionObj: {fileID: 0}
+  gameObject: {fileID: 0}
+  dropChance: 0

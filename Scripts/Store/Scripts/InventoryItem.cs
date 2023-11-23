@@ -14,6 +14,8 @@ public class InventoryItem : ScriptableObject, IStoreItem, IInventoryItem
     [SerializeField] private Material previewMaterial;
     [SerializeField] private bool usedOrPurchase;
     [SerializeField] private GameAction gameActionObj;
+    [SerializeField] public GameObject gameObject;
+    [SerializeField] public float dropChance;
 
     // IStoreItem and IInventoryItem Implementation
     public int Price { get => price; set => price = value; }
@@ -23,6 +25,7 @@ public class InventoryItem : ScriptableObject, IStoreItem, IInventoryItem
     public Sprite PreviewArt { get => previewArt; set => previewArt = value; }
     public GameObject GameArt { get => gameArt; set => gameArt = value; }
     public Material PreviewMaterial { get => previewMaterial; set => previewMaterial = value; }
+    public float DropChance { get => dropChance; set => dropChance = value; }
     public string ThisName
     {
         get => name; // Directly return the scriptable object's name
