@@ -9,6 +9,7 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
     public Button ButtonObj { get; private set; }
     public GameAction gameActionSpriteObj, gameActionMaterialObj, gameActionItemDropObj;
     public UnityEvent spriteRaiseEvent, materialRiseEvent, itemDropRaiseEvent;
+    
     public TextMeshProUGUI Label { get; private set; }
     public IInventoryItem InventoryItemObj { get; set; }
 
@@ -29,15 +30,17 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
         {
             if (InventoryItemObj.PreviewArt != null)
             {
+                Debug.Log("Background is not null");
                 ButtonObj.image.sprite = InventoryItemObj.PreviewArt;
-                gameActionSpriteObj.ExecuteAction(ButtonObj.image.sprite);
+                gameActionSpriteObj.Raise(ButtonObj.image.sprite);
                 spriteRaiseEvent.Invoke();
             }
 
             if (InventoryItemObj.PreviewMaterial != null)
             {
+                Debug.Log("Material is not null");
                 ButtonObj.image.material = InventoryItemObj.PreviewMaterial;
-                gameActionMaterialObj.ExecuteAction(ButtonObj.image.material);
+                gameActionMaterialObj.Raise(ButtonObj.image.material);
                 materialRiseEvent.Invoke();
             }
 
@@ -46,6 +49,7 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
                 Debug.Log("GameArt is not null");
                 IInventoryItem item = InventoryItemObj;
                 gameActionItemDropObj.Raise(item);
+                ButtonObj.interactable = false;
                 Debug.Log("Art Worked");
             }
         }

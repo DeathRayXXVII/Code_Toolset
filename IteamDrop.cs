@@ -1,15 +1,12 @@
 using System.Collections.Generic;
 using Scripts.UnityActions;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class IteamDrop : MonoBehaviour
 {
     public List <InventoryItem> itemPrefabs;
     public InventoryData itemPrefabsObj;
     public GameAction gameAction;
-    //public UnityEvent addToListEvent;
     public float skipChance = .98f;
     public Brick brickObj;
     

@@ -9,7 +9,7 @@ public class BrickSpawn : MonoBehaviour
     public GameManager gameManager;
     public Dictionary<Material, int> materialHealthMap;
     public BrickDataList brickDataList;
-    public float unbreakableChance = 0.1f;
+    public float unbreakableChance = 0.03f;
     float skipChance = 0.2f;
 
     

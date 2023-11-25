@@ -24,12 +24,12 @@ namespace Scripts.UnityActions
             response.Invoke(item);
         }
 
-        public void ExecuteAction(Sprite sprite)
+        public void Raise(Sprite sprite)
         {
             spriteObj.sprite = sprite;
         }
         
-        public void ExecuteAction(Material texture)
+        public void Raise(Material texture)
         {
             meshObj.material = texture;
         }
