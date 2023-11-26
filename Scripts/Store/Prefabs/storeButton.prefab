@@ -256,7 +256,7 @@ RectTransform:
   m_GameObject: {fileID: 1403833562}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4.0938, y: 4.0938, z: 4.0938}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 781132797}
@@ -265,7 +265,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 49.1912, y: 12.028015}
+  m_AnchoredPosition: {x: 49.1912, y: -187}
   m_SizeDelta: {x: 88.5044, y: 24.056}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1403833564
@@ -455,7 +455,7 @@ MonoBehaviour:
   gameActionSpriteObj: {fileID: 11400000, guid: 17c20cf62621e10408703e5e65c9c4d9, type: 2}
   gameActionMaterialObj: {fileID: 11400000, guid: 01b4d2d331b1fb9498f4497b69b20d69, type: 2}
   gameActionItemDropObj: {fileID: 11400000, guid: 4afd4dc5d1ad3d643b0a070af07fae94, type: 2}
-  spritRaiseEvent:
+  spriteRaiseEvent:
     m_PersistentCalls:
       m_Calls: []
   materialRiseEvent:
@@ -464,25 +464,12 @@ MonoBehaviour:
   itemDropRaiseEvent:
     m_PersistentCalls:
       m_Calls: []
-  iteamDrop: {fileID: 0}
   purchaseEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11400000, guid: 4303feae9cc784fe5a9760630879365b, type: 2}
         m_TargetAssemblyTypeName: GameAction, Assembly-CSharp
         m_MethodName: Raise
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7665599623515888769}
-        m_TargetAssemblyTypeName: ReloadScene, Assembly-CSharp
-        m_MethodName: Reload
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -556,7 +543,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -116}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &741666601881422719

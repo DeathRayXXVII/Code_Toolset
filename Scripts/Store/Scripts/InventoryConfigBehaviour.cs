@@ -16,7 +16,35 @@ public class InventoryConfigBehaviour : MonoBehaviour
         buttonEvent.Invoke();
     }
 
-    private void AddItemsToUI<T>(List<T> items)
+    public void AddAllInventoryItemsToUI()
+    {
+        foreach (var item in inventoryDataObj.inventoryDataObjList)
+        {
+            if (item is not { UsedOrPurchase: true }) continue;
+            var element = Instantiate(inventoryUIPrefab.gameObject, transform);
+            var elementData = element.GetComponent<InventoryUIButtonBehaviour>();
+            elementData.ConfigButton(item);
+        }
+    }
+    
+    public void AddAllStoreInventoryItemsToUI()
+    {
+        foreach (var item in inventoryDataObj.storeDataObjList)
+        {
+            if (item is not { UsedOrPurchase: false }) continue;
+            var element = Instantiate(inventoryUIPrefab.gameObject, transform);
+            var elementData = element.GetComponent<StoreUIButtonBehaviour>();
+            if (elementData != null)
+            {
+                elementData.inventoryConfigBehaviour = this;
+                elementData.inventoryDataObj = inventoryDataObj;
+            } 
+            elementData.ConfigButton(item);
+        }
+    }
+    
+    
+    /*private void AddItemsToUI<T>(List<T> items)
     {
         
         foreach (var item in items)
@@ -97,7 +125,13 @@ public class InventoryConfigBehaviour : MonoBehaviour
 
     public void AddAllInventoryItemsToUI()
     {
-        AddItemsToUI(inventoryDataObj.inventoryDataObjList);
+        foreach (var item in inventoryDataObj.inventoryDataObjList)
+        {
+            if (item is not { UsedOrPurchase: true }) continue;
+            var element = Instantiate(inventoryUIPrefab.gameObject, transform);
+            var elementData = element.GetComponent<InventoryUIButtonBehaviour>();
+            elementData.ConfigButton(item);
+        }
     }
 
     public void AddAllStoreInventoryItemsToUI()
@@ -142,5 +176,5 @@ public class InventoryConfigBehaviour : MonoBehaviour
     public void UpdateIventoryUI()
     {
         //AddAllInventoryItemsToUI();
-    }
+    }*/
 }

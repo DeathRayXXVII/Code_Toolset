@@ -23,6 +23,25 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
             ButtonObj.onClick.AddListener(HandleButtonClick);
         }
     }
+    
+    public void ConfigButton(IInventoryItem inventoryItem)
+    {
+        Vector3 lableMoveFactor = new Vector3(0, -1.56f, -.1f);
+
+        ButtonObj.image.sprite = inventoryItem.PreviewArt;
+        ButtonObj.image.material = inventoryItem.PreviewMaterial;
+        Label.text = inventoryItem.ThisName;
+        ButtonObj.interactable = inventoryItem.UsedOrPurchase;
+        InventoryItemObj = inventoryItem as InventoryItem;
+        if(inventoryItem.GameActionObj != null)
+            ButtonObj.onClick.AddListener(inventoryItem.Raise);
+        else
+        {
+            ButtonObj.interactable = true;
+        }
+            
+        Label.transform.position += lableMoveFactor;
+    }
 
     private void HandleButtonClick()
     {
@@ -53,8 +72,5 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
                 Debug.Log("Art Worked");
             }
         }
-        //if (InventoryItemObj == null) return;
-        //InventoryItemObj.UsedOrPurchase = false;
-        //ButtonObj.interactable = false
     }
 }

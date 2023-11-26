@@ -21,6 +21,26 @@ public class StoreUIButtonBehaviour : InventoryUIButtonBehaviour
         PriceLabel = ToggleObj.GetComponentInChildren<Text>();
         ButtonObj.onClick.AddListener(AttemptPurchase);
     }
+    
+    public void ConfigButton(IStoreItem storeItem)
+    {
+        Vector3 toggelScaleFactor = Vector3.one * 4;
+        Vector3 lableMoveFactor = new Vector3(0, -1.56f, -.1f);
+        Vector3 toggelMoveFactor = new Vector3(2, .75f, 0);
+        
+        if (storeItem == null) return;
+        ButtonObj.image.sprite = storeItem.PreviewArt;
+        ButtonObj.image.material = storeItem.PreviewMaterial;
+        Label.text = storeItem.ThisName;
+        ButtonObj.interactable = !storeItem.UsedOrPurchase;
+        StoreItemObj = storeItem;
+        ToggleObj.isOn = storeItem.UsedOrPurchase;
+        PriceLabel.text = $"${storeItem.Price}";
+        
+        ToggleObj.transform.localScale = toggelScaleFactor;
+        ToggleObj.transform.position += toggelMoveFactor;
+        Label.transform.position += lableMoveFactor;
+    }
 
     private void AttemptPurchase()
     {
@@ -31,8 +51,7 @@ public class StoreUIButtonBehaviour : InventoryUIButtonBehaviour
             cash.UpdateValue(-StoreItemObj.Price);
             ButtonObj.interactable = false;
             //GameState.Instance.CurrentAction = "Purchase";
-            var purchaseItem = StoreItemObj as InventoryItem;
-            purchaseItem.OnPurchase(inventoryDataObj);
+
             purchaseEvent?.Invoke();
         }
         else
