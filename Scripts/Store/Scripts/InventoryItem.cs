@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu (fileName = "InventoryItem", menuName = "Store/InventoryItem")]
 public class InventoryItem : ScriptableObject, IStoreItem, IInventoryItem
 {
+    [SerializeField] private string category;
     [SerializeField] private int price;
     //[SerializeField] private bool purchased;
     [SerializeField] private bool own;
@@ -14,10 +15,10 @@ public class InventoryItem : ScriptableObject, IStoreItem, IInventoryItem
     [SerializeField] private Material previewMaterial;
     [SerializeField] private bool usedOrPurchase;
     [SerializeField] private GameAction gameActionObj;
-    [SerializeField] public GameObject gameObject;
     [SerializeField] public float dropChance;
 
     // IStoreItem and IInventoryItem Implementation
+    public string Category { get => category; set => category = value; }
     public int Price { get => price; set => price = value; }
     public bool UsedOrPurchase { get => usedOrPurchase; set => usedOrPurchase = value; }
     public int IntLevel { get => intLevel; set => intLevel = value; }

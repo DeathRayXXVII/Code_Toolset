@@ -12,6 +12,7 @@ namespace Scripts.UnityActions
         public UnityAction raiseNoArgs;
         public SpriteRenderer spriteObj;
         public MeshRenderer meshObj;
+        public MeshRenderer meshObj1;
         public UnityEvent <IInventoryItem> response;
     
     
@@ -32,6 +33,10 @@ namespace Scripts.UnityActions
         public void Raise(Material texture)
         {
             meshObj.material = texture;
+        }
+        public void CallMaterial(Material texture)
+        {
+            meshObj1.material = texture;
         }
         public void Raise(object obj)
         {

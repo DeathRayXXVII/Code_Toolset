@@ -31,6 +31,7 @@ public interface IInventoryItem
     Material PreviewMaterial { get; set; }
     float DropChance { get; set; }
     string ThisName { get; set; }
+    string Category { get; set; }
     
     public GameAction GameActionObj { get; set; }
     void Raise();

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Brick : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Brick : MonoBehaviour
     private BrickData brickData;
     public GameManager gameManager;
     public BrickDataList brickDataList;
+    public UnityEvent hitEvent;
 
     private void Start()
     {
@@ -92,6 +94,7 @@ public class Brick : MonoBehaviour
             {
                 if (unbreakable) 
                     return;
+                hitEvent.Invoke();
                 health--;
                 if (health <= 0)
                 {
@@ -111,6 +114,7 @@ public class Brick : MonoBehaviour
         {
             rend.material = materials[materialIndex];
         }
+        
                 
     }
     

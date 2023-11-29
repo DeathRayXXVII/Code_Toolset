@@ -7,8 +7,12 @@ using UnityEngine.UI;
 public class InventoryUIButtonBehaviour : MonoBehaviour
 {
     public Button ButtonObj { get; private set; }
-    public GameAction gameActionSpriteObj, gameActionMaterialObj, gameActionItemDropObj;
-    public UnityEvent spriteRaiseEvent, materialRiseEvent, itemDropRaiseEvent;
+    public string catagory;
+    public GameAction gameActionSpriteObj, gameActionMaterialObj, gameActionItemDropObj, ballMaterialObj;
+    public UnityEvent spriteRaiseEvent, materialRiseEvent, ballMaterialEvent;
+    
+    public GameObject ballObj;
+    public GameObject playerObj;
     
     public TextMeshProUGUI Label { get; private set; }
     public IInventoryItem InventoryItemObj { get; set; }
@@ -33,6 +37,7 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
         Label.text = inventoryItem.ThisName;
         ButtonObj.interactable = inventoryItem.UsedOrPurchase;
         InventoryItemObj = inventoryItem as InventoryItem;
+        catagory = inventoryItem.Category;
         if(inventoryItem.GameActionObj != null)
             ButtonObj.onClick.AddListener(inventoryItem.Raise);
         else
@@ -57,10 +62,22 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
 
             if (InventoryItemObj.PreviewMaterial != null)
             {
-                Debug.Log("Material is not null");
-                ButtonObj.image.material = InventoryItemObj.PreviewMaterial;
-                gameActionMaterialObj.Raise(ButtonObj.image.material);
-                materialRiseEvent.Invoke();
+                if (catagory == "Player")
+                {
+                    Debug.Log("Material is not null");
+                    ButtonObj.image.material = InventoryItemObj.PreviewMaterial;
+                    gameActionMaterialObj.Raise(ButtonObj.image.material);
+                    materialRiseEvent.Invoke();
+                }
+
+                if (catagory == "Ball")
+                {
+                    Debug.Log("Material is not null");
+                    ButtonObj.image.material = InventoryItemObj.PreviewMaterial;
+                    ballMaterialObj.Raise(ButtonObj.image.material);
+                    ballMaterialEvent.Invoke();
+                }
+
             }
 
             if (InventoryItemObj.GameArt != null)

@@ -137,6 +137,7 @@ MonoBehaviour:
   gameActionSpriteObj: {fileID: 11400000, guid: 17c20cf62621e10408703e5e65c9c4d9, type: 2}
   gameActionMaterialObj: {fileID: 11400000, guid: 01b4d2d331b1fb9498f4497b69b20d69, type: 2}
   gameActionItemDropObj: {fileID: 11400000, guid: 4afd4dc5d1ad3d643b0a070af07fae94, type: 2}
+  ballMaterialObj: {fileID: 11400000, guid: 7471f12fdfa7567498037c6f4f054464, type: 2}
   spriteRaiseEvent:
     m_PersistentCalls:
       m_Calls:
@@ -167,9 +168,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  itemDropRaiseEvent:
+  ballMaterialEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 7471f12fdfa7567498037c6f4f054464, type: 2}
+        m_TargetAssemblyTypeName: Scripts.UnityActions.GameAction, Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  ballObj: {fileID: 8838528493420265190, guid: 8b45dc386a9bd5349b7f5d5b29d119d7, type: 3}
+  playerObj: {fileID: 919132149155446097, guid: 6d45c1e8dd2d7d14db838b12983ab6c3, type: 3}
 --- !u!1 &6062888167021909034
 GameObject:
   m_ObjectHideFlags: 0
