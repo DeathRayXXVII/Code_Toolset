@@ -452,18 +452,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b66719d810fa435e9ec90323f3915cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  catagory: 
   gameActionSpriteObj: {fileID: 11400000, guid: 17c20cf62621e10408703e5e65c9c4d9, type: 2}
   gameActionMaterialObj: {fileID: 11400000, guid: 01b4d2d331b1fb9498f4497b69b20d69, type: 2}
   gameActionItemDropObj: {fileID: 11400000, guid: 4afd4dc5d1ad3d643b0a070af07fae94, type: 2}
+  ballMaterialObj: {fileID: 0}
   spriteRaiseEvent:
     m_PersistentCalls:
       m_Calls: []
   materialRiseEvent:
     m_PersistentCalls:
       m_Calls: []
-  itemDropRaiseEvent:
+  ballMaterialEvent:
     m_PersistentCalls:
       m_Calls: []
+  ballObj: {fileID: 0}
+  playerObj: {fileID: 0}
   purchaseEvent:
     m_PersistentCalls:
       m_Calls:

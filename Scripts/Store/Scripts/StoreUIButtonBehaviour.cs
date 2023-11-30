@@ -24,9 +24,11 @@ public class StoreUIButtonBehaviour : InventoryUIButtonBehaviour
     
     public void ConfigButton(IStoreItem storeItem)
     {
-        Vector3 toggelScaleFactor = Vector3.one * 4;
+        Vector3 toggelScaleFactor = new Vector3(2.5f, 4, 1);
+        Vector3 buttonScale = new Vector3(2,1,1);
+        Vector3 lableScale = new Vector3(.5f, 1, 1);
         Vector3 lableMoveFactor = new Vector3(0, -1.56f, -.1f);
-        Vector3 toggelMoveFactor = new Vector3(2, .75f, 0);
+        Vector3 toggelMoveFactor = new Vector3(4, .75f, 0);
         
         if (storeItem == null) return;
         ButtonObj.image.sprite = storeItem.PreviewArt;
@@ -35,9 +37,11 @@ public class StoreUIButtonBehaviour : InventoryUIButtonBehaviour
         ButtonObj.interactable = !storeItem.UsedOrPurchase;
         StoreItemObj = storeItem;
         ToggleObj.isOn = storeItem.UsedOrPurchase;
-        PriceLabel.text = $"${storeItem.Price}";
+        PriceLabel.text = $"{storeItem.Price}";
         
         ToggleObj.transform.localScale = toggelScaleFactor;
+        ButtonObj.transform.localScale = buttonScale; 
+        Label.transform.localScale = lableScale;
         ToggleObj.transform.position += toggelMoveFactor;
         Label.transform.position += lableMoveFactor;
     }

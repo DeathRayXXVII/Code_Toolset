@@ -58,10 +58,14 @@ public class IteamDrop : MonoBehaviour
 }
    public void AddToList(IInventoryItem item)
 {
-    Debug.Log("ItemDrop");
+
     if (item is InventoryItem inventoryItem)
     {
-        itemPrefabs.Add(inventoryItem);
+        if (!itemPrefabs.Contains(inventoryItem))
+        {
+            itemPrefabs.Add(inventoryItem);
+        }
+        
     }
 }
    public void RemoveFromList(IInventoryItem item)

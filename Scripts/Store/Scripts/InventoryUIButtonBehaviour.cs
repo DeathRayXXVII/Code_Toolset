@@ -1,3 +1,4 @@
+using System.Diagnostics.SymbolStore;
 using Scripts.UnityActions;
 using TMPro;
 using UnityEngine;
@@ -30,8 +31,10 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
     
     public void ConfigButton(IInventoryItem inventoryItem)
     {
+        Vector3 buttonScale = new Vector3(2,1,1);
+        Vector3 lableScale = new Vector3(.5f, 1, 1);
         Vector3 lableMoveFactor = new Vector3(0, -1.56f, -.1f);
-
+        
         ButtonObj.image.sprite = inventoryItem.PreviewArt;
         //ButtonObj.image.material = inventoryItem.PreviewMaterial;
         Label.text = inventoryItem.ThisName;
@@ -44,7 +47,8 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
         {
             ButtonObj.interactable = true;
         }
-            
+        ButtonObj.transform.localScale = buttonScale; 
+        Label.transform.localScale = lableScale;
         Label.transform.position += lableMoveFactor;
     }
 
@@ -54,10 +58,14 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
         {
             if (InventoryItemObj.PreviewArt != null)
             {
-                Debug.Log("Background is not null");
-                ButtonObj.image.sprite = InventoryItemObj.PreviewArt;
-                gameActionSpriteObj.Raise(ButtonObj.image.sprite);
-                spriteRaiseEvent.Invoke();
+                if (catagory == "Background")
+                {
+                    Debug.Log("Background is not null");
+                    ButtonObj.image.sprite = InventoryItemObj.PreviewArt;
+                    gameActionSpriteObj.Raise(ButtonObj.image.sprite);
+                    spriteRaiseEvent.Invoke();
+                }
+                
             }
 
             if (InventoryItemObj.PreviewMaterial != null)
@@ -81,12 +89,15 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
             }
 
             if (InventoryItemObj.GameArt != null)
-            {  
-                Debug.Log("GameArt is not null");
-                IInventoryItem item = InventoryItemObj;
-                gameActionItemDropObj.Raise(item);
-                ButtonObj.interactable = false;
-                Debug.Log("Art Worked");
+            {
+                if (catagory == "Coin")
+                {
+                    Debug.Log("GameArt is not null");
+                    IInventoryItem item = InventoryItemObj;
+                    gameActionItemDropObj.Raise(item);
+                    ButtonObj.interactable = false;
+                    Debug.Log("Art Worked");                    
+                }
             }
         }
     }
