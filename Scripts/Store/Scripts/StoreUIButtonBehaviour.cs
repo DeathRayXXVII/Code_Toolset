@@ -30,7 +30,7 @@ public class StoreUIButtonBehaviour : InventoryUIButtonBehaviour
         
         if (storeItem == null) return;
         ButtonObj.image.sprite = storeItem.PreviewArt;
-        ButtonObj.image.material = storeItem.PreviewMaterial;
+        //ButtonObj.image.material = storeItem.PreviewMaterial;
         Label.text = storeItem.ThisName;
         ButtonObj.interactable = !storeItem.UsedOrPurchase;
         StoreItemObj = storeItem;

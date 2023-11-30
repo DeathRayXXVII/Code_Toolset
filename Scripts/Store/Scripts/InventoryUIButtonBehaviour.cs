@@ -33,7 +33,7 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
         Vector3 lableMoveFactor = new Vector3(0, -1.56f, -.1f);
 
         ButtonObj.image.sprite = inventoryItem.PreviewArt;
-        ButtonObj.image.material = inventoryItem.PreviewMaterial;
+        //ButtonObj.image.material = inventoryItem.PreviewMaterial;
         Label.text = inventoryItem.ThisName;
         ButtonObj.interactable = inventoryItem.UsedOrPurchase;
         InventoryItemObj = inventoryItem as InventoryItem;
@@ -65,16 +65,16 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
                 if (catagory == "Player")
                 {
                     Debug.Log("Material is not null");
-                    ButtonObj.image.material = InventoryItemObj.PreviewMaterial;
-                    gameActionMaterialObj.Raise(ButtonObj.image.material);
+                    //ButtonObj.image.material = InventoryItemObj.PreviewMaterial;
+                    gameActionMaterialObj.Raise(InventoryItemObj.PreviewMaterial);
                     materialRiseEvent.Invoke();
                 }
 
                 if (catagory == "Ball")
                 {
                     Debug.Log("Material is not null");
-                    ButtonObj.image.material = InventoryItemObj.PreviewMaterial;
-                    ballMaterialObj.Raise(ButtonObj.image.material);
+                    //ButtonObj.image.material = InventoryItemObj.PreviewMaterial;
+                    ballMaterialObj.Raise(InventoryItemObj.PreviewMaterial);
                     ballMaterialEvent.Invoke();
                 }
 
