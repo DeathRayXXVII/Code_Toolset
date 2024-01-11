@@ -195,18 +195,27 @@
             "actions": [
                 {
                     "name": "Move",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "9f871ff0-2c47-402f-939a-cdaf1eb74165",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Rotate",
+                    "type": "PassThrough",
+                    "id": "766c39d5-2d14-4790-b2a9-5b8aa1a12cac",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Look",
-                    "type": "PassThrough",
-                    "id": "766c39d5-2d14-4790-b2a9-5b8aa1a12cac",
-                    "expectedControlType": "Stick",
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "19bb50fe-2718-4c83-92fb-833de31bd750",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -231,7 +240,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
-                    "action": "Look",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8938cf21-eacb-4573-a21e-311ba67b650d",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
