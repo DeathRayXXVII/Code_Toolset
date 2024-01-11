@@ -210,6 +210,54 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Controller"",
+            ""id"": ""d0b82643-466f-4c35-b328-bf29bc9120df"",
+            ""actions"": [
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""9f871ff0-2c47-402f-939a-cdaf1eb74165"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""766c39d5-2d14-4790-b2a9-5b8aa1a12cac"",
+                    ""expectedControlType"": ""Stick"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c8c95490-20f0-466b-88b4-ec44aef9fed3"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""19c3001b-1f19-49ca-8343-9b1244e67241"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -223,6 +271,16 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                     ""isOR"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Touch"",
+            ""bindingGroup"": ""Touch"",
+            ""devices"": []
+        },
+        {
+            ""name"": ""Controller"",
+            ""bindingGroup"": ""Controller"",
+            ""devices"": []
         }
     ]
 }");
@@ -238,6 +296,10 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         m_mTouch = asset.FindActionMap("mTouch", throwIfNotFound: true);
         m_mTouch_Contact = m_mTouch.FindAction("Contact", throwIfNotFound: true);
         m_mTouch_ContactPostion = m_mTouch.FindAction("ContactPostion", throwIfNotFound: true);
+        // Controller
+        m_Controller = asset.FindActionMap("Controller", throwIfNotFound: true);
+        m_Controller_Move = m_Controller.FindAction("Move", throwIfNotFound: true);
+        m_Controller_Look = m_Controller.FindAction("Look", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -457,6 +519,60 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         }
     }
     public MTouchActions @mTouch => new MTouchActions(this);
+
+    // Controller
+    private readonly InputActionMap m_Controller;
+    private List<IControllerActions> m_ControllerActionsCallbackInterfaces = new List<IControllerActions>();
+    private readonly InputAction m_Controller_Move;
+    private readonly InputAction m_Controller_Look;
+    public struct ControllerActions
+    {
+        private @GameInputs m_Wrapper;
+        public ControllerActions(@GameInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_Controller_Move;
+        public InputAction @Look => m_Wrapper.m_Controller_Look;
+        public InputActionMap Get() { return m_Wrapper.m_Controller; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ControllerActions set) { return set.Get(); }
+        public void AddCallbacks(IControllerActions instance)
+        {
+            if (instance == null || m_Wrapper.m_ControllerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_ControllerActionsCallbackInterfaces.Add(instance);
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
+        }
+
+        private void UnregisterCallbacks(IControllerActions instance)
+        {
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
+        }
+
+        public void RemoveCallbacks(IControllerActions instance)
+        {
+            if (m_Wrapper.m_ControllerActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IControllerActions instance)
+        {
+            foreach (var item in m_Wrapper.m_ControllerActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_ControllerActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public ControllerActions @Controller => new ControllerActions(this);
     private int m_KeysSchemeIndex = -1;
     public InputControlScheme KeysScheme
     {
@@ -464,6 +580,24 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         {
             if (m_KeysSchemeIndex == -1) m_KeysSchemeIndex = asset.FindControlSchemeIndex("Keys");
             return asset.controlSchemes[m_KeysSchemeIndex];
+        }
+    }
+    private int m_TouchSchemeIndex = -1;
+    public InputControlScheme TouchScheme
+    {
+        get
+        {
+            if (m_TouchSchemeIndex == -1) m_TouchSchemeIndex = asset.FindControlSchemeIndex("Touch");
+            return asset.controlSchemes[m_TouchSchemeIndex];
+        }
+    }
+    private int m_ControllerSchemeIndex = -1;
+    public InputControlScheme ControllerScheme
+    {
+        get
+        {
+            if (m_ControllerSchemeIndex == -1) m_ControllerSchemeIndex = asset.FindControlSchemeIndex("Controller");
+            return asset.controlSchemes[m_ControllerSchemeIndex];
         }
     }
     public interface IKeyActionMapActions
@@ -480,5 +614,10 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
     {
         void OnContact(InputAction.CallbackContext context);
         void OnContactPostion(InputAction.CallbackContext context);
+    }
+    public interface IControllerActions
+    {
+        void OnMove(InputAction.CallbackContext context);
+        void OnLook(InputAction.CallbackContext context);
     }
 }
