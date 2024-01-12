@@ -33,19 +33,15 @@ namespace Scripts.InputSystem
 
         public void Update()
         {
-            
-            
-            //Move on the x and z axis
-            Vector3 m = new Vector3(-move.x, 0, move.y) * (Time.deltaTime * moveSpeed);
-            m = transform.rotation * m;
-            characterController.Move(m);
-            
             // Rotate on the y axis
             //Vector3 r = new Vector3(0, rotate.y, 0) * (Time.deltaTime * rotateSpeed);
-            //transform.Rotate(r, Space.World);
-            Quaternion rotation = Quaternion.Euler(0, rotate.y * Time.deltaTime * rotateSpeed, 0);
-            transform.rotation = rotation;
-            
+            //transform.Rotate(r);
+
+            // Move on the x and z axis
+            Vector3 m = new Vector3(move.x, 0, move.y) * (Time.deltaTime * moveSpeed);
+            m = transform.TransformDirection(m);
+            characterController.Move(m);
+
             // Apply gravity
             if (characterController.isGrounded)
             {
@@ -78,6 +74,7 @@ namespace Scripts.InputSystem
         public void Move(InputAction.CallbackContext ctx)
         {
             move = ctx.ReadValue<Vector2>();
+            
             //Vector3 m = new Vector3(-move.x, 0, move.y) * (Time.deltaTime * moveSpeed);
             //transform.Translate(m, Space.World);
             
@@ -86,6 +83,8 @@ namespace Scripts.InputSystem
         public void Rotate(InputAction.CallbackContext ctx)
         {
             rotate = ctx.ReadValue<Vector2>();
+            Vector3 r = new Vector3(0, rotate.y, 0) * (Time.deltaTime * rotateSpeed);
+            transform.Rotate(r);
             //Quaternion rotation = Quaternion.Euler(0, rotate.y * Time.deltaTime * rotateSpeed, 0);
             //transform.rotation = rotation;
         }

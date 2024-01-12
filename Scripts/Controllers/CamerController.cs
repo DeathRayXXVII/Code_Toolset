@@ -23,8 +23,13 @@ namespace Scripts.Controllers
 
         private void LateUpdate()
         {
-            transform.position = target.position - offset * currentZoom;
-            transform.LookAt(target.position);
+            //transform.position = target.position - offset * currentZoom;
+            //transform.LookAt(target.position);
+            //transform.RotateAround(target.position, Vector3.up, currentInput);
+
+            transform.rotation = target.rotation;
+            Vector3 desiredPosition = target.position - (target.rotation * offset * currentZoom);
+            transform.position = desiredPosition;
             transform.RotateAround(target.position, Vector3.up, currentInput);
         }
     }
