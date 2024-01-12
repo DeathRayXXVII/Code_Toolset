@@ -21,10 +21,10 @@ namespace Scripts.InputSystem
         public void Awake()
         {
             controls = new GameInputs();
+            controls.Controller.Rotate.performed += Rotate;
+            controls.Controller.Rotate.canceled += Rotate;
             controls.Controller.Move.performed += Move;
-            controls.Controller.Move.canceled += ctx => move = Vector2.zero;
-            controls.Controller.Rotate.performed += ctx => rotate = ctx.ReadValue<Vector2>();
-            controls.Controller.Rotate.canceled += ctx => rotate = Vector2.zero;
+            controls.Controller.Move.canceled += Move;
             controls.Controller.Jump.performed += Jump;
             controls.Controller.Jump.canceled += ctx => isJumping = false;
 
@@ -33,14 +33,19 @@ namespace Scripts.InputSystem
 
         public void Update()
         {
-            // Move on the x and z axis
+            
+            
+            //Move on the x and z axis
             Vector3 m = new Vector3(-move.x, 0, move.y) * (Time.deltaTime * moveSpeed);
-            transform.Translate(m, Space.World);
-
+            m = transform.rotation * m;
+            characterController.Move(m);
+            
             // Rotate on the y axis
-            Vector3 r = new Vector3(0, rotate.y, 0) * (Time.deltaTime * rotateSpeed);
-            transform.Rotate(r, Space.World);
-
+            //Vector3 r = new Vector3(0, rotate.y, 0) * (Time.deltaTime * rotateSpeed);
+            //transform.Rotate(r, Space.World);
+            Quaternion rotation = Quaternion.Euler(0, rotate.y * Time.deltaTime * rotateSpeed, 0);
+            transform.rotation = rotation;
+            
             // Apply gravity
             if (characterController.isGrounded)
             {
@@ -63,6 +68,7 @@ namespace Scripts.InputSystem
         public void Jump(InputAction.CallbackContext ctx)
         {
             jumpHeight = ctx.ReadValue<float>();
+            
             if (characterController.isGrounded)
             {
                 isJumping = true;
@@ -72,6 +78,16 @@ namespace Scripts.InputSystem
         public void Move(InputAction.CallbackContext ctx)
         {
             move = ctx.ReadValue<Vector2>();
+            //Vector3 m = new Vector3(-move.x, 0, move.y) * (Time.deltaTime * moveSpeed);
+            //transform.Translate(m, Space.World);
+            
+        }
+
+        public void Rotate(InputAction.CallbackContext ctx)
+        {
+            rotate = ctx.ReadValue<Vector2>();
+            //Quaternion rotation = Quaternion.Euler(0, rotate.y * Time.deltaTime * rotateSpeed, 0);
+            //transform.rotation = rotation;
         }
 
         public void OnEnable()

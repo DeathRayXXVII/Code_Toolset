@@ -195,16 +195,16 @@
             "actions": [
                 {
                     "name": "Move",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "9f871ff0-2c47-402f-939a-cdaf1eb74165",
-                    "expectedControlType": "Vector3",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
                 {
                     "name": "Rotate",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "766c39d5-2d14-4790-b2a9-5b8aa1a12cac",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -214,7 +214,7 @@
                 {
                     "name": "Jump",
                     "type": "Button",
-                    "id": "19bb50fe-2718-4c83-92fb-833de31bd750",
+                    "id": "435ac38c-ddfb-4632-9f24-f63f342af3c0",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -246,7 +246,7 @@
                 },
                 {
                     "name": "",
-                    "id": "8938cf21-eacb-4573-a21e-311ba67b650d",
+                    "id": "7658fbc1-a68b-4ff3-96bb-f3940f6ce667",
                     "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
