@@ -5,22 +5,19 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerResponManager : MonoBehaviour
-{
-    public GameObject currentCheakPoint; //Last cheak point found
+{  
+    public FloatData life;
+    [Header ("Respawn")]
+    public vector3Data spawnPosition;
+    public vector3Data respawnPosition;
     public CharacterController cc;
-    public GameObject playerOj; //Player object
-    public IntData score;
-    public IntData health; //visual health
-    public IntData maxHealth; //max health
-    public UnityEvent respawnEvent;
+    public GameObject playerOj;
+    public float respawnDelay;
+    public UnityEvent respawnEvent, noLifeEvent;
     [Header ("Particals")]
     public GameObject deathParticles;
     public GameObject respawnParticles;
-    [Header ("Respawn Delay")]
-    public float respawnDelay; //Delay for respawning
-    [Header ("Penalty on Death")]
-    public int deathPenalty; //Penalty for dieing
-    // Start is called before the first frame update
+    
     public void RespawnPlayer()
     {
         StartCoroutine("RespawnPlayerCo");
@@ -28,20 +25,43 @@ public class PlayerResponManager : MonoBehaviour
     public IEnumerator RespawnPlayerCo()
     {
         //Instantiate (deathParticles, cc.transform.position, cc.transform.rotation); //Generate Death Particles
-        //Hide the player on death
+
         playerOj.SetActive(false); 
         cc.GetComponent<Renderer>().enabled = false;
-        
-        //Respon Delay
+
         yield return new WaitForSeconds(respawnDelay);
-        //Match Player transfom poition with cheak point
-        cc.transform.position = currentCheakPoint.transform.position;
-        //Show Player
+        
+        if (life.value >= 0)
+        {
+            cc.transform.position = respawnPosition.value;
+        }
+        else
+        {
+            noLifeEvent.Invoke();
+            cc.transform.position = spawnPosition.value;
+        }
+        
+
         playerOj.SetActive(true);
         cc.GetComponent<Renderer>().enabled = true;
-        //player.curHP = player.maxHp;
-        //healthBar.SetHealth(player.maxHp);
-        //Show Respawn Particle
+
         //Instantiate(respawnParticles, currentCheakPoint.transform.position, currentCheakPoint.transform.rotation);
+    }
+    
+    public void LoseLife()
+    {
+        if (life.value <= 0)
+        {
+            noLifeEvent.Invoke();
+        }
+        else
+        {
+            cc.transform.position = spawnPosition.value;
+        }
+    }
+    
+    public void SetSpawnPoint(Vector3 newSpawnPoint)
+    {
+        respawnPosition.value = newSpawnPoint;
     }
 }
