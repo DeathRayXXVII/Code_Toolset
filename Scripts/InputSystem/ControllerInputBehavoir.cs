@@ -17,12 +17,13 @@ namespace Scripts.InputSystem
 
         private float verticalSpeed = 0;
         private CharacterController characterController;
+        //Quaternion currentRotation;
 
         public void Awake()
         {
             controls = new GameInputs();
             controls.Controller.Rotate.performed += Rotate;
-            controls.Controller.Rotate.canceled += Rotate;
+            //controls.Controller.Rotate.canceled += Rotate;
             controls.Controller.Move.performed += Move;
             controls.Controller.Move.canceled += Move;
             controls.Controller.Jump.performed += Jump;
@@ -33,16 +34,6 @@ namespace Scripts.InputSystem
 
         public void Update()
         {
-            // Rotate on the y axis
-            //Vector3 r = new Vector3(0, rotate.y, 0) * (Time.deltaTime * rotateSpeed);
-            //transform.Rotate(r);
-
-            // Move on the x and z axis
-            Vector3 m = new Vector3(move.x, 0, move.y) * (Time.deltaTime * moveSpeed);
-            m = transform.TransformDirection(m);
-            characterController.Move(m);
-
-            // Apply gravity
             if (characterController.isGrounded)
             {
                 verticalSpeed = 0; // Reset the vertical speed if the character is grounded
@@ -74,17 +65,23 @@ namespace Scripts.InputSystem
         public void Move(InputAction.CallbackContext ctx)
         {
             move = ctx.ReadValue<Vector2>();
-            
-            //Vector3 m = new Vector3(-move.x, 0, move.y) * (Time.deltaTime * moveSpeed);
-            //transform.Translate(m, Space.World);
-            
+            // Move on the x and z axis
+            Vector3 m = new Vector3(move.x, 0, move.y) * (Time.deltaTime * moveSpeed);
+            m = transform.TransformDirection(m);
+            characterController.Move(m);
         }
 
         public void Rotate(InputAction.CallbackContext ctx)
         {
             rotate = ctx.ReadValue<Vector2>();
-            Vector3 r = new Vector3(0, rotate.y, 0) * (Time.deltaTime * rotateSpeed);
-            transform.Rotate(r);
+            Vector3 r = new Vector3(0, rotate.y * 360, 0) * rotateSpeed;
+            Quaternion currentRotation = transform.rotation;
+            Quaternion targetQuaternion = Quaternion.Euler(r);
+            Quaternion smoothedRotation = Quaternion.Lerp(currentRotation, targetQuaternion, Time.deltaTime * rotateSpeed);
+            transform.rotation = smoothedRotation;
+            
+            //Vector3 r = new Vector3(0, rotate.y, 0) * (Time.deltaTime * rotateSpeed);
+            //transform.Rotate(r);
             //Quaternion rotation = Quaternion.Euler(0, rotate.y * Time.deltaTime * rotateSpeed, 0);
             //transform.rotation = rotation;
         }
