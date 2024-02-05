@@ -1,109 +1,89 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Scripts.InputSystem
+[RequireComponent(typeof(CharacterController))]
+public class ControllerInputBehavoir : MonoBehaviour
 {
-    public class ControllerInputBehavoir : MonoBehaviour
+    [SerializeField] 
+    private InputActionReference move;
+    [SerializeField] 
+    private InputActionReference jump;
+    
+    
+    [SerializeField]
+    private float playerSpeed = 2.0f;
+    [SerializeField]
+    private float jumpHeight = 1.0f;
+    [SerializeField]
+    private float gravityValue = -9.81f;
+    [SerializeField] 
+    private float rotationSpeed = 4f;
+
+
+    private CharacterController controller;
+    private Vector3 playerVelocity;
+    private bool groundedPlayer;
+    private bool doubleJumped = false;
+    private Transform cameraMainTransform;
+
+    private void OnEnable()
     {
-        GameInputs controls;
-        public Vector2 move;
-        public Vector2 rotate;
+        move.action.Enable();
+        jump.action.Enable();
+    }
 
-        public float moveSpeed = 1f;
-        public float rotateSpeed = 100f;
-        public float jumpHeight = 1.0f;
-        public bool isJumping = false;
+    private void OnDisable()
+    {
+        move.action.Disable();
+        jump.action.Disable();
+    }
+    
+    private void Start()
+    {
+        controller = gameObject.GetComponent<CharacterController>();
+        if (Camera.main != null) cameraMainTransform = Camera.main.transform;
+    }
 
-        private float verticalSpeed = 0;
-        private CharacterController characterController;
-        //Quaternion currentRotation;
-        
-        public float smoothTime = 0.1f;
-        private float yVelocity = 0.0f;
-        private float targetAngle;
-        public void Awake()
+    private void Update()
+    {
+        // Info to allow Jump
+        groundedPlayer = controller.isGrounded;
+        if (groundedPlayer && playerVelocity.y < 0)
         {
-            controls = new GameInputs();
-            controls.Controller.Rotate.performed += Rotate;
-            //controls.Controller.Rotate.canceled += Rotate;
-            controls.Controller.Move.performed += Move;
-            controls.Controller.Move.canceled += Move;
-            controls.Controller.Jump.performed += Jump;
-            controls.Controller.Jump.canceled += ctx => isJumping = false;
-
-            characterController = GetComponent<CharacterController>();
+            playerVelocity.y = 0f;
+            doubleJumped = false; // Reset double jump when grounded
         }
 
-        public void Update()
-        {
-            
-        }
+        // Basic Movement
+        Vector2 movement = move.action.ReadValue<Vector2>();
+        Vector3 moves = new Vector3(movement.x, 0, movement.y);
+        moves = cameraMainTransform.forward * moves.z + cameraMainTransform.right * moves.x;
+        moves.y = 0f;
 
-        public void FixedUpdate()
+        controller.Move(moves * (Time.deltaTime * playerSpeed));
+
+        // Jump
+        if (jump.action.triggered)
         {
-            if (characterController.isGrounded)
+            if (groundedPlayer || !doubleJumped)
             {
-                verticalSpeed = 0; // Reset the vertical speed if the character is grounded
-                if (isJumping)
+                if (!groundedPlayer)
                 {
-                    verticalSpeed = Mathf.Sqrt(jumpHeight * -10f * Physics.gravity.y); // Calculate the initial vertical speed
-                    isJumping = false;
+                    doubleJumped = true;
                 }
-            }
-            else
-            {
-                verticalSpeed += Physics.gravity.y * Time.deltaTime; // Apply gravity
-            }
-
-            // Move the character controller
-            characterController.Move(new Vector3(0, verticalSpeed, 0) * Time.deltaTime);
-            
-            Vector3 m = new Vector3(move.x, 0, move.y) * (Time.deltaTime * moveSpeed);
-            m = transform.TransformDirection(m);
-            characterController.Move(m);
-            
-        }
-
-        public void Jump(InputAction.CallbackContext ctx)
-        {
-            jumpHeight = ctx.ReadValue<float>();
-            
-            if (characterController.isGrounded)
-            {
-                isJumping = true;
+                playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
             }
         }
 
-        public void Move(InputAction.CallbackContext ctx)
-        {
-            move = ctx.ReadValue<Vector2>();
-        }
+        playerVelocity.y += gravityValue * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
 
-        public void Rotate(InputAction.CallbackContext ctx)
+        // Makes the character move in the direction of the camera
+        if (movement != Vector2.zero)
         {
-            rotate = ctx.ReadValue<Vector2>();
-            if (rotate.y != 0)
-            {
-                targetAngle = rotate.y * 360;
-            }
-            float smoothedAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref yVelocity, smoothTime);
-            transform.rotation = Quaternion.Euler(0, smoothedAngle, 0);
-            
-            // Vector3 r = new Vector3(0, rotate.y * 360, 0) * rotateSpeed;
-            // Quaternion targetQuaternion = Quaternion.Euler(r);
-            // Quaternion smoothedRotation = Quaternion.RotateTowards(transform.rotation, targetQuaternion, Time.deltaTime * rotateSpeed);
-            // transform.rotation = smoothedRotation;
-        }
-
-        public void OnEnable()
-        {
-            controls.Controller.Enable();
-        }
-
-        public void OnDisable()
-        {
-            controls.Controller.Disable();
+            float targetAngle = Mathf.Atan2(movement.x, movement.y) * Mathf.Rad2Deg + cameraMainTransform.eulerAngles.y;
+            Quaternion rotation = Quaternion.Euler(0f, targetAngle, 0f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
         }
     }
 }

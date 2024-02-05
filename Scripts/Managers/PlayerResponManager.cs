@@ -14,7 +14,7 @@ public class PlayerResponManager : MonoBehaviour
     public GameObject playerOj;
     public float respawnDelay;
     public UnityEvent respawnEvent, noLifeEvent;
-    [Header ("Particals")]
+    [Header ("Particles")]
     public GameObject deathParticles;
     public GameObject respawnParticles;
     
