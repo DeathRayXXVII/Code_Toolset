@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    public GameObject minPosition, maxPosition;
+    public GameObject startPosition, endPosition;
     public float speed = 1.0f;
     public bool autoStart;
-    public float seconds = 1.0f;
+    public bool switchDirection;
 
     private Vector3 targetPosition;
     private bool isMoving;
@@ -18,10 +18,40 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
-    public void StartMoving()
+    private void StartMoving()
     {
-        targetPosition = maxPosition.transform.position;
+        targetPosition = endPosition.transform.position;
         isMoving = true;
+    }
+    
+    public void ToggleMovePlatform()
+    {
+        if (!switchDirection)
+        {
+            switchDirection = true;
+        }
+        else
+        {
+            switchDirection = false;
+        }
+    }
+
+    private void SwitchDirectionOn()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        if (!switchDirection)
+        {
+            targetPosition = endPosition.transform.position;
+        }
+    }
+
+    private void SwitchDirectionOff()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        if (switchDirection)
+        {
+            targetPosition = startPosition.transform.position;
+        }
     }
 
     private void Update()
@@ -30,6 +60,17 @@ public class MovingPlatform : MonoBehaviour
         {
             MovePlatform();
         }
+
+        if (switchDirection)
+        {
+            SwitchDirectionOff();
+        }
+        
+        if (!switchDirection)
+        {
+            SwitchDirectionOn();
+        }
+        
     }
 
     private void MovePlatform()
@@ -38,13 +79,13 @@ public class MovingPlatform : MonoBehaviour
 
         if (Vector3.Distance(transform.position, targetPosition) < 0.001f)
         {
-            if (targetPosition == maxPosition.transform.position)
+            if (targetPosition == endPosition.transform.position)
             {
-                targetPosition = minPosition.transform.position;
+                targetPosition = startPosition.transform.position;
             }
             else
             {
-                targetPosition = maxPosition.transform.position;
+                targetPosition = endPosition.transform.position;
             }
         }
     }
