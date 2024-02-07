@@ -31,7 +31,7 @@ public class PlayerResponManager : MonoBehaviour
 
         yield return new WaitForSeconds(respawnDelay);
         
-        if (life.value >= 0)
+        if (life.value > 1)
         {
             cc.transform.position = respawnPosition.value;
         }
