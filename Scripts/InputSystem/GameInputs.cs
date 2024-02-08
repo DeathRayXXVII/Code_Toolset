@@ -265,7 +265,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""INPUT"",
                     ""id"": ""40aa55a5-1e6d-44cf-a6ea-a6333243d5f4"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

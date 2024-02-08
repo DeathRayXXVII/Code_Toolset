@@ -4,14 +4,17 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class ControllerInputBehavoir : MonoBehaviour
 {
+    [Header("Input System Controls")]
     [SerializeField] 
-    private InputActionReference move;
+    private InputActionReference moveControl;
     [SerializeField] 
-    private InputActionReference jump;
+    private InputActionReference jumpControl;
     
-    
+    [Header("Player Stats")]
     [SerializeField]
     private float playerSpeed = 2.0f;
+    [SerializeField]
+    private float minSpeed;
     [SerializeField]
     private float jumpHeight = 1.0f;
     [SerializeField]
@@ -19,27 +22,29 @@ public class ControllerInputBehavoir : MonoBehaviour
     [SerializeField] 
     private float rotationSpeed = 4f;
 
-
+    private Animator animator;
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private bool doubleJumped = false;
     private Transform cameraMainTransform;
+    
 
     private void OnEnable()
     {
-        move.action.Enable();
-        jump.action.Enable();
+        moveControl.action.Enable();
+        jumpControl.action.Enable();
     }
 
     private void OnDisable()
     {
-        move.action.Disable();
-        jump.action.Disable();
+        moveControl.action.Disable();
+        jumpControl.action.Disable();
     }
     
     private void Start()
     {
+        animator = GetComponent<Animator>();
         controller = gameObject.GetComponent<CharacterController>();
         if (Camera.main != null) cameraMainTransform = Camera.main.transform;
     }
@@ -55,15 +60,22 @@ public class ControllerInputBehavoir : MonoBehaviour
         }
 
         // Basic Movement
-        Vector2 movement = move.action.ReadValue<Vector2>();
-        Vector3 moves = new Vector3(movement.x, 0, movement.y);
-        moves = cameraMainTransform.forward * moves.z + cameraMainTransform.right * moves.x;
-        moves.y = 0f;
+        Vector2 movement = moveControl.action.ReadValue<Vector2>();
+        Vector3 move = new Vector3(movement.x, 0, movement.y);
+        float inputMagnitude = Mathf.Clamp01(move.magnitude);
+    
+        animator.SetFloat("Input Magnitude", inputMagnitude, 0.5f, Time.deltaTime);
+        float speed = Mathf.Lerp(minSpeed, playerSpeed, inputMagnitude);
+        move.Normalize();
+        
+        
+        move = cameraMainTransform.forward * move.z + cameraMainTransform.right * move.x;
+        move.y = 0f;
 
-        controller.Move(moves * (Time.deltaTime * playerSpeed));
+        controller.Move(speed * Time.deltaTime * playerSpeed * move);
 
         // Jump
-        if (jump.action.triggered)
+        if (jumpControl.action.triggered)
         {
             if (groundedPlayer || !doubleJumped)
             {
