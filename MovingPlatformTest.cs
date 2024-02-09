@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class MovingPlatformTest : MonoBehaviour
@@ -7,6 +8,11 @@ public class MovingPlatformTest : MonoBehaviour
     private WaypointPath waypointPath;
     [SerializeField]
     private float speed;
+    public bool autoStart;
+    public bool switchDirection;
+    public bool isMoving;
+    public float delay = 2.5f;
+    
     private int targetWaypointIndex;
     private Transform targetWaypoint;
     private Transform currentWaypoint;
@@ -16,18 +22,48 @@ public class MovingPlatformTest : MonoBehaviour
     private void Start()
     {
         TargetNextWaypoint();
+        
+        if (autoStart)
+        {
+            isMoving = true;
+        }
     }
     
     private void FixedUpdate()
     {
-        elapsedTime += Time.deltaTime;
-        float elapsedPercentage = elapsedTime / timeToWaypoint;
-        elapsedPercentage = Mathf.SmoothStep(0, 1, elapsedPercentage);
-        transform.position = Vector3.Lerp(currentWaypoint.position, targetWaypoint.position, elapsedPercentage);
-        transform.rotation = Quaternion.Lerp(currentWaypoint.rotation, targetWaypoint.rotation, elapsedPercentage);
-        if (elapsedTime >= timeToWaypoint)
+        if (isMoving)
         {
-            TargetNextWaypoint();
+            elapsedTime += Time.deltaTime;
+            float elapsedPercentage = elapsedTime / timeToWaypoint;
+            elapsedPercentage = Mathf.SmoothStep(0, 1, elapsedPercentage);
+            transform.position = Vector3.Lerp(currentWaypoint.position, targetWaypoint.position, elapsedPercentage);
+            transform.rotation = Quaternion.Lerp(currentWaypoint.rotation, targetWaypoint.rotation, elapsedPercentage);
+            if (elapsedTime >= timeToWaypoint)
+            {
+                TargetNextWaypoint();
+            }
+        }
+        if (switchDirection && !isMoving)
+        {
+            elapsedTime += Time.deltaTime;
+            float elapsedPercentage = elapsedTime / timeToWaypoint;
+            elapsedPercentage = Mathf.SmoothStep(0, 1, elapsedPercentage);
+            transform.position = Vector3.Lerp(currentWaypoint.position, targetWaypoint.position, elapsedPercentage);
+            transform.rotation = Quaternion.Lerp(currentWaypoint.rotation, targetWaypoint.rotation, elapsedPercentage);
+            if (elapsedTime >= timeToWaypoint)
+            {
+                switchDirection = false;
+                TargetNextWaypoint();
+            }
+        }
+        
+    }
+    
+    public void ToggleMovePlatform()
+    {
+        if (!switchDirection)
+        {
+            switchDirection = true;
         }
     }
 
@@ -38,7 +74,6 @@ public class MovingPlatformTest : MonoBehaviour
         targetWaypoint = waypointPath.GetWaypoint(targetWaypointIndex);
         
         elapsedTime = 0;
-        //float distanceToWaypoint = Vector3.Distance(currentWaypoint.position, targetWaypoint.position);
         timeToWaypoint = Vector3.Distance(currentWaypoint.position, targetWaypoint.position) / speed;
         
     }
