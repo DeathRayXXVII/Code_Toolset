@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
@@ -6,6 +7,7 @@ public class MovingPlatform : MonoBehaviour
     public float speed = 1.0f;
     public bool autoStart;
     public bool switchDirection;
+    public float delay = 2.5f;
 
     private Vector3 targetPosition;
     private bool isMoving;
@@ -36,20 +38,22 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
-    private void SwitchDirectionOn()
+    private IEnumerator SwitchDirectionOn()
     {
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
         if (!switchDirection)
         {
+            yield return new WaitForSeconds(delay);
             targetPosition = endPosition.transform.position;
         }
     }
 
-    private void SwitchDirectionOff()
+    private IEnumerator SwitchDirectionOff()
     {
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
         if (switchDirection)
         {
+            yield return new WaitForSeconds(delay);
             targetPosition = startPosition.transform.position;
         }
     }
@@ -58,22 +62,22 @@ public class MovingPlatform : MonoBehaviour
     {
         if (isMoving)
         {
-            MovePlatform();
+            StartCoroutine(MovePlatform());
         }
 
         if (switchDirection)
         {
-            SwitchDirectionOff();
+            StartCoroutine(SwitchDirectionOff());
         }
         
         if (!switchDirection)
         {
-            SwitchDirectionOn();
+            StartCoroutine(SwitchDirectionOn());
         }
         
     }
 
-    private void MovePlatform()
+    private IEnumerator MovePlatform()
     {
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
@@ -81,11 +85,33 @@ public class MovingPlatform : MonoBehaviour
         {
             if (targetPosition == endPosition.transform.position)
             {
+                yield return new WaitForSeconds(delay);
                 targetPosition = startPosition.transform.position;
             }
             else
             {
+                yield return new WaitForSeconds(delay);
                 targetPosition = endPosition.transform.position;
+            }
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject != null && other.gameObject.CompareTag("Player"))
+        {
+            if (other.transform != null)
+            {
+                other.transform.parent = transform;
+            }
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject != null && other.gameObject.CompareTag("Player"))
+        {
+            if (other.transform != null)
+            {
+                other.transform.parent = null;
             }
         }
     }
