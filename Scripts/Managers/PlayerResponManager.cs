@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class PlayerResponManager : MonoBehaviour
 {  
     public FloatData life;
+    public BoolData startSpawn;
     [Header ("Respawn")]
     public vector3Data spawnPosition;
     public vector3Data respawnPosition;
@@ -18,6 +19,18 @@ public class PlayerResponManager : MonoBehaviour
     public GameObject deathParticles;
     public GameObject respawnParticles;
     
+    
+    private void Start()
+    {
+        if (startSpawn.value == true)
+        {
+            cc.transform.position = spawnPosition.value;
+        }
+        else
+        {
+            cc.transform.position = respawnPosition.value;
+        }
+    }
     public void RespawnPlayer()
     {
         StartCoroutine("RespawnPlayerCo");
@@ -31,14 +44,15 @@ public class PlayerResponManager : MonoBehaviour
 
         yield return new WaitForSeconds(respawnDelay);
         
-        if (life.value > 1)
+        if (life.value > 1 && startSpawn.value)
         {
-            cc.transform.position = respawnPosition.value;
+            cc.transform.position = spawnPosition.value;
         }
         else
         {
-            noLifeEvent.Invoke();
-            cc.transform.position = spawnPosition.value;
+            //noLifeEvent.Invoke();
+            LoseLife();
+            cc.transform.position = respawnPosition.value;
         }
         
 
@@ -46,6 +60,11 @@ public class PlayerResponManager : MonoBehaviour
         cc.GetComponent<Renderer>().enabled = true;
 
         //Instantiate(respawnParticles, currentCheakPoint.transform.position, currentCheakPoint.transform.rotation);
+    }
+    
+    public void StartingPosition()
+    {
+        cc.transform.position = spawnPosition.value;
     }
     
     public void LoseLife()
@@ -63,5 +82,6 @@ public class PlayerResponManager : MonoBehaviour
     public void SetSpawnPoint(Vector3 newSpawnPoint)
     {
         respawnPosition.value = newSpawnPoint;
+        startSpawn.value = false;
     }
 }
