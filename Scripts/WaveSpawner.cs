@@ -52,7 +52,7 @@ namespace Scripts
             }
             if (waveCountDown <= 0)
             {
-                if (state != SpawnState.spawning);
+                if (state != SpawnState.spawning)
                 {
                     StartCoroutine(SpawnWave(waves[nextWave]));
                 }
