@@ -6,5 +6,6 @@ namespace Scripts
     public class ColorID : ID
     {
         public Color value = Color.red;
+        public Material material;
     }
 }

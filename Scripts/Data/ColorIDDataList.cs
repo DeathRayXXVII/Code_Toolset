@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Scripts.Data
 {
-    [CreateAssetMenu(menuName = "Single Variables/ColorData")]
+    [CreateAssetMenu(menuName = "Single Variables/ColorDataList")]
     public class ColorIDDataList : ScriptableObject
     {
         public List<ColorID> colorIDList;
