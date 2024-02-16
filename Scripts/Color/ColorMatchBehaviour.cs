@@ -17,5 +17,10 @@ namespace Scripts
             var newColor = idObj as ColorID;
             renderer.color = newColor.value;
         }
+        public void ChangeMaterial(MeshRenderer renderer)
+        {
+            var newColor = idObj as ColorID;
+            renderer.material = newColor.material;
+        }
     }
 }

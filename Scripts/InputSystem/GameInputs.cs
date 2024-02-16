@@ -259,6 +259,15 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TestingStuff"",
+                    ""type"": ""Button"",
+                    ""id"": ""232d4361-f638-46c3-a36b-385642e2a881"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -567,6 +576,17 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Options"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cd69fe44-fc37-4e37-a73f-7af8901c03a0"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TestingStuff"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1147,6 +1167,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Options = m_Player.FindAction("Options", throwIfNotFound: true);
+        m_Player_TestingStuff = m_Player.FindAction("TestingStuff", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1387,6 +1408,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Options;
+    private readonly InputAction m_Player_TestingStuff;
     public struct PlayerActions
     {
         private @GameInputs m_Wrapper;
@@ -1396,6 +1418,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Options => m_Wrapper.m_Player_Options;
+        public InputAction @TestingStuff => m_Wrapper.m_Player_TestingStuff;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1420,6 +1443,9 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
             @Options.started += instance.OnOptions;
             @Options.performed += instance.OnOptions;
             @Options.canceled += instance.OnOptions;
+            @TestingStuff.started += instance.OnTestingStuff;
+            @TestingStuff.performed += instance.OnTestingStuff;
+            @TestingStuff.canceled += instance.OnTestingStuff;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1439,6 +1465,9 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
             @Options.started -= instance.OnOptions;
             @Options.performed -= instance.OnOptions;
             @Options.canceled -= instance.OnOptions;
+            @TestingStuff.started -= instance.OnTestingStuff;
+            @TestingStuff.performed -= instance.OnTestingStuff;
+            @TestingStuff.canceled -= instance.OnTestingStuff;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1650,6 +1679,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnOptions(InputAction.CallbackContext context);
+        void OnTestingStuff(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -17,6 +17,10 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
     
     public TextMeshProUGUI Label { get; private set; }
     public IInventoryItem InventoryItemObj { get; set; }
+    [Header("Scale Factor")] 
+    public Vector3 invButtonScale;
+    public Vector3 invLableScale;
+    public Vector3 invLableMoveFactor;
 
     protected virtual void Awake()
     {
@@ -31,9 +35,14 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
     
     public void ConfigButton(IInventoryItem inventoryItem)
     {
-        Vector3 buttonScale = new Vector3(2,1,1);
-        Vector3 lableScale = new Vector3(.5f, 1, 1);
-        Vector3 lableMoveFactor = new Vector3(0, -1.56f, -.1f);
+        // Vector3 buttonScale = new Vector3(2,1,1);
+        // Vector3 lableScale = new Vector3(.5f, 1, 1);
+        // Vector3 lableMoveFactor = new Vector3(0, -1.56f, -.1f);
+
+        // invButtonScale = new Vector3();
+        // invLableScale = new Vector3();
+        // invLableMoveFactor = new Vector3();
+
         
         ButtonObj.image.sprite = inventoryItem.PreviewArt;
         //ButtonObj.image.material = inventoryItem.PreviewMaterial;
@@ -47,9 +56,9 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
         {
             ButtonObj.interactable = true;
         }
-        ButtonObj.transform.localScale = buttonScale; 
-        Label.transform.localScale = lableScale;
-        Label.transform.position += lableMoveFactor;
+        // ButtonObj.transform.localScale = invButtonScale; 
+        // Label.transform.localScale = invLableScale;
+        // Label.transform.position += invLableMoveFactor;
     }
 
     private void HandleButtonClick()
