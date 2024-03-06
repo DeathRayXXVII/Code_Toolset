@@ -12,6 +12,7 @@ public class MovingPlatformTest : MonoBehaviour
     public bool switchDirection;
     public bool isMoving;
     public float delay = 2.5f;
+    private WaitForSeconds waitObj;
     
     private int targetWaypointIndex;
     private Transform targetWaypoint;
@@ -21,6 +22,7 @@ public class MovingPlatformTest : MonoBehaviour
 
     private void Start()
     {
+        waitObj = new WaitForSeconds(delay);
         TargetNextWaypoint();
         
         if (autoStart)
@@ -40,7 +42,7 @@ public class MovingPlatformTest : MonoBehaviour
             transform.rotation = Quaternion.Lerp(currentWaypoint.rotation, targetWaypoint.rotation, elapsedPercentage);
             if (elapsedTime >= timeToWaypoint)
             {
-                TargetNextWaypoint();
+                StartCoroutine(MoveDelay());
             }
         }
         if (switchDirection && !isMoving)
@@ -59,12 +61,25 @@ public class MovingPlatformTest : MonoBehaviour
         
     }
     
+    private IEnumerator MoveDelay()
+    {
+        isMoving = false;
+        yield return waitObj;
+        isMoving = true;
+        TargetNextWaypoint();
+    }
+    
     public void ToggleMovePlatform()
     {
         if (!switchDirection)
         {
             switchDirection = true;
         }
+    }
+    
+    public void StartMoving()
+    {
+        isMoving = true;
     }
 
     private void TargetNextWaypoint()
