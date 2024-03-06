@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,7 +7,8 @@ namespace Scripts
 {
     public class MatchBehaviour : IDContanerBehavour
     {
-        public UnityEvent matchEvent, noMatchEvent, noMatchDelayed; 
+        public UnityEvent matchEvent, matchEventDelayed, noMatchEvent, noMatchDelayed;
+        public bool isMatched;
         private IEnumerator OnTriggerEnter(Collider other)
         {
             //fecting the otherID from a diffrent script
@@ -20,13 +22,22 @@ namespace Scripts
             if (otherID == idObj)
             {
                 matchEvent.Invoke();
+                isMatched = true;
+                yield return new WaitForSeconds(0.5f);
+                matchEventDelayed.Invoke();
             }
             else
             {
                 noMatchEvent.Invoke();
+                isMatched = false;
                 yield return new WaitForSeconds(0.5f);
                 noMatchDelayed.Invoke();
             }
+        }
+
+        public void OnDisable()
+        {
+            isMatched = false;
         }
     }
 }
