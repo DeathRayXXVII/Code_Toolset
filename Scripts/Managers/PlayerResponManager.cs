@@ -37,7 +37,7 @@ public class PlayerResponManager : MonoBehaviour
     }
     public IEnumerator RespawnPlayerCo()
     {
-        //Instantiate (deathParticles, cc.transform.position, cc.transform.rotation); //Generate Death Particles
+        Instantiate (deathParticles, cc.transform.position, cc.transform.rotation); //Generate Death Particles
 
         playerOj.SetActive(false); 
         cc.GetComponent<Renderer>().enabled = false;
@@ -59,7 +59,7 @@ public class PlayerResponManager : MonoBehaviour
         playerOj.SetActive(true);
         cc.GetComponent<Renderer>().enabled = true;
 
-        //Instantiate(respawnParticles, currentCheakPoint.transform.position, currentCheakPoint.transform.rotation);
+        Instantiate(respawnParticles, cc.transform.position, cc.transform.rotation);
     }
     
     public void StartingPosition()
