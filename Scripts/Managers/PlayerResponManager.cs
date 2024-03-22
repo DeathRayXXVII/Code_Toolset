@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Scripts.Data;
@@ -8,9 +9,11 @@ public class PlayerResponManager : MonoBehaviour
 {  
     public FloatData life;
     public BoolData startSpawn;
+    private PlayerController playerController;
     [Header ("Respawn")]
     public vector3Data spawnPosition;
     public vector3Data respawnPosition;
+    public vector3Data checkpointPosition;
     public CharacterController cc;
     public GameObject playerOj;
     public float respawnDelay;
@@ -22,15 +25,17 @@ public class PlayerResponManager : MonoBehaviour
     
     private void Start()
     {
+        playerController = playerOj.GetComponent<PlayerController>();
         if (startSpawn.value == true)
         {
             cc.transform.position = spawnPosition.value;
         }
         else
         {
-            cc.transform.position = respawnPosition.value;
+            cc.transform.position = checkpointPosition.value;
         }
     }
+
     public void RespawnPlayer()
     {
         StartCoroutine("RespawnPlayerCo");
@@ -44,7 +49,11 @@ public class PlayerResponManager : MonoBehaviour
 
         yield return new WaitForSeconds(respawnDelay);
         
-        if (life.value > 1 && startSpawn.value)
+        if (playerController != null && !playerController.groundedPlayer)
+        {
+            cc.transform.position = respawnPosition.value;
+        }
+        else if (life.value > 1 && startSpawn.value)
         {
             cc.transform.position = spawnPosition.value;
         }
@@ -52,7 +61,7 @@ public class PlayerResponManager : MonoBehaviour
         {
             //noLifeEvent.Invoke();
             LoseLife();
-            cc.transform.position = respawnPosition.value;
+            cc.transform.position = checkpointPosition.value;
         }
         
 
@@ -81,7 +90,7 @@ public class PlayerResponManager : MonoBehaviour
     
     public void SetSpawnPoint(Vector3 newSpawnPoint)
     {
-        respawnPosition.value = newSpawnPoint;
+        checkpointPosition.value = newSpawnPoint;
         startSpawn.value = false;
     }
 }
