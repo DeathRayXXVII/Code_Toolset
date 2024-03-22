@@ -994,7 +994,7 @@
                 },
                 {
                     "name": "",
-                    "id": "c6a42ee7-8f6a-4fd8-b9ac-a4f09919a9b8",
+                    "id": "dfca2910-d3c6-4278-a22c-444cab466695",
                     "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
@@ -1016,7 +1016,7 @@
                 },
                 {
                     "name": "",
-                    "id": "909802c8-6c77-4d5b-97df-49ec163036ef",
+                    "id": "70f3bbb5-d6d3-48f5-8168-68ee1a6d644e",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
