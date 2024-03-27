@@ -10,11 +10,28 @@ public class ItemPickup : MonoBehaviour
     private GameObject item;
     private Rigidbody itemRb;
     private bool inputTriggered;
+    [SerializeField]
+    private bool inputEnabled;
     
     [Header("Physics Settings")]
     [SerializeField] private float pickupRange = 5.0f;
     [SerializeField] private float pickupForce = 150.0f;
 
+    private void Start()
+    {
+        if (input == null)
+        {
+            return;
+        }
+        if (inputEnabled)
+        {
+            input.action.Enable();
+        }
+        else
+        {
+            input.action.Disable();
+        }
+    }
     private void Update()
     {
         if (input.action.triggered)
@@ -80,7 +97,7 @@ public class ItemPickup : MonoBehaviour
         
     }
     
-    private void OnEnable()
+    public void OnEnable()
     {
         if (input == null)
         {
@@ -89,7 +106,7 @@ public class ItemPickup : MonoBehaviour
         input.action.Enable();
     }
     
-    private void OnDisable()
+    public void OnDisable()
     {
         if (input == null)
         {
