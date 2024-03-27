@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,7 +7,7 @@ namespace Scripts
     [RequireComponent(typeof(Collider))]
     public class TriggerEvent : MonoBehaviour
     {
-        public UnityEvent triggerEnterEvent, triggerColorEvent, clickEvent, playerEvent;
+        public UnityEvent triggerEnterEvent,triggerExitEvent, triggerColorEvent, clickEvent, playerEvent;
         public LayerMask coin;
         public LayerMask player;
         private Collider colliderObj;
@@ -35,6 +36,11 @@ namespace Scripts
             triggerEnterEvent.Invoke();
             triggerColorEvent.Invoke();
             
+        }
+
+        private void OnTriggerExit(Collider col)
+        {
+            triggerExitEvent.Invoke();
         }
 
         void OnButtonClick()

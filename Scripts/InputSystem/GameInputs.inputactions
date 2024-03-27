@@ -239,7 +239,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "TestingStuff",
+                    "name": "Pickup",
                     "type": "Button",
                     "id": "232d4361-f638-46c3-a36b-385642e2a881",
                     "expectedControlType": "Button",
@@ -578,11 +578,22 @@
                 {
                     "name": "",
                     "id": "cd69fe44-fc37-4e37-a73f-7af8901c03a0",
-                    "path": "<Gamepad>/select",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "TestingStuff",
+                    "groups": "Gamepad",
+                    "action": "Pickup",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c6001d79-1ab9-444e-88b2-2c06a3346a89",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Pickup",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -600,7 +611,7 @@
                 {
                     "name": "",
                     "id": "e6d57639-e622-440f-929c-e0392182c0c7",
-                    "path": "<Keyboard>/e",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",

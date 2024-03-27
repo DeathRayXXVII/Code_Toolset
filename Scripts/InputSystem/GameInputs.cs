@@ -261,7 +261,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""TestingStuff"",
+                    ""name"": ""Pickup"",
                     ""type"": ""Button"",
                     ""id"": ""232d4361-f638-46c3-a36b-385642e2a881"",
                     ""expectedControlType"": ""Button"",
@@ -600,11 +600,22 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""cd69fe44-fc37-4e37-a73f-7af8901c03a0"",
-                    ""path"": ""<Gamepad>/select"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TestingStuff"",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Pickup"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c6001d79-1ab9-444e-88b2-2c06a3346a89"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Pickup"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -622,7 +633,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e6d57639-e622-440f-929c-e0392182c0c7"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -1251,7 +1262,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Options = m_Player.FindAction("Options", throwIfNotFound: true);
-        m_Player_TestingStuff = m_Player.FindAction("TestingStuff", throwIfNotFound: true);
+        m_Player_Pickup = m_Player.FindAction("Pickup", throwIfNotFound: true);
         m_Player_Grab = m_Player.FindAction("Grab", throwIfNotFound: true);
         m_Player_Throw = m_Player.FindAction("Throw", throwIfNotFound: true);
         // UI
@@ -1494,7 +1505,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Options;
-    private readonly InputAction m_Player_TestingStuff;
+    private readonly InputAction m_Player_Pickup;
     private readonly InputAction m_Player_Grab;
     private readonly InputAction m_Player_Throw;
     public struct PlayerActions
@@ -1506,7 +1517,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @Options => m_Wrapper.m_Player_Options;
-        public InputAction @TestingStuff => m_Wrapper.m_Player_TestingStuff;
+        public InputAction @Pickup => m_Wrapper.m_Player_Pickup;
         public InputAction @Grab => m_Wrapper.m_Player_Grab;
         public InputAction @Throw => m_Wrapper.m_Player_Throw;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -1533,9 +1544,9 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
             @Options.started += instance.OnOptions;
             @Options.performed += instance.OnOptions;
             @Options.canceled += instance.OnOptions;
-            @TestingStuff.started += instance.OnTestingStuff;
-            @TestingStuff.performed += instance.OnTestingStuff;
-            @TestingStuff.canceled += instance.OnTestingStuff;
+            @Pickup.started += instance.OnPickup;
+            @Pickup.performed += instance.OnPickup;
+            @Pickup.canceled += instance.OnPickup;
             @Grab.started += instance.OnGrab;
             @Grab.performed += instance.OnGrab;
             @Grab.canceled += instance.OnGrab;
@@ -1561,9 +1572,9 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
             @Options.started -= instance.OnOptions;
             @Options.performed -= instance.OnOptions;
             @Options.canceled -= instance.OnOptions;
-            @TestingStuff.started -= instance.OnTestingStuff;
-            @TestingStuff.performed -= instance.OnTestingStuff;
-            @TestingStuff.canceled -= instance.OnTestingStuff;
+            @Pickup.started -= instance.OnPickup;
+            @Pickup.performed -= instance.OnPickup;
+            @Pickup.canceled -= instance.OnPickup;
             @Grab.started -= instance.OnGrab;
             @Grab.performed -= instance.OnGrab;
             @Grab.canceled -= instance.OnGrab;
@@ -1781,7 +1792,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnOptions(InputAction.CallbackContext context);
-        void OnTestingStuff(InputAction.CallbackContext context);
+        void OnPickup(InputAction.CallbackContext context);
         void OnGrab(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
     }
