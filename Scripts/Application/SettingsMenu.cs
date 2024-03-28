@@ -34,7 +34,7 @@ public class SettingsMenu : MonoBehaviour
         Debug.Log($"Setting resolution with index: {resolutionIndex}");
         if (resolutionIndex >= 0 && resolutionIndex < Screen.resolutions.Length)
         {
-            Resolution resolution = Screen.resolutions[resolutionIndex];
+            Resolution resolution = resolutions[resolutionIndex];
             Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         }
         else
