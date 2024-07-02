@@ -203,6 +203,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Run",
+                    "type": "Button",
+                    "id": "1ff89505-7054-4d61-a396-76898be3e6d4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "543ad930-dce2-40eb-bafc-bb5bb3be7f89",
@@ -257,9 +266,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Throw",
+                    "name": "Activate/Interact",
                     "type": "Button",
                     "id": "d184c4f8-ec77-48a0-a58b-9e6ffc27b0da",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SoftwareHome",
+                    "type": "Button",
+                    "id": "eaf19338-2e1d-40aa-be7a-02654bce3ef5",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -589,7 +607,7 @@
                 {
                     "name": "",
                     "id": "c6001d79-1ab9-444e-88b2-2c06a3346a89",
-                    "path": "<Keyboard>/e",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -622,22 +640,44 @@
                 {
                     "name": "",
                     "id": "d5a8b326-73ab-4165-b05b-222f628757bd",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Throw",
+                    "action": "Activate/Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "ee205f09-e67c-40bc-a112-f61a7fdf8cc9",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Throw",
+                    "action": "Activate/Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5ccf3146-7852-45b8-9eed-5bd20e53c0c3",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7841a37e-0d1c-40af-8666-fda7e730202f",
+                    "path": "<Gamepad>/systemButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SoftwareHome",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -733,6 +773,15 @@
                     "type": "PassThrough",
                     "id": "c5ceb7b7-7f5d-49af-a9c0-32cbf96e80b1",
                     "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DialogueNavigate",
+                    "type": "Button",
+                    "id": "1f429e07-b242-4be7-b0b0-5247a7cc776b",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1165,6 +1214,17 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d77b3647-df16-4edc-9161-658b31ea587c",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "DialogueNavigate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

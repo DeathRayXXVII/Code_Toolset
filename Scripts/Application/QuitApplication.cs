@@ -1,5 +1,6 @@
 using Scripts.Data;
 using UnityEngine;
+using Steamworks;
 
 namespace Scripts
 {
@@ -12,6 +13,8 @@ namespace Scripts
             UnityEditor.EditorApplication.isPlaying = false;
 #else
 		    Application.Quit ();
+            SteamClient.Shutdown();
+            
 #endif
         }
 

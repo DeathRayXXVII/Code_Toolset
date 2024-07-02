@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-using Scripts.Managers;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using Scripts.Managers;
 
 namespace Scripts.Controllers
 {
@@ -10,10 +10,10 @@ namespace Scripts.Controllers
         public float lookRadius = 10f;
         private NavMeshAgent agent;
         public float remainingDistanceNum = 0.5f;
-        public List<Transform> patrolPointList;
+        [SerializeField] private WaypointPath waypointPath;
         private int i;
-        public int seconds;
-        public WaitForSeconds wfsObj;
+        public int patrolWaitTime;
+        private Animator anim;
 
         private Transform target;
 
@@ -21,17 +21,25 @@ namespace Scripts.Controllers
         {
             target = PlayerManager.instance.player.transform;
             agent = GetComponent<NavMeshAgent>();
-            wfsObj = new WaitForSeconds(seconds);
+            anim = GetComponent<Animator>();
         }
 
         private void Update()
         {
+            if (agent.velocity.magnitude > 0)
+            {
+                anim.SetBool("IsWalking", true);
+            }
+            else
+            {
+                anim.SetBool("IsWalking", false);
+            }
             float distacne = Vector3.Distance(target.position, transform.position);
-                    
+
             if (distacne <= lookRadius)
             {
-                agent.SetDestination((target.position));
-                    
+                agent.SetDestination(target.position);
+
                 if (distacne <= agent.stoppingDistance)
                 {
                     // Attack the target
@@ -40,14 +48,24 @@ namespace Scripts.Controllers
             }
             else
             {
+                if (agent.pathPending || !(agent.remainingDistance < remainingDistanceNum))
+                {
+                    return;
+                }
 
-                if (agent.pathPending || !(agent.remainingDistance < remainingDistanceNum)) return;
-                agent.destination = patrolPointList[i].position;
-                i = (i + 1) % patrolPointList.Count;
+                if (waypointPath == null)
+                {
+                    return;
+                }
+                StartCoroutine(Patrol());
             }
         }
-
-    
+        IEnumerator Patrol()
+        {
+            agent.destination = waypointPath.GetWaypoint(i).position;
+            yield return new WaitForSeconds(patrolWaitTime);
+            i = (i + 1) % waypointPath.transform.childCount;
+        }
 
         void FaceTarget()
         {
@@ -61,6 +79,5 @@ namespace Scripts.Controllers
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, lookRadius);
         }
-    
     }
 }

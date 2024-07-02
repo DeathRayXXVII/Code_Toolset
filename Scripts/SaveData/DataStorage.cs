@@ -18,6 +18,14 @@ namespace Scripts
         {
             SetData(data);
         }
+        
+        public void DeleteDataList()
+        {
+            foreach (var obj in listData)
+            {
+                PlayerPrefs.DeleteKey(obj.name);
+            }
+        }
 
         public void SetListData()
         {

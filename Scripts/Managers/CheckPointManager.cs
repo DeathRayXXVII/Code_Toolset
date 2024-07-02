@@ -1,18 +1,31 @@
-using Scripts.Data;
 using UnityEngine;
 
 public class CheckPointManager : MonoBehaviour
 {
-    public vector3Data checkpointPosition;
+    public GameObjectData checkpointPosition;
     public PlayerResponManager playerResponManager;
+    public GameObjectData activePoint;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("You have entered the checkpoint");
-            checkpointPosition.value = transform.position;
-            playerResponManager.startSpawn.value = false;
+            CheckPoint(other.gameObject);
         }
+    }
+
+    public void CheckPoint(GameObject obj)
+    {
+        Debug.Log("You have entered the checkpoint");
+        checkpointPosition.value = transform.position;
+        playerResponManager.startSpawn.value = false;
+        
+        if (activePoint != null && activePoint != obj)
+        {
+            activePoint.obj.GetComponent<Renderer>().enabled = false;
+        }
+        
+        activePoint.obj = obj;
+        activePoint.obj.GetComponent<Renderer>().enabled = true;
     }
 }

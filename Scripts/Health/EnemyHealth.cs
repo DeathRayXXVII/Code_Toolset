@@ -1,6 +1,7 @@
 using Scripts.Controllers;
 using Scripts.Data;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Scripts
@@ -20,6 +21,8 @@ namespace Scripts
     
         [Header ("Loot Drop")]
         public InstancerDataList lootDrop;
+        [SerializeField]
+        private UnityEvent deathEvent;
 
         private void Start()
         {
@@ -59,9 +62,14 @@ namespace Scripts
         public void Die()
         {
             Debug.Log("Enemy Has Died!!!!");
+            deathEvent.Invoke();
         }
         public void LootDrop()
         {
+            if (lootDrop == null)
+            {
+                return;
+            }
             //int lootIndex =Random.Range(0, lootDrop);
             Debug.Log("Loot Drop");
             Instantiate(lootDrop, transform.position, Quaternion.identity);

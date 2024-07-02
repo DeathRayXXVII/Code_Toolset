@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class MovingPlatformTest : MonoBehaviour
 {
-    [SerializeField]
-    private WaypointPath waypointPath;
-    [SerializeField]
-    private float speed;
+    [SerializeField] private WaypointPath waypointPath;
+    [SerializeField] private float speed;
     public bool autoStart;
     public bool switchDirection;
     public bool isMoving;

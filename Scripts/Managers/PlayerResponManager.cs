@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Scripts.Data;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,7 +11,7 @@ public class PlayerResponManager : MonoBehaviour
     [Header ("Respawn")]
     public vector3Data spawnPosition;
     public vector3Data respawnPosition;
-    public vector3Data checkpointPosition;
+    public GameObjectData checkpointPosition;
     public CharacterController cc;
     public GameObject playerOj;
     public float respawnDelay;
@@ -49,11 +47,11 @@ public class PlayerResponManager : MonoBehaviour
 
         yield return new WaitForSeconds(respawnDelay);
         
-        if (playerController != null && !playerController.groundedPlayer)
+        /*if (playerController != null && !playerController.groundedPlayer)
         {
             cc.transform.position = respawnPosition.value;
         }
-        else if (life.value > 1 && startSpawn.value)
+        else*/ if (life.value > 1 && startSpawn.value)
         {
             cc.transform.position = spawnPosition.value;
         }
@@ -69,6 +67,7 @@ public class PlayerResponManager : MonoBehaviour
         cc.GetComponent<Renderer>().enabled = true;
 
         Instantiate(respawnParticles, cc.transform.position, cc.transform.rotation);
+        respawnEvent.Invoke();
     }
     
     public void StartingPosition()

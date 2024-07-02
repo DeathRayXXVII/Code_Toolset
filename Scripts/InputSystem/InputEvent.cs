@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -9,8 +8,7 @@ public class InputEvent : MonoBehaviour
     [Header("Custom Input Action Reference Event")]
     public InputActionReference input;
     public UnityEvent firstEvent, secondEvent;
-    [SerializeField]
-    private bool inputEnabled;
+    [SerializeField] private bool inputEnabled;
     private bool isPressed = true;
     [Header("First Selected Button")]
     public GameObject firstSelectedButton;
@@ -68,6 +66,7 @@ public class InputEvent : MonoBehaviour
             return;
         }
         input.action.Enable();
+        inputEnabled = true;
     }
     
     public void OnDisable()
@@ -77,5 +76,6 @@ public class InputEvent : MonoBehaviour
             return;
         }
         input.action.Disable();
+        inputEnabled = false;
     }
 }
