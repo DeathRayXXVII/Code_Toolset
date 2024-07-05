@@ -1,3 +1,4 @@
+using System;
 using Scripts.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,6 +8,8 @@ public class TankController : MonoBehaviour
     public int playerNumber = 1;
     public FloatData speed;
     public FloatData turnSpeed;
+    [SerializeField] private GameObject barrel;
+    private Vector2 lastMousePosition;
 
     private CharacterController cc;
     [SerializeField] private InputActionReference moveControl;
@@ -42,6 +45,22 @@ public class TankController : MonoBehaviour
         turnControl.action.performed -= ctx => turnInput = ctx.ReadValue<Vector2>();
     }
 
+    void Update()
+    {
+        // Convert mouse position to world space
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        if (Physics.Raycast(ray, out RaycastHit hitInfo))
+        {
+            Vector3 targetPosition = hitInfo.point;
+            targetPosition.y = barrel.transform.position.y; // Keep the barrel's height constant
+            Vector3 direction = targetPosition - barrel.transform.position;
+
+            // Directly set the barrel's rotation to face the target position
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            barrel.transform.rotation = lookRotation;
+        }
+    }
+
     private void FixedUpdate()
     {
         Move();
@@ -50,42 +69,21 @@ public class TankController : MonoBehaviour
 
     private void Move()
     {
-        Transform cameraMainTransform = Camera.main.transform;
-        Vector3 forward = cameraMainTransform.forward;
-        Vector3 right = cameraMainTransform.right;
-        forward.y = 0; // Ensure movement is horizontal.
-        right.y = 0;
-        forward.Normalize();
-        right.Normalize();
-
-        // Correcting the input direction by rotating the input vector 90 degrees clockwise
-        Vector3 correctedInput = new Vector3(movementInput.y, 0, movementInput.x);
-
-        Vector3 desiredDirection = (forward * correctedInput.x + right * correctedInput.z).normalized;
-
-        if (desiredDirection != Vector3.zero)
+        if (movementInput != Vector2.zero)
         {
-            Quaternion desiredRotation = Quaternion.LookRotation(desiredDirection, Vector3.up);
-            cc.transform.rotation = Quaternion.Slerp(cc.transform.rotation, desiredRotation, turnSpeed.value * Time.deltaTime);
+            float move = movementInput.y * speed.value * Time.deltaTime;
+            Vector3 movement = transform.forward * move;
+            cc.Move(movement);
         }
-
-        Vector3 movement = desiredDirection * (speed.value * Time.deltaTime);
-        cc.Move(movement);
     }
 
     private void Turn()
     {
-        if (turnInput != Vector2.zero) // Only rotate if there is input
+        if (turnInput != Vector2.zero)
         {
-            // Assuming cameraMainTransform is a reference to your main camera's transform.
-            Transform cameraMainTransform = Camera.main.transform;
-
-            // Calculate the target rotation angle based on the turn input and camera orientation.
-            float targetAngle = Mathf.Atan2(turnInput.y, -turnInput.x) * Mathf.Rad2Deg + cameraMainTransform.eulerAngles.y;
-            Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
-
-            // Smoothly interpolate to the target rotation.
-            cc.transform.rotation = Quaternion.Lerp(cc.transform.rotation, targetRotation, Time.deltaTime * turnSpeed.value);
+            float turn = turnInput.x * turnSpeed.value * Time.deltaTime;
+            Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
+            cc.transform.Rotate(turnRotation.eulerAngles);
         }
     }
 }
