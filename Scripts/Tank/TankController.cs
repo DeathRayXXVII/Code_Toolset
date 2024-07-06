@@ -57,6 +57,7 @@ public class TankController : MonoBehaviour
 
             // Directly set the barrel's rotation to face the target position
             Quaternion lookRotation = Quaternion.LookRotation(direction);
+            lookRotation *= Quaternion.Euler(0, 90, 0);
             barrel.transform.rotation = lookRotation;
         }
     }

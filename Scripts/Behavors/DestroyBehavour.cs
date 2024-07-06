@@ -42,7 +42,7 @@ namespace Scripts
         {
             wfsObj = new WaitForSeconds(seconds); 
             yield return wfsObj;
-            Destroy(gameObject); //destroying itself
+            Destroy(gameObject);
         }
         public void Destroy()
         {
