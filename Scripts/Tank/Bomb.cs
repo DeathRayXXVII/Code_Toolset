@@ -19,16 +19,15 @@ public class Bomb : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius, destructibleLayer);
         foreach (var hitCollider in hitColliders)
         {
-            // Optionally, you can add more logic here to handle different types of destructible objects differently
             Destroy(hitCollider.gameObject);
         }
-        onExplode.Invoke(); // Trigger any additional explosion effects
-        Destroy(gameObject); // Destroy the bomb itself
+        onExplode.Invoke();
+        Destroy(gameObject);
     }
     
-    private void OnCollisionEnter(Collision collision)
+        private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if ((destructibleLayer.value & (1 << collision.gameObject.layer)) > 0)
         {
             onExplode.Invoke();
             Destroy(collision.gameObject);

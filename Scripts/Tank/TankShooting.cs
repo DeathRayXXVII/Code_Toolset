@@ -40,6 +40,7 @@ public class TankShooting : MonoBehaviour
 
         // Instantiate the bullet with the corrected rotation
         Instantiate(bulletData.shellPrefab, fireTransform.position, correctedRotation);
+        bulletData.shellPrefab.transform.rotation = correctedRotation;
         
     }
 
