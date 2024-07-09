@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class BulletBehavior : MonoBehaviour
 {
-    public BulletData bulletData;
-    public float bounce;
+    [SerializeField] private BulletData bulletData;
+    [SerializeField] private float bounce;
     private Rigidbody rb;
 
     private void Start()

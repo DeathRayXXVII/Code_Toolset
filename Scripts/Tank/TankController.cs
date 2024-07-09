@@ -6,12 +6,13 @@ using UnityEngine.InputSystem;
 public class TankController : MonoBehaviour
 {
     public int playerNumber = 1;
-    public FloatData speed;
-    public FloatData turnSpeed;
+    [SerializeField] private FloatData speed;
+    [SerializeField] private FloatData turnSpeed;
     [SerializeField] private GameObject barrel;
     private Vector2 lastMousePosition;
 
-    private CharacterController cc;
+    //private CharacterController cc;
+    private Rigidbody rb;
     [SerializeField] private InputActionReference moveControl;
     [SerializeField] private InputActionReference turnControl;
 
@@ -20,12 +21,12 @@ public class TankController : MonoBehaviour
 
     private void Awake()
     {
-        cc = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
     }
 
     private void OnEnable()
     {
-        cc.enabled = true;
+        rb.velocity = Vector3.zero;
         moveControl.action.Enable();
         turnControl.action.Enable();
         
@@ -37,7 +38,7 @@ public class TankController : MonoBehaviour
 
     private void OnDisable()
     {
-        cc.enabled = false;
+        rb.velocity = Vector3.zero;
         moveControl.action.Disable();
         turnControl.action.Disable();
         
@@ -74,7 +75,7 @@ public class TankController : MonoBehaviour
         {
             float move = movementInput.y * speed.value * Time.deltaTime;
             Vector3 movement = transform.forward * move;
-            cc.Move(movement);
+            rb.MovePosition(rb.position + movement);
         }
     }
 
@@ -84,7 +85,7 @@ public class TankController : MonoBehaviour
         {
             float turn = turnInput.x * turnSpeed.value * Time.deltaTime;
             Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
-            cc.transform.Rotate(turnRotation.eulerAngles);
+            rb.MoveRotation(rb.rotation * turnRotation);
         }
     }
 }
