@@ -5,6 +5,7 @@ public class TankShooting : MonoBehaviour
 {
     [SerializeField] private InputActionReference fireControl;
     [SerializeField] private InputActionReference bombControl;
+    [SerializeField] private BulletBehavior bB;
     [SerializeField] private BulletData bulletData;
     [SerializeField] private BulletData bombData;
     [SerializeField] private Transform fireTransform;
@@ -35,13 +36,9 @@ public class TankShooting : MonoBehaviour
 
     private void Fire()
     {
-        // Adjust the fireTransform's rotation by adding a 90-degree offset
-        Quaternion correctedRotation = fireTransform.rotation * Quaternion.Euler(0, -90, 0);
-
-        // Instantiate the bullet with the corrected rotation
-        Instantiate(bulletData.shellPrefab, fireTransform.position, correctedRotation);
-        bulletData.shellPrefab.transform.rotation = correctedRotation;
-        
+        Vector3 direction = fireTransform.up;
+        BulletBehavior bullet = Instantiate(bB, fireTransform.position, fireTransform.rotation);
+        bullet.Shoot(direction.normalized);
     }
 
     private void Bomb()

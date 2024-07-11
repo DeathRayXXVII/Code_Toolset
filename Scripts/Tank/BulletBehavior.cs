@@ -2,19 +2,24 @@ using UnityEngine;
 
 public class BulletBehavior : MonoBehaviour
 {
-    [SerializeField] private BulletData bulletData;
-    [SerializeField] private float bounce;
+    public BulletData bulletData;
+    public float bounce;
     [SerializeField] private LayerMask destructibleLayer;
-    private Rigidbody rb;
+    public Rigidbody rb;
+    private Vector3 direction;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.velocity = transform.forward * bulletData.speed;
+        //rb.velocity = transform.up * bulletData.speed;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (bounce >= bulletData.maxBounces - 1)
+        {
+            Destroy(gameObject);
+        }
         if ((destructibleLayer.value & (1 << collision.gameObject.layer)) != 0)
         {
             Destroy(collision.gameObject);
@@ -22,27 +27,20 @@ public class BulletBehavior : MonoBehaviour
         }
         else
         {
-            Vector3 incomingVector = rb.velocity.normalized;
-            Vector3 normalVector = collision.GetContact(0).normal;
-            Vector3 reflectVector = Vector3.Reflect(incomingVector, normalVector).normalized;
+            var firstContact = collision.GetContact(0);
+            Vector3 newVelocity = Vector3.Reflect(direction.normalized, firstContact.normal);
+            Shoot(newVelocity.normalized);
 
-            // Adjust for sliding behavior by ensuring a minimum reflection angle
-            float minReflectionAngle = 30f; // Minimum angle for reflection, adjust as needed
-            if (Vector3.Angle(reflectVector, -incomingVector) < minReflectionAngle)
-            {
-                reflectVector = Quaternion.Euler(0, minReflectionAngle, 0) * reflectVector;
-            }
-
-            // Reapply the original speed to the new direction, excluding Y-axis movement
-            rb.velocity = new Vector3(reflectVector.x, 0, reflectVector.z).normalized * bulletData.speed;
-
-            transform.rotation = Quaternion.LookRotation(rb.velocity);
-
+            Vector3 newForward = newVelocity.normalized;
+            Quaternion rotationToApply = Quaternion.LookRotation(newForward) * Quaternion.Euler(90, 0, 0);
+            transform.rotation = rotationToApply;          
             bounce++;
-            if (bounce >= bulletData.maxBounces)
-            {
-                Destroy(gameObject);
-            }
         }
+    }
+    
+    public void Shoot(Vector3 dir)
+    {
+        direction = dir;
+        rb.velocity = dir * bulletData.speed;
     }
 }

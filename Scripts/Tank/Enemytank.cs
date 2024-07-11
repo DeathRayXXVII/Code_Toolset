@@ -18,6 +18,7 @@ public class EnemyTank : MonoBehaviour
     
     [SerializeField] private GameObject barrelPrefab;
     [SerializeField] private Transform fireTransform;
+    [SerializeField] private BulletBehavior bB;
     [SerializeField] private BulletData bulletData;
     [SerializeField] private float attackSpeed = 1f;
     private float timer;
@@ -182,9 +183,9 @@ public class EnemyTank : MonoBehaviour
         {
             // Attack code here
             // Add shooting or other attack logic here
-            Quaternion correctedRotation = fireTransform.rotation * Quaternion.Euler(0, -90, 0);
-            Instantiate(bulletData.shellPrefab, fireTransform.position, correctedRotation);
-            bulletData.shellPrefab.transform.rotation = correctedRotation;
+            Vector3 direction = fireTransform.up;
+            BulletBehavior bullet = Instantiate(bB, fireTransform.position, fireTransform.rotation);
+            bullet.Shoot(direction.normalized);
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
