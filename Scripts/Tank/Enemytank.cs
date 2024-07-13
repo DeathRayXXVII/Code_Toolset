@@ -67,7 +67,8 @@ public class EnemyTank : MonoBehaviour
                 //ChasePlayer();
                 if (!CanSeePlayer())
                 {
-                    AttemptRicochetShot();
+                    //AttemptRicochetShot();
+                    AttemptRicochetDetection();
                 }
                 else
                 {
@@ -82,7 +83,11 @@ public class EnemyTank : MonoBehaviour
         }
 
         if (!isStationary) return;
-        if (!playerInSightRange && playerInAttackRange && distanceToTarget <= attackRange)
+        if (playerInSightRange)
+        {
+            AttemptRicochetDetection();
+        }
+        /*if (!playerInSightRange && playerInAttackRange && distanceToTarget <= attackRange)
         {
             if (!CanSeePlayer())
             {
@@ -111,7 +116,7 @@ public class EnemyTank : MonoBehaviour
                 AttackPlayer();
                 timer = 0f;
             }
-        }
+        }*/
 
 
 
@@ -223,6 +228,7 @@ public class EnemyTank : MonoBehaviour
         return false;
     }
     
+    /*
     private void AttemptRicochetShot()
     {
         bool shotSuccessful = false;
@@ -258,12 +264,58 @@ public class EnemyTank : MonoBehaviour
             AttackPlayer();
         }
     }
+    */
+    
+    private void AttemptRicochetDetection()
+    {
+        if (!CanSeePlayer() && Physics.CheckSphere(transform.position, sightRange, playerLayer))
+        {
+            RaycastHit hit;
+            // Cast a ray around the tank to find a potential ricochet point
+            for (int angle = 0; angle < 360; angle += 10)
+            {
+                Vector3 direction = Quaternion.Euler(0, angle, 0) * transform.forward;
+                if (Physics.Raycast(transform.position, direction, out hit, sightRange))
+                {
+                    // Simulate the bullet's trajectory considering its maximum bounces
+                    if (SimulateRicochet(hit.point, direction, bulletData.maxBounces))
+                    {
+                        // If a valid path to the player is found, aim towards the first ricochet point
+                        AimAtPoint(hit.point);
+                        AttackPlayer();
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private bool SimulateRicochet(Vector3 position, Vector3 direction, float maxBounces)
+    {
+        if (maxBounces <= 0) return false;
+
+        RaycastHit hit;
+        if (Physics.Raycast(position, direction, out hit, sightRange))
+        {
+            // Check if the ray hit the player
+            if (hit.transform == player)
+            {
+                return true;
+            }
+
+            // Calculate the next ricochet direction
+            Vector3 nextDirection = Vector3.Reflect(direction, hit.normal);
+            // Recursively simulate the next bounce
+            return SimulateRicochet(hit.point, nextDirection, maxBounces - 1);
+        }
+        return false;
+    }
     
     private void AimAtPoint(Vector3 point)
     {
         Vector3 direction = point - barrelPrefab.transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
-        barrelPrefab.transform.rotation = Quaternion.Slerp(barrelPrefab.transform.rotation, lookRotation, Time.deltaTime * 5f);
+        barrelPrefab.transform.rotation = Quaternion.Slerp(barrelPrefab.transform.rotation, lookRotation, Time.deltaTime * bulletData.rotationSpeed);
     }
     
     private void OnDrawGizmosSelected()

@@ -16,7 +16,7 @@ public class BulletBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (bounce >= bulletData.maxBounces - 1)
+        if (bounce >= bulletData.maxBounces)
         {
             Destroy(gameObject);
         }
