@@ -10,6 +10,7 @@ public class EnemyTank : MonoBehaviour
     [SerializeField] private float pathUpdateDelay = 0.2f;
     [SerializeField] private float walkPointRange;
     [SerializeField] private float attackSpeed;
+    [SerializeField] private float rotateSpeed;
     [SerializeField] private float timeBetweenAttacks;
     [SerializeField] private Transform fireTransform;
     [SerializeField] private GameObject barrelPrefab;
@@ -20,7 +21,7 @@ public class EnemyTank : MonoBehaviour
 
     private float pathUpdateDeadline;
     private float stoppingDistance;
-    private bool isStationary;
+    private bool isStationary = false;
     private Vector3 walkPoint;
     private bool walkPointSet;
     private float timer;
@@ -50,22 +51,11 @@ public class EnemyTank : MonoBehaviour
         bool playerInAttackRange = Physics.CheckSphere(position, attackRange, playerLayer);
         if (!isStationary)
         {
-           if (!playerInSightRange && !playerInAttackRange)
-           {
-               if (!walkPointSet)
-               {
-                   SearchWalkPoint();
-               }
-               else
-               {
-                   agent.SetDestination(walkPoint);
-               }
-           }
-                   
-           if (playerInSightRange && !playerInAttackRange)
-           {
-               RotateBarrel();
-           }
+            Patrolling();
+            if (playerInSightRange && playerInAttackRange)
+            { 
+                RotateBarrel();
+            }
         }
         else
         {
@@ -83,13 +73,32 @@ public class EnemyTank : MonoBehaviour
         if (CanSeePlayer())
         {
             isRotating = false;
-            UpdatePath();
+            //UpdatePath();
                         
             if (timer <= attackSpeed)
             {
                 AttackPlayer();
                 timer = 0f;
             }
+        }
+    }
+    
+    private void Patrolling()
+    {
+        if (!walkPointSet)
+        {
+            SearchWalkPoint();
+        }
+        else
+        {
+            agent.SetDestination(walkPoint);
+        }
+
+        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+
+        if (distanceToWalkPoint.magnitude < 1f)
+        {
+            walkPointSet = false;
         }
     }
     
@@ -103,7 +112,7 @@ public class EnemyTank : MonoBehaviour
         
         if (Physics.Raycast(walkPoint, -transform.up, 2f, groundLayer))
         {
-            walkPointSet = true;
+            walkPointSet =  true;
         }
     }
     
@@ -201,7 +210,7 @@ public class EnemyTank : MonoBehaviour
 
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         lookRotation *= Quaternion.Euler(0, 90, 0);
-        barrelPrefab.transform.rotation = Quaternion.Slerp(barrelPrefab.transform.rotation, lookRotation, Time.deltaTime * 5f);
+        barrelPrefab.transform.rotation = Quaternion.Slerp(barrelPrefab.transform.rotation, lookRotation, Time.deltaTime * rotateSpeed);
     }
 
     private void RandomRotateBarrel()
