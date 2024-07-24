@@ -36,9 +36,16 @@ public class TankShooting : MonoBehaviour
 
     private void Fire()
     {
-        Vector3 direction = fireTransform.up;
-        BulletBehavior bullet = Instantiate(bB, fireTransform.position, fireTransform.rotation);
+        Vector3 direction = fireTransform.forward;
+        // Calculate the new rotation with a 180-degree turn around the y-axis
+        var eulerAngles = fireTransform.eulerAngles;
+        Quaternion newRotation = Quaternion.Euler(0, eulerAngles.y + 180, 0);
+        
+        // Instantiate the bullet
+        BulletBehavior bullet = Instantiate(bB, fireTransform.position, newRotation);
         bullet.Shoot(direction.normalized);
+
+        
     }
 
     private void Bomb()

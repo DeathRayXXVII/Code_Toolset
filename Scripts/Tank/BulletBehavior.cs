@@ -32,7 +32,7 @@ public class BulletBehavior : MonoBehaviour
             Shoot(newVelocity.normalized);
 
             Vector3 newForward = newVelocity.normalized;
-            Quaternion rotationToApply = Quaternion.LookRotation(newForward) * Quaternion.Euler(90, 0, 0);
+            Quaternion rotationToApply = Quaternion.LookRotation(newForward) * Quaternion.Euler(0, 180, 0);
             transform.rotation = rotationToApply;          
             bounce++;
         }

@@ -181,7 +181,7 @@ public class EnemyTank : MonoBehaviour
         //barrelPrefab.transform.LookAt(player);
         if (!alreadyAttacked)
         {
-            direction = fireTransform.up;
+            direction = fireTransform.forward;
             BulletBehavior bullet = Instantiate(bB, fireTransform.position, fireTransform.rotation);
             bullet.Shoot(direction.normalized);
             
