@@ -30,14 +30,14 @@ public class EnemyTank : MonoBehaviour
     private Vector3 walkPoint;
     private bool walkPointSet;
     private float timer;
-    public float timer1;
+    private float timer1;
     private bool alreadyAttacked;
     private Vector3 direction;
     
     
     private void Awake()
     {
-        player = GameObject.Find("Player").transform;
+        
         agent = GetComponent<NavMeshAgent>();
         if(bombTriggered)
         {
@@ -55,6 +55,11 @@ public class EnemyTank : MonoBehaviour
         {
             isStationary = false;
         }
+    }
+    
+    private void Start()
+    {
+        player = GameObject.FindWithTag("Player").transform;
     }
     
     private void Update()
