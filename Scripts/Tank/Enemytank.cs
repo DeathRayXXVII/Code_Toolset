@@ -30,7 +30,7 @@ public class EnemyTank : MonoBehaviour
     private Vector3 walkPoint;
     private bool walkPointSet;
     private float timer;
-    private float timer1;
+    public float timer1;
     private bool alreadyAttacked;
     private Vector3 direction;
     
@@ -59,6 +59,8 @@ public class EnemyTank : MonoBehaviour
     
     private void Update()
     {
+        timer += Time.deltaTime;
+        timer1 += Time.deltaTime;
         var position = transform.position;
         bool playerInSightRange = Physics.CheckSphere(position, sightRange, playerLayer);
         bool playerInAttackRange = Physics.CheckSphere(position, attackRange, playerLayer);
@@ -88,19 +90,23 @@ public class EnemyTank : MonoBehaviour
             isRotating = false;
             //UpdatePath();
                         
-            if (timer <= attackSpeed)
+            if (timer >= attackSpeed)
             {
                 AttackPlayer();
                 timer = 0f;
             }
+            if (playerInSightRange && isBombTriggered)
+            {
+                if (timer1 >= bombData.timeBetweenShots)
+                {
+                    BombTriggered();
+                    timer1 = 0f;
+                }
+            }
+            
         }
         
-        if (!isBombTriggered) return;
-        if (timer1 >= bombData.timeBetweenShots)
-        {
-            BombTriggered();
-            timer1 = 0f;
-        }
+        
     }
     
     private void Patrolling()
@@ -199,7 +205,8 @@ public class EnemyTank : MonoBehaviour
     
     private void BombTriggered()
     {
-        //Instantiate(bombData.shellPrefab, bombTransform.position, bombTransform.rotation);
+        Debug.Log("Bomb Triggered");
+        Instantiate(bombData.shellPrefab, bombTransform.position, bombTransform.rotation);
     }
     private void AttackPlayer()
     {
