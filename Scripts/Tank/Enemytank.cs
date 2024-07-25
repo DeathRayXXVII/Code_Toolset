@@ -7,12 +7,15 @@ public class EnemyTank : MonoBehaviour
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Transform player;
     [SerializeField] private BulletBehavior bB;
+    [SerializeField] private BulletData bombData;
+    [SerializeField] private bool bombTriggered;
     [SerializeField] private float pathUpdateDelay = 0.2f;
     [SerializeField] private float walkPointRange;
     [SerializeField] private float attackSpeed;
     [SerializeField] private float rotateSpeed;
     [SerializeField] private float timeBetweenAttacks;
     [SerializeField] private Transform fireTransform;
+    [SerializeField] private Transform bombTransform;
     [SerializeField] private GameObject barrelPrefab;
     [SerializeField] private bool stationary;
     [SerializeField] private LayerMask groundLayer, playerLayer;
@@ -22,18 +25,28 @@ public class EnemyTank : MonoBehaviour
     private float pathUpdateDeadline;
     private float stoppingDistance;
     private bool isStationary = false;
+    private bool isBombTriggered = false;
+    private bool isRotating;
     private Vector3 walkPoint;
     private bool walkPointSet;
     private float timer;
+    private float timer1;
     private bool alreadyAttacked;
     private Vector3 direction;
-    private bool isRotating;
+    
     
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
-        
+        if(bombTriggered)
+        {
+            isBombTriggered = true;
+        }
+        else
+        {
+            isBombTriggered = false;
+        }
         if (stationary)
         {
             isStationary = true;
@@ -80,6 +93,13 @@ public class EnemyTank : MonoBehaviour
                 AttackPlayer();
                 timer = 0f;
             }
+        }
+        
+        if (!isBombTriggered) return;
+        if (timer1 >= bombData.timeBetweenShots)
+        {
+            BombTriggered();
+            timer1 = 0f;
         }
     }
     
@@ -176,6 +196,11 @@ public class EnemyTank : MonoBehaviour
         }
     }
     
+    
+    private void BombTriggered()
+    {
+        //Instantiate(bombData.shellPrefab, bombTransform.position, bombTransform.rotation);
+    }
     private void AttackPlayer()
     {
         //barrelPrefab.transform.LookAt(player);
