@@ -5,6 +5,7 @@ using UnityEngine.AI;
 public class EnemyTank : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private TankGameManager gameManager;
     [SerializeField] private Transform player;
     [SerializeField] private BulletBehavior bB;
     [SerializeField] private BulletData bombData;
@@ -21,6 +22,7 @@ public class EnemyTank : MonoBehaviour
     [SerializeField] private LayerMask groundLayer, playerLayer;
     [SerializeField] private float sightRange;
     [SerializeField] private float attackRange;
+    public Vector3 startingPosition;
 
     private float pathUpdateDeadline;
     private float stoppingDistance;
@@ -60,6 +62,8 @@ public class EnemyTank : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
+        gameManager = FindObjectOfType<TankGameManager>();
+        startingPosition = transform.position;
     }
     
     private void Update()
@@ -289,6 +293,16 @@ public class EnemyTank : MonoBehaviour
             }
         }
         return false;
+    }
+    
+    public void ResetTank()
+    {
+        transform.position = startingPosition;
+    }
+    
+    public void ManagerHit()
+    {
+        gameManager.Hit();
     }
 
     private void OnDrawGizmosSelected()
