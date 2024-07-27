@@ -8,4 +8,5 @@ public class TankLevelData : ScriptableObject
     public GameObject LevelPrefab;
     public List<GameObject> TankPrefabs;
     public List<Vector3> TankSpawnPoints;
+    public List<Vector3> PlayersTankSpawnPoints;
 }
