@@ -5,8 +5,8 @@ using UnityEngine;
 public class TankLevelData : ScriptableObject
 {
     public int levelNumber;
-    public GameObject LevelPrefab;
-    public List<GameObject> TankPrefabs;
-    public List<Vector3> TankSpawnPoints;
-    public List<Vector3> PlayersTankSpawnPoints;
+    public GameObject levelPrefab;
+    public List<GameObject> tankPrefabs;
+    public List<Vector3> tankSpawnPoints;
+    public List<Vector3> playersTankSpawnPoints;
 }

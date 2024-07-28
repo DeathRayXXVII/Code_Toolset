@@ -16,6 +16,7 @@ public class TankGameManager : MonoBehaviour
     
     private void Start()
     {
+        currentLevelData.playersTankSpawnPoints = playersTankSpawnPoint;
         if (currentLevelData == null)
         {
             Debug.LogError("Level data is not set in the TankGameManager");
@@ -24,7 +25,7 @@ public class TankGameManager : MonoBehaviour
 
         if (!isRestarting)
         {
-            enemyTankPrefab = currentLevelData.TankPrefabs;
+            enemyTankPrefab = currentLevelData.tankPrefabs;
             LevelGenerator();
         }
 
@@ -40,19 +41,19 @@ public class TankGameManager : MonoBehaviour
 
     private void LevelGenerator()
     {
-        Instantiate(currentLevelData.LevelPrefab);
+        Instantiate(currentLevelData.levelPrefab);
         foreach (var playerTankPrefab in playersTankPrefab)
         {
             foreach (var playerTankSpawnPoint in playersTankSpawnPoint)
             {
-                Instantiate(playerTankPrefab, playerTankSpawnPoint, Quaternion.identity);
+                playerTankPrefab.transform.position = playerTankSpawnPoint;
             }
         }
         
-        foreach (var tankPrefab in currentLevelData.TankPrefabs)
+        foreach (var tankPrefab in currentLevelData.tankPrefabs)
         {
             //int randomIndex = Random.Range(0, levelData.TankSpawnPoints.Count);
-            foreach (var tankSpawnPoint in currentLevelData.TankSpawnPoints)
+            foreach (var tankSpawnPoint in currentLevelData.tankSpawnPoints)
             {
                 Instantiate(tankPrefab, tankSpawnPoint, Quaternion.identity);
             }
