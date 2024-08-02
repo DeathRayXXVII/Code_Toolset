@@ -4,19 +4,20 @@ using UnityEngine.Events;
 
 public class TankGameManager : MonoBehaviour
 {
-    [SerializeField] private TankLevelData currentLevelData;
-    [SerializeField] private List<TankLevelData> levelDataList;
+    [SerializeField] private LevelManager currentLevelData;
+    [SerializeField] private GameObject levelPosition;
+    [SerializeField] private List<LevelManager> levelDataList;
     [SerializeField] private List<GameObject> playersTankPrefab;
-    [SerializeField] private List<GameObject> enemyTankPrefab;
-    [SerializeField] private List<Vector3> playersTankSpawnPoint;
+    //[SerializeField] private List<GameObject> enemyTankPrefabs;
+    [SerializeField] private List<GameObject> currentEnemyTankPrefab;
+    [SerializeField] private List<GameObject> playersSpawnPoint;
     private UnityEvent onLevelComplete;
     [SerializeField] private bool isRestarting;
     
     public UnityEvent winEvent;
     
-    private void Start()
+    private void Awake()
     {
-        currentLevelData.playersTankSpawnPoints = playersTankSpawnPoint;
         if (currentLevelData == null)
         {
             Debug.LogError("Level data is not set in the TankGameManager");
@@ -25,7 +26,7 @@ public class TankGameManager : MonoBehaviour
 
         if (!isRestarting)
         {
-            enemyTankPrefab = currentLevelData.tankPrefabs;
+            
             LevelGenerator();
         }
 
@@ -33,7 +34,7 @@ public class TankGameManager : MonoBehaviour
 
     private void Update()
     {
-        if(enemyTankPrefab.Count == 0)
+        if(currentEnemyTankPrefab.Count == 0)
         {
             onLevelComplete.Invoke();
         }
@@ -41,28 +42,21 @@ public class TankGameManager : MonoBehaviour
 
     private void LevelGenerator()
     {
-        Instantiate(currentLevelData.levelPrefab);
-        foreach (var playerTankPrefab in playersTankPrefab)
+        foreach (GameObject obj in currentLevelData.enemyTankPrefabs)
         {
-            foreach (var playerTankSpawnPoint in playersTankSpawnPoint)
-            {
-                playerTankPrefab.transform.position = playerTankSpawnPoint;
-            }
+            currentEnemyTankPrefab.Add(obj);
         }
-        
-        foreach (var tankPrefab in currentLevelData.tankPrefabs)
+        foreach (GameObject obj in currentLevelData.playersSpawnPoints)
         {
-            //int randomIndex = Random.Range(0, levelData.TankSpawnPoints.Count);
-            foreach (var tankSpawnPoint in currentLevelData.tankSpawnPoints)
-            {
-                Instantiate(tankPrefab, tankSpawnPoint, Quaternion.identity);
-            }
+            playersTankPrefab.Add(obj);
         }
+        currentLevelData.transform.position = Vector3.zero;
+        currentLevelData.LevelActive();
     }
     
     private void LevelReset()
     {
-        foreach (GameObject obj in enemyTankPrefab)
+        foreach (GameObject obj in currentEnemyTankPrefab)
         {
             EnemyTank enemyTank = obj.GetComponent<EnemyTank>();
             if (!enemyTank.gameObject.activeInHierarchy)
@@ -88,6 +82,7 @@ public class TankGameManager : MonoBehaviour
     
     public void LoadNextLevel()
     {
+        currentLevelData.ExitLevel();
         int nextLevel = currentLevelData.levelNumber + 1;
         if (nextLevel >= levelDataList.Count)
         {
@@ -114,7 +109,7 @@ public class TankGameManager : MonoBehaviour
         {
             isRestarting = false;
             winEvent.Invoke();
-            enemyTankPrefab.Clear();
+            currentEnemyTankPrefab.Clear();
             Debug.Log("You win!");
         }
     }
@@ -122,7 +117,7 @@ public class TankGameManager : MonoBehaviour
     public bool ClearedLevel()
     {
         bool cleared = true;
-        foreach (GameObject obj in enemyTankPrefab)
+        foreach (GameObject obj in currentEnemyTankPrefab)
         {
             EnemyTank enemyTank = obj.GetComponent<EnemyTank>();
             if (enemyTank.gameObject.activeInHierarchy)

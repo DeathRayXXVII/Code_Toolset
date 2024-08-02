@@ -39,8 +39,6 @@ public class EnemyTank : MonoBehaviour
     
     private void Awake()
     {
-        
-        agent = GetComponent<NavMeshAgent>();
         if(bombTriggered)
         {
             isBombTriggered = true;
@@ -61,6 +59,7 @@ public class EnemyTank : MonoBehaviour
     
     private void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
         gameManager = FindObjectOfType<TankGameManager>();
         startingPosition = transform.position;
