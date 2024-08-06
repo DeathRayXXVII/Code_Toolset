@@ -34,23 +34,31 @@ public class TankGameManager : MonoBehaviour
 
     private void Update()
     {
-        if(currentEnemyTankPrefab.Count == 0)
-        {
-            onLevelComplete.Invoke();
-        }
+        // if(currentEnemyTankPrefab.Count == 0)
+        // {
+        //     onLevelComplete.Invoke();
+        // }
     }
 
     private void LevelGenerator()
     {
+        currentLevelData.transform.position = Vector3.zero;
+        
         foreach (GameObject obj in currentLevelData.enemyTankPrefabs)
         {
             currentEnemyTankPrefab.Add(obj);
         }
+        
+        playersSpawnPoint.Clear();
         foreach (GameObject obj in currentLevelData.playersSpawnPoints)
         {
-            playersTankPrefab.Add(obj);
+            playersSpawnPoint.Add(obj);
         }
-        currentLevelData.transform.position = Vector3.zero;
+        
+        for (int i = 0; i < playersTankPrefab.Count; i++)
+        {
+            playersTankPrefab[i].transform.position = playersSpawnPoint[i].transform.position;
+        }
         currentLevelData.LevelActive();
     }
     
