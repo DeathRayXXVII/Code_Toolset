@@ -11,6 +11,7 @@ public class BulletBehavior : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.constraints = RigidbodyConstraints.FreezeRotationY;
         //rb.velocity = transform.up * bulletData.speed;
     }
 
@@ -30,10 +31,12 @@ public class BulletBehavior : MonoBehaviour
             var firstContact = collision.GetContact(0);
             Vector3 newVelocity = Vector3.Reflect(direction.normalized, firstContact.normal);
             Shoot(newVelocity.normalized);
-
+            
             Vector3 newForward = newVelocity.normalized;
             Quaternion rotationToApply = Quaternion.LookRotation(newForward) * Quaternion.Euler(0, 180, 0);
-            transform.rotation = rotationToApply;          
+            
+            transform.rotation = rotationToApply;
+            
             bounce++;
         }
     }
