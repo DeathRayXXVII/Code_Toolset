@@ -8,13 +8,10 @@ public class TankGameManager : MonoBehaviour
     [SerializeField] private GameObject levelPosition;
     [SerializeField] private List<LevelManager> levelDataList;
     [SerializeField] private List<GameObject> playersTankPrefab;
-    //[SerializeField] private List<GameObject> enemyTankPrefabs;
-    [SerializeField] private List<GameObject> currentEnemyTankPrefab;
     [SerializeField] private List<GameObject> playersSpawnPoint;
-    private UnityEvent onLevelComplete;
+    public UnityEvent onLevelComplete;
     [SerializeField] private bool isRestarting;
-    
-    public UnityEvent winEvent;
+    private bool cleared;
     
     private void Awake()
     {
@@ -26,28 +23,14 @@ public class TankGameManager : MonoBehaviour
 
         if (!isRestarting)
         {
-            
             LevelGenerator();
         }
 
     }
 
-    private void Update()
-    {
-        // if(currentEnemyTankPrefab.Count == 0)
-        // {
-        //     onLevelComplete.Invoke();
-        // }
-    }
-
     private void LevelGenerator()
     {
         currentLevelData.transform.position = Vector3.zero;
-        
-        foreach (GameObject obj in currentLevelData.enemyTankPrefabs)
-        {
-            currentEnemyTankPrefab.Add(obj);
-        }
         
         playersSpawnPoint.Clear();
         foreach (GameObject obj in currentLevelData.playersSpawnPoints)
@@ -64,7 +47,7 @@ public class TankGameManager : MonoBehaviour
     
     private void LevelReset()
     {
-        foreach (GameObject obj in currentEnemyTankPrefab)
+        foreach (GameObject obj in currentLevelData.enemyTankPrefabs)
         {
             EnemyTank enemyTank = obj.GetComponent<EnemyTank>();
             if (!enemyTank.gameObject.activeInHierarchy)
@@ -115,17 +98,17 @@ public class TankGameManager : MonoBehaviour
     {
         if (ClearedLevel())
         {
+            cleared = false;
             isRestarting = false;
-            winEvent.Invoke();
-            currentEnemyTankPrefab.Clear();
+            onLevelComplete.Invoke();
             Debug.Log("You win!");
         }
     }
     
     public bool ClearedLevel()
     {
-        bool cleared = true;
-        foreach (GameObject obj in currentEnemyTankPrefab)
+        cleared = true;
+        foreach (GameObject obj in currentLevelData.enemyTankPrefabs)
         {
             EnemyTank enemyTank = obj.GetComponent<EnemyTank>();
             if (enemyTank.gameObject.activeInHierarchy)
