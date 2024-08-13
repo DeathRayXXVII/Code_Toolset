@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Scripts.Data;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,12 +7,14 @@ public class TankGameManager : MonoBehaviour
 {
     [SerializeField] private LevelManager currentLevelData;
     [SerializeField] private GameObject levelPosition;
+    [SerializeField] private IntData enemyTankNum;
     [SerializeField] private List<LevelManager> levelDataList;
     [SerializeField] private List<GameObject> playersTankPrefab;
     [SerializeField] private List<GameObject> playersSpawnPoint;
     public UnityEvent onLevelComplete;
     [SerializeField] private bool isRestarting;
     private bool cleared;
+    private int nextLevel;
     
     private void Awake()
     {
@@ -74,7 +77,7 @@ public class TankGameManager : MonoBehaviour
     public void LoadNextLevel()
     {
         currentLevelData.ExitLevel();
-        int nextLevel = currentLevelData.levelNumber + 1;
+        
         if (nextLevel >= levelDataList.Count)
         {
             Debug.LogError("No more levels to load");
@@ -94,8 +97,16 @@ public class TankGameManager : MonoBehaviour
         LoadLevel(previousLevel);
     }
     
+    public void UpdateLevelInfo()
+    {
+        Debug.Log("Level " + currentLevelData.levelNumber);
+        nextLevel = currentLevelData.levelNumber + 1;
+        enemyTankNum.value = currentLevelData.enemyTankPrefabs.Count;
+    }
+    
     public void Hit()
     {
+        enemyTankNum.value--;
         if (ClearedLevel())
         {
             cleared = false;
