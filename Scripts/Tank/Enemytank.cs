@@ -26,6 +26,7 @@ public class EnemyTank : MonoBehaviour
     [SerializeField] private float sightRange;
     [SerializeField] private float attackRange;
     public Vector3 startingPosition;
+    public bool canMove;
 
     private float pathUpdateDeadline;
     private float stoppingDistance;
@@ -82,49 +83,50 @@ public class EnemyTank : MonoBehaviour
         var position = transform.position;
         bool playerInSightRange = Physics.CheckSphere(position, sightRange, playerLayer);
         bool playerInAttackRange = Physics.CheckSphere(position, attackRange, playerLayer);
-        if (!isStationary)
+        if (canMove)
         {
-            Patrolling();
-            if (playerInSightRange && playerInAttackRange)
-            { 
-                RotateBarrel();
-            }
-        }
-        else
-        {
-
-            if (!CanSeePlayer())
+            if (!isStationary)
             {
-               FindPlayer();
+                Patrolling();
+                if (playerInSightRange && playerInAttackRange)
+                { 
+                    RotateBarrel();
+                }
             }
             else
             {
-                RotateBarrel();
-            }
             
-        }
-        if (CanSeePlayer())
-        {
-            isRotating = false;
-            //UpdatePath();
-                        
-            if (timer >= attackSpeed)
-            {
-                AttackPlayer();
-                timer = 0f;
-            }
-            if (playerInSightRange && isBombTriggered)
-            {
-                if (timer1 >= bombData.timeBetweenShots)
+                if (!CanSeePlayer())
                 {
-                    BombTriggered();
-                    timer1 = 0f;
+                    FindPlayer();
                 }
+                else
+                {
+                    RotateBarrel();
+                }
+                        
             }
-            
+            if (CanSeePlayer())
+            {
+                isRotating = false;
+                //UpdatePath();
+                                    
+                if (timer >= attackSpeed)
+                {
+                    AttackPlayer();
+                    timer = 0f;
+                }
+                if (playerInSightRange && isBombTriggered)
+                {
+                    if (timer1 >= bombData.timeBetweenShots)
+                    {
+                        BombTriggered();
+                        timer1 = 0f;
+                    }
+                }
+                        
+            }
         }
-        
-        
     }
     
     private void Patrolling()
@@ -332,6 +334,14 @@ public class EnemyTank : MonoBehaviour
     public void ResetTank()
     {
         transform.position = startingPosition;
+    }
+    
+    public void ResetBullet()
+    {
+        foreach (var bullet in bulletPool)
+        {
+            bullet.ResetBullet();
+        }
     }
     
     public void ManagerHit()

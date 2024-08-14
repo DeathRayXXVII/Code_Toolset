@@ -109,14 +109,24 @@ public class TankGameManager : MonoBehaviour
         enemyTankNum.value--;
         if (ClearedLevel())
         {
+            foreach (GameObject obj in currentLevelData.enemyTankPrefabs)
+            {
+                EnemyTank enemyTank = obj.GetComponent<EnemyTank>();
+                enemyTank.ResetBullet();
+            }
+            foreach (GameObject obj in playersTankPrefab)
+            {
+                TankShooting playerTank = obj.GetComponent<TankShooting>();
+                playerTank.ResetBullets();
+            }
             cleared = false;
             isRestarting = false;
             onLevelComplete.Invoke();
             Debug.Log("You win!");
         }
     }
-    
-    public bool ClearedLevel()
+
+    private bool ClearedLevel()
     {
         cleared = true;
         foreach (GameObject obj in currentLevelData.enemyTankPrefabs)
@@ -128,10 +138,24 @@ public class TankGameManager : MonoBehaviour
                 break;
             }
         }
-        //enemyTankPrefab.Clear();
-        //enemyTankSpawnPoint.Clear();
-        //playersTankSpawnPoint.Clear();
         return cleared;
-        
+    }
+    
+    public void EnemyPause()
+    {
+        foreach (GameObject obj in currentLevelData.enemyTankPrefabs)
+        {
+            EnemyTank enemyTank = obj.GetComponent<EnemyTank>();
+            enemyTank.canMove = false;
+        }
+    }
+    
+    public void EnemyResume()
+    {
+        foreach (GameObject obj in currentLevelData.enemyTankPrefabs)
+        {
+            EnemyTank enemyTank = obj.GetComponent<EnemyTank>();
+            enemyTank.canMove = true;
+        }
     }
 }

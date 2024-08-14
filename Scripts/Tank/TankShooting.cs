@@ -92,6 +92,14 @@ public class TankShooting : MonoBehaviour
         }
         return null;
     }
+    
+    public void ResetBullets()
+    {
+        foreach (var bullet in bulletPool)
+        {
+            bullet.ResetBullet();
+        }
+    }
 
     private void Bomb()
     {

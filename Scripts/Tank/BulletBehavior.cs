@@ -20,7 +20,6 @@ public class BulletBehavior : MonoBehaviour
         if (bounce >= bulletData.maxBounces)
         {
             //Destroy(gameObject);
-            bounce = 0;
             gameObject.SetActive(false);
             
         }
@@ -28,7 +27,6 @@ public class BulletBehavior : MonoBehaviour
         {
             Destroy(collision.gameObject);
             //Destroy(gameObject);
-            bounce = 0;
             gameObject.SetActive(false);
         }
         else
@@ -54,8 +52,8 @@ public class BulletBehavior : MonoBehaviour
     
     public void ResetBullet()
     {
+        gameObject.SetActive(false);
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        gameObject.SetActive(false);
     }
 }
