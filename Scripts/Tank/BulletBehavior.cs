@@ -19,12 +19,17 @@ public class BulletBehavior : MonoBehaviour
     {
         if (bounce >= bulletData.maxBounces)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            bounce = 0;
+            gameObject.SetActive(false);
+            
         }
         if ((destructibleLayer.value & (1 << collision.gameObject.layer)) != 0)
         {
             Destroy(collision.gameObject);
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            bounce = 0;
+            gameObject.SetActive(false);
         }
         else
         {
@@ -45,5 +50,12 @@ public class BulletBehavior : MonoBehaviour
     {
         direction = dir;
         rb.velocity = dir * bulletData.speed;
+    }
+    
+    public void ResetBullet()
+    {
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        gameObject.SetActive(false);
     }
 }

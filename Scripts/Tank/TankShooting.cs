@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using Scripts.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,42 +13,84 @@ public class TankShooting : MonoBehaviour
     [SerializeField] private BulletData bombData;
     [SerializeField] private Transform fireTransform;
     [SerializeField] private Transform bombTransform;
+    [SerializeField] private IntData bulletCount;
+    [SerializeField] public List<BulletBehavior> bulletPool;
+    public bool canShoot;
     private float timer;
+
+    private void Awake()
+    {
+        bulletPool = new List<BulletBehavior>();
+        for (int i = 0; i < bulletCount.value; i++)
+        {
+            BulletBehavior bullet = Instantiate(bB);
+            bullet.gameObject.SetActive(false);
+            bulletPool.Add(bullet);
+        }
+    }
 
     private void Update()
     {
         timer += Time.deltaTime;
-
-        if (timer >= bulletData.timeBetweenShots)
+        if (canShoot)
         {
-            if (fireControl.action.triggered)
+            if (timer >= bulletData.timeBetweenShots)
             {
-                Fire();
-                timer = 0f;
+                if (fireControl.action.triggered)
+                {
+                    Fire();
+                    timer = 0f;
+                }
+            }
+            if (timer >= bombData.timeBetweenShots)
+            {
+                if (bombControl.action.triggered)
+                {
+                    Bomb();
+                    timer = 0f;
+                }
             }
         }
-        if (timer >= bombData.timeBetweenShots)
-        {
-            if (bombControl.action.triggered)
-            {
-                Bomb();
-                timer = 0f;
-            }
-        }
+        
     }
 
     private void Fire()
     {
+        bB.ResetBullet();
         Vector3 direction = fireTransform.forward;
-        // Calculate the new rotation with a 180-degree turn around the y-axis
         var eulerAngles = fireTransform.eulerAngles;
         Quaternion newRotation = Quaternion.Euler(0, eulerAngles.y + 180, 0);
         
-        // Instantiate the bullet
-        BulletBehavior bullet = Instantiate(bB, fireTransform.position, newRotation);
-        bullet.Shoot(direction.normalized);
-
-        
+        BulletBehavior bullet = GetBullet();
+        if (bullet != null)
+        {
+            bullet.transform.position = fireTransform.position;
+            bullet.transform.rotation = newRotation;
+            bullet.gameObject.SetActive(true);
+            bullet.Shoot(direction.normalized);
+            bullet.bounce = 0;
+        }
+    }
+    
+    public void ToggleShootOn()
+    {
+        canShoot = true;
+    }
+    public void ToggleShootOff()
+    {
+        canShoot = false;
+    }
+    
+    private BulletBehavior GetBullet()
+    {
+        foreach (var bullet in bulletPool)
+        {
+            if (!bullet.gameObject.activeInHierarchy)
+            {
+                return bullet;
+            }
+        }
+        return null;
     }
 
     private void Bomb()

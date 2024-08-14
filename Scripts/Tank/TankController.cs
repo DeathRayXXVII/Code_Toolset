@@ -23,7 +23,7 @@ public class TankController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         rb.velocity = Vector3.zero;
         moveControl.action.Enable();
@@ -35,7 +35,7 @@ public class TankController : MonoBehaviour
         turnControl.action.canceled += ctx => turnInput = Vector2.zero;
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         rb.velocity = Vector3.zero;
         moveControl.action.Disable();

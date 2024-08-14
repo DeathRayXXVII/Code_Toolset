@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,6 +19,8 @@ public class EnemyTank : MonoBehaviour
     [SerializeField] private Transform fireTransform;
     [SerializeField] private Transform bombTransform;
     [SerializeField] private GameObject barrelPrefab;
+    [SerializeField] private int bulletCount;
+    [SerializeField] public List<BulletBehavior> bulletPool;
     [SerializeField] private bool stationary;
     [SerializeField] private LayerMask groundLayer, playerLayer;
     [SerializeField] private float sightRange;
@@ -39,6 +42,13 @@ public class EnemyTank : MonoBehaviour
     
     private void Awake()
     {
+        bulletPool = new List<BulletBehavior>();
+        for (int i = 0; i < bulletCount; i++)
+        {
+            BulletBehavior bullet = Instantiate(bB);
+            bullet.gameObject.SetActive(false);
+            bulletPool.Add(bullet);
+        }
         if(bombTriggered)
         {
             isBombTriggered = true;
@@ -221,13 +231,38 @@ public class EnemyTank : MonoBehaviour
         //barrelPrefab.transform.LookAt(player);
         if (!alreadyAttacked)
         {
-            direction = fireTransform.forward;
-            BulletBehavior bullet = Instantiate(bB, fireTransform.position, fireTransform.rotation);
-            bullet.Shoot(direction.normalized);
-            
-            alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            // direction = fireTransform.forward;
+            // BulletBehavior bullet = Instantiate(bB, fireTransform.position, fireTransform.rotation);
+            // bullet.Shoot(direction.normalized);
+            //
+            // alreadyAttacked = true;
+            // Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            Vector3 direction = fireTransform.forward;
+            var eulerAngles = fireTransform.eulerAngles;
+            Quaternion newRotation = Quaternion.Euler(0, eulerAngles.y + 180, 0);
+        
+            BulletBehavior bullet = GetBullet();
+            if (bullet != null)
+            {
+                bullet.transform.position = fireTransform.position;
+                bullet.transform.rotation = newRotation;
+                bullet.gameObject.SetActive(true);
+                bullet.Shoot(direction.normalized);
+                bullet.bounce = 0;
+            }
         }
+    }
+    
+    private BulletBehavior GetBullet()
+    {
+        foreach (var bullet in bulletPool)
+        {
+            if (!bullet.gameObject.activeInHierarchy)
+            {
+                return bullet;
+            }
+        }
+        return null;
     }
     
     private void ResetAttack()
