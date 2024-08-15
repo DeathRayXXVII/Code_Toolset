@@ -7,9 +7,11 @@ public class BulletBehavior : MonoBehaviour
     [SerializeField] private LayerMask destructibleLayer;
     public Rigidbody rb;
     private Vector3 direction;
+    private TankGameManager tankGameManager;
 
     private void Start()
     {
+        tankGameManager = FindObjectOfType<TankGameManager>();
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotationY;
         //rb.velocity = transform.up * bulletData.speed;
@@ -23,10 +25,14 @@ public class BulletBehavior : MonoBehaviour
             gameObject.SetActive(false);
             
         }
-        if ((destructibleLayer.value & (1 << collision.gameObject.layer)) != 0)
+        if (collision.gameObject.layer == 8)
         {
-            Destroy(collision.gameObject);
-            //Destroy(gameObject);
+            collision.gameObject.SetActive(false);
+            tankGameManager.LevelFail();
+        }
+        else if ((destructibleLayer.value & (1 << collision.gameObject.layer)) != 0)
+        {
+            collision.gameObject.SetActive(false);
             gameObject.SetActive(false);
         }
         else

@@ -1,3 +1,4 @@
+using System;
 using Scripts.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,10 +9,11 @@ public class TankController : MonoBehaviour
     [SerializeField] private FloatData speed;
     [SerializeField] private FloatData turnSpeed;
     [SerializeField] private GameObject barrel;
+    public Vector3 spawnPoint;
     private Vector2 lastMousePosition;
 
     //private CharacterController cc;
-    private Rigidbody rb;
+    [SerializeField] private Rigidbody rb;
     [SerializeField] private InputActionReference moveControl;
     [SerializeField] private InputActionReference turnControl;
 
@@ -21,6 +23,11 @@ public class TankController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        ResetTank();
     }
 
     public void OnEnable()
@@ -86,5 +93,19 @@ public class TankController : MonoBehaviour
             Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
             rb.MoveRotation(rb.rotation * turnRotation);
         }
+    }
+    
+    public void SetSpawnPoint(Vector3 newSpawnPoint)
+    {
+        spawnPoint = newSpawnPoint;
+        ResetTank();
+    }
+
+    private void ResetTank()
+    {
+        //rb.velocity = Vector3.zero;
+        //rb.angularVelocity = Vector3.zero;
+        transform.position = spawnPoint;
+        transform.rotation = Quaternion.Euler(0, 90, 0);
     }
 }

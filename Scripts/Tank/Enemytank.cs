@@ -333,7 +333,9 @@ public class EnemyTank : MonoBehaviour
     
     public void ResetTank()
     {
-        transform.position = startingPosition;
+        //transform.position = startingPosition;
+        agent.Warp(startingPosition);
+        canMove = true;
     }
     
     public void ResetBullet()
