@@ -23,7 +23,7 @@ public class Ball: MonoBehaviour
     {
         speed.value = maxSpeed.value;
         gameObject.SetActive(true);
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         transform.position = new Vector3(0, -4, 0);
 
         Invoke(nameof(SetRandomTrajectory), 1f);
@@ -45,6 +45,6 @@ public class Ball: MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = rb.velocity.normalized * speed.value;
+        rb.linearVelocity = rb.linearVelocity.normalized * speed.value;
     }
 }

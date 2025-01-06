@@ -53,13 +53,13 @@ public class BulletBehavior : MonoBehaviour
     public void Shoot(Vector3 dir)
     {
         direction = dir;
-        rb.velocity = dir * bulletData.speed;
+        rb.linearVelocity = dir * bulletData.speed;
     }
     
     public void ResetBullet()
     {
         gameObject.SetActive(false);
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
     }
 }

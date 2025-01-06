@@ -19,7 +19,7 @@ namespace Scripts
 
         private void Update()
         {
-            rigidbody.velocity = new Vector2(-speed, rigidbody.velocity.y);
+            rigidbody.linearVelocity = new Vector2(-speed, rigidbody.linearVelocity.y);
             moveVelocity = speed;
         }
     }

@@ -76,7 +76,7 @@ public class Brick : MonoBehaviour
             Ball ball = collision.gameObject.GetComponent<Ball>();
             if (ball != null)
             {
-                ball.rb.velocity = Vector3.Reflect(ball.rb.velocity, collision.contacts[0].normal);
+                ball.rb.linearVelocity = Vector3.Reflect(ball.rb.linearVelocity, collision.contacts[0].normal);
                /* Vector3 paddlePosition = transform.position;
                 Vector2 ballPosition = collision.transform.position;
 

@@ -90,7 +90,7 @@ public class ItemPickup : MonoBehaviour
             item.transform.parent = hand;
             itemRb = obj.GetComponent<Rigidbody>();
             itemRb.useGravity = false;
-            itemRb.drag = 10;
+            itemRb.linearDamping = 10;
             itemRb.constraints = RigidbodyConstraints.FreezeRotation;
             itemRb.transform.parent = hand;
             item.transform.position = hand.position;
@@ -103,7 +103,7 @@ public class ItemPickup : MonoBehaviour
         item.transform.GetChild(0).gameObject.SetActive(true);
         item.transform.parent = null;
         itemRb.useGravity = true;
-        itemRb.drag = 1;
+        itemRb.linearDamping = 1;
         itemRb.constraints = RigidbodyConstraints.None;
         itemRb.transform.parent = null;
         item = null;

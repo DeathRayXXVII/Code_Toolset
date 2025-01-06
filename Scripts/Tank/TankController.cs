@@ -32,7 +32,7 @@ public class TankController : MonoBehaviour
 
     public void OnEnable()
     {
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         moveControl.action.Enable();
         turnControl.action.Enable();
         
@@ -44,7 +44,7 @@ public class TankController : MonoBehaviour
 
     public void OnDisable()
     {
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         moveControl.action.Disable();
         turnControl.action.Disable();
         
