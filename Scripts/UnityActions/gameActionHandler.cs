@@ -19,7 +19,7 @@ namespace Scripts.UnityActions
         private void OnEnable()
         {
             waitObj = new WaitForSeconds(holdTime);
-            action.raiseNoArgs += Respond;
+            //action.raiseNoArgs += Respond;
         }
 
         private void Respond()
@@ -41,7 +41,7 @@ namespace Scripts.UnityActions
 
         private void OnDestroy()
         {
-            action.raiseNoArgs = null;
+            //action.raiseNoArgs = null;
         }
     }
 }

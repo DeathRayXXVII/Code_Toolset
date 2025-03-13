@@ -24,6 +24,6 @@ public class InventoryPrefabItemBehaviour : ColliderBehaviour
     protected override void OnTriggerExit(Collider other)
     {
         base.OnTriggerExit(other);
-        gameActionObj.Raise();
+        gameActionObj.RaiseAction();
     }
 }

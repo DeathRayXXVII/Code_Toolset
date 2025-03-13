@@ -16,7 +16,7 @@ namespace Scripts
         void Awake()
         {
             rendererObj = GetComponent<SpriteRenderer>();
-            gameActionObj.raiseNoArgs += Raise;
+            //gameActionObj.raiseNoArgs += Raise;
         }
         private void Raise()
         {
@@ -35,7 +35,7 @@ namespace Scripts
         
         public void ChangeRenererSprite()
         {
-            rendererObj.sprite = gameActionObj.spriteObj.sprite;
+            //rendererObj.sprite = gameActionObj.spriteObj.sprite;
         }
     }
 }

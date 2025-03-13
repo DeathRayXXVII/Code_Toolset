@@ -18,7 +18,7 @@ public class Materialbehaviour : MonoBehaviour
         {
             return;
         }
-        gameActionObj.raiseNoArgs += Raise;
+        //gameActionObj.RaiseAction() += Raise;
     }
     
     private void Raise()
@@ -39,6 +39,6 @@ public class Materialbehaviour : MonoBehaviour
     public void ChangeMeshRenderer()
     {
         //rendererObj.sprite = gameActionObj.spriteObj.sprite;
-        rendererObj.sharedMaterial = gameActionObj.meshObj.sharedMaterial;
+        //rendererObj.sharedMaterial = gameActionObj.meshObj.sharedMaterial;
     }
 }

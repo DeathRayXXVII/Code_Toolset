@@ -17,11 +17,11 @@ namespace Scripts
     private void Start()
     {
       imageObj = GetComponent<Image>();
-      updateAction.raiseNoArgs += OnUpdate;
+      updateAction.RaiseEvent += OnUpdate;
       startEvent.Invoke();
     }
 
-    public void OnUpdate()
+    private void OnUpdate(GameAction _)
     {
       updateImageEvent.Invoke();
     }

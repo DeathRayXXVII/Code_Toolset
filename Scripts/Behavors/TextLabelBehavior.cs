@@ -22,15 +22,15 @@ namespace Scripts
         protected void Start()
         {
             waitObj = new WaitForFixedUpdate();
-            gameActionObj.raiseNoArgs += Raise;
+            gameActionObj.RaiseAction();
             textObj = GetComponent<TextMeshProUGUI>();
             awakeEvent.Invoke();
         }
 
-        private void Raise()
-        {
-            raiseEvent.Invoke();
-        }
+        // private void Raise()
+        // {
+        //     raiseEvent.Invoke();
+        // }
 
         public new void UpdateText(StringList stringListDataObj)
         {

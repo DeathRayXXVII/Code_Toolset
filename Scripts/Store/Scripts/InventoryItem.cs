@@ -41,7 +41,7 @@ public class InventoryItem : ScriptableObject, IStoreItem, IInventoryItem
 
     public void Raise()
     {
-        if (gameActionObj != null) gameActionObj.Raise();
+        if (gameActionObj != null) gameActionObj.RaiseAction();
     }
     
     // public void OnPurchase(InventoryData inventoryDataObj)

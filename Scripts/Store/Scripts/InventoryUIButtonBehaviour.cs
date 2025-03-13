@@ -71,7 +71,7 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
                 {
                     Debug.Log("Background is not null");
                     ButtonObj.image.sprite = InventoryItemObj.PreviewArt;
-                    gameActionSpriteObj.Raise(ButtonObj.image.sprite);
+                    //gameActionSpriteObj.RaiseAction(ButtonObj.image.sprite);
                     spriteRaiseEvent.Invoke();
                 }
                 
@@ -83,7 +83,7 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
                 {
                     Debug.Log("Material is not null");
                     //ButtonObj.image.material = InventoryItemObj.PreviewMaterial;
-                    gameActionMaterialObj.Raise(InventoryItemObj.PreviewMaterial);
+                    //gameActionMaterialObj.RaiseAction(InventoryItemObj.PreviewMaterial);
                     materialRiseEvent.Invoke();
                 }
 
@@ -91,7 +91,7 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
                 {
                     Debug.Log("Material is not null");
                     //ButtonObj.image.material = InventoryItemObj.PreviewMaterial;
-                    ballMaterialObj.Raise(InventoryItemObj.PreviewMaterial);
+                    //ballMaterialObj.RaiseEvent(InventoryItemObj.PreviewMaterial);
                     ballMaterialEvent.Invoke();
                 }
 
@@ -103,7 +103,7 @@ public class InventoryUIButtonBehaviour : MonoBehaviour
                 {
                     Debug.Log("GameArt is not null");
                     IInventoryItem item = InventoryItemObj;
-                    gameActionItemDropObj.Raise(item);
+                    //gameActionItemDropObj.RaiseAction(item);
                     ButtonObj.interactable = false;
                     Debug.Log("Art Worked");                    
                 }

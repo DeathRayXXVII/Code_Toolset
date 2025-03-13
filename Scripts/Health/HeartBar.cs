@@ -17,7 +17,7 @@ public class HeartBar : MonoBehaviour
     public void Start()
     {
         DrawHearts();
-        updateAction.raiseNoArgs += UpdateHearts;
+        //updateAction.RaiseAction() += UpdateHearts;
     }
     
     public void UpdateHearts()
