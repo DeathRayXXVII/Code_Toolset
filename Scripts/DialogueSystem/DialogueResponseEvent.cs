@@ -1,13 +1,21 @@
 using UnityEngine;
 using System;
+using UI.DialogueSystem;
 
 public class DialogueResponseEvents : MonoBehaviour
 {
     [SerializeField] private DialogueData dialogueData;
     [SerializeField] private ResponseEvent[] events;
-
+    
     public DialogueData DialogueData => dialogueData;
     public ResponseEvent[] Events => events;
+    
+    
+    public void UpdateResponseEvents(DialogueData dData)
+    {
+        this.dialogueData = dData;
+        OnValidate();
+    }
 
     public void OnValidate()
     {

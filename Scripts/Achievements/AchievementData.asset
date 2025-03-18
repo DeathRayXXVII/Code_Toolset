@@ -22,15 +22,15 @@ MonoBehaviour:
     - rid: 8171694956739559621
       type: {class: ProgressiveAchievement, ns: Scripts.Achievements, asm: Assembly-CSharp}
       data:
-        idName: 
+        idName: Prog Test
         name: 
         description: 
         isHidden: 0
         isUnlocked: 0
         lockedIcon: {fileID: 0}
         unlockedIcon: {fileID: 0}
-        action: {fileID: 0}
-        goal: 0
+        action: {fileID: 11400000, guid: 0f7e38cfa8de5e24181fecf4e97c8899, type: 2}
+        goal: 5
         progress: 0
         progressUpdate: 0
         progressSuffix: 
@@ -38,23 +38,25 @@ MonoBehaviour:
     - rid: 8171694956739559653
       type: {class: Achievement, ns: Scripts.Achievements, asm: Assembly-CSharp}
       data:
-        idName: 
+        idName: Ach Test
         name: 
         description: 
         isHidden: 0
         isUnlocked: 0
         lockedIcon: {fileID: 0}
         unlockedIcon: {fileID: 0}
-        action: {fileID: 0}
+        action: {fileID: 11400000, guid: 9a2dd3493e2b04a4882c7273e22f418a, type: 2}
     - rid: 8171694956739559654
       type: {class: CollectiveAchievement, ns: Scripts.Achievements, asm: Assembly-CSharp}
       data:
-        idName: 
+        idName: Collect Test
         name: 
         description: 
         isHidden: 0
         isUnlocked: 0
         lockedIcon: {fileID: 0}
         unlockedIcon: {fileID: 0}
-        action: {fileID: 0}
-        collection: []
+        action: {fileID: 11400000, guid: 057c8cd2c3c1efb4e994aeefe3ff9d06, type: 2}
+        collection:
+        - id: {fileID: 0}
+          isCollected: 0

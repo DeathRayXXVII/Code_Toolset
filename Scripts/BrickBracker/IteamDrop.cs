@@ -13,6 +13,7 @@ public class IteamDrop : MonoBehaviour
     
     private void Awake()
     {
+        //gameAction.RaiseEvent += AddToList;
         //gameAction.response.AddListener(AddToList);
     }
    private void OnCollisionEnter(Collision collision)

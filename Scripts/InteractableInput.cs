@@ -38,11 +38,11 @@ public class InteractableInput : MonoBehaviour, IInteractable
         }
     }
 
-    public void Interact(PlayerController playerController)
+    public void Interact(PlayerDialogueActivator playerController)
     {
         interactEvent.Invoke();
     }
-    public void Interact1(PlayerController playerController)
+    public void Interact(PlayerController player)
     {
     }
 }

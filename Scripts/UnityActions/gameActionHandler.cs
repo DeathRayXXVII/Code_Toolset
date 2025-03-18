@@ -1,47 +1,46 @@
-using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Scripts.UnityActions
 {
+    [System.Serializable]
+    public class GameActionEvent
+    {
+        public GameAction actionObj;
+        public UnityEvent onRaiseEvent;
+    }
+
     public class GameActionHandler : MonoBehaviour
     {
-        public GameAction action;
-        public UnityEvent startEvent, respondEvent, respondLateEvent, runInAnimatorEvent;
-        public float holdTime = 0.1f;
-        private WaitForSeconds waitObj;
-
-        private void Start()
-        {
-            startEvent.Invoke();
-        }
+        public List<GameActionEvent> gameActions;
 
         private void OnEnable()
         {
-            waitObj = new WaitForSeconds(holdTime);
-            //action.raiseNoArgs += Respond;
+            // Subscribe to all the events in the list.
+            foreach (var gameAction in gameActions.Where(gameAction => gameAction.actionObj != null))
+            {
+                gameAction.actionObj.RaiseEvent += RaiseEvent;
+            }
         }
 
-        private void Respond()
+        private void OnDisable()
         {
-            respondEvent.Invoke();
-            StartCoroutine(RespondLate());
+            // Unsubscribe from all the events in the list.
+            foreach (var gameAction in gameActions.Where(gameAction => gameAction.actionObj != null))
+            {
+                gameAction.actionObj.RaiseEvent -= RaiseEvent;
+            }
         }
 
-        private IEnumerator RespondLate()
+        private void RaiseEvent(GameAction callingObj)
         {
-            yield return waitObj;
-            respondLateEvent.Invoke();
-        }
+            // Find the first matching GameAction
+            var gameAction = gameActions.FirstOrDefault(action => action.actionObj == callingObj);
 
-        private void RunFromAnimator()
-        {
-            runInAnimatorEvent.Invoke();
-        }
-
-        private void OnDestroy()
-        {
-            //action.raiseNoArgs = null;
+            // If found, invoke its onRaiseEvent
+            gameAction?.onRaiseEvent.Invoke();
         }
     }
 }

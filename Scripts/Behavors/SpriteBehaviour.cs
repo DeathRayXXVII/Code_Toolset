@@ -36,6 +36,7 @@ namespace Scripts
         public void ChangeRenererSprite()
         {
             //rendererObj.sprite = gameActionObj.spriteObj.sprite;
+            //rendererObj.sprite = gameActionObj.RaiseEventObj as Sprite;
         }
     }
 }

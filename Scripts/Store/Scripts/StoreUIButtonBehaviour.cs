@@ -63,7 +63,7 @@ public class StoreUIButtonBehaviour : InventoryUIButtonBehaviour
         {
             StoreItemObj.UsedOrPurchase = true;
             ToggleObj.isOn = true;
-            cash.UpdateValue(-StoreItemObj.Price);
+            cash.AdjustValue(-StoreItemObj.Price);
             ButtonObj.interactable = false;
             //GameState.Instance.CurrentAction = "Purchase";
 

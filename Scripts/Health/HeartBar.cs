@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Scripts.Data;
 using Scripts.Health;
 using Scripts.UnityActions;
 using UnityEngine;
@@ -11,16 +10,16 @@ public class HeartBar : MonoBehaviour
     public GameObject heartPrefab;
     public FloatData curtHealth;
     public FloatData maxHealth;
-    List<HealthHeart> hearts = new List<HealthHeart>();
+    private readonly List<HealthHeart> hearts = new List<HealthHeart>();
     public UnityEvent updateHeartBar;
 
     public void Start()
     {
         DrawHearts();
-        //updateAction.RaiseAction() += UpdateHearts;
+        updateAction.RaiseEvent += UpdateHearts;
     }
     
-    public void UpdateHearts()
+    public void UpdateHearts(GameAction _)
     {
         DrawHearts();
         updateHeartBar.Invoke();
@@ -29,25 +28,25 @@ public class HeartBar : MonoBehaviour
     public void DrawHearts()
     {
         ClearHearts();
-        float maxHealthRemander = maxHealth.value % 4;
-        int makeHearts = (int)(maxHealth.value / 4 + maxHealthRemander);
-        for (int i = 0; i < makeHearts; i++)
+        var maxHealthRemainder = maxHealth.value % 4;
+        var makeHearts = (int)(maxHealth.value / 4 + maxHealthRemainder);
+        for (var i = 0; i < makeHearts; i++)
         {
             CreateHeart();
         }
 
         for (int i = 0; i < hearts.Count; i++)
         {
-            int heartStatusRemander = (int)Mathf.Clamp(curtHealth.value - (i * 4), 0, 4);
-            hearts[i].SetHeartState((HeartState)heartStatusRemander);
+            int heartStatusRemainder = (int)Mathf.Clamp(curtHealth.value - (i * 4), 0, 4);
+            hearts[i].SetHeartState((HeartState)heartStatusRemainder);
         }
     }
     
     public void CreateHeart()
     {
-        GameObject newHeart = Instantiate(heartPrefab, transform, true);
+        var newHeart = Instantiate(heartPrefab, transform, true);
         
-        HealthHeart heart = newHeart.GetComponent<HealthHeart>();
+        var heart = newHeart.GetComponent<HealthHeart>();
         heart.SetHeartState(HeartState.Empty);
         hearts.Add(heart);
     }

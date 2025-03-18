@@ -23,10 +23,26 @@ namespace Scripts.Achievements
         public Sprite unlockedIcon;
         public GameAction action;
         
-        private void OnEnable() => action.RaiseEvent += CheckProgress;
-        private void OnDisable() => action.RaiseEvent -= CheckProgress;
+        //private void OnEnable() => action.RaiseEvent += CheckProgress;
+        //private void OnDisable() => action.RaiseEvent -= CheckProgress;
         
-        protected abstract void CheckProgress(GameAction _);
+        private void OnEnable()
+        {
+            if (action != null)
+            {
+                action.RaiseEvent += CheckProgress;
+            }
+        }
+        
+        private void OnDisable()
+        {
+            if (action != null)
+            {
+                action.RaiseEvent -= CheckProgress;
+            }
+        }
+        
+        public abstract void CheckProgress(GameAction _);
     }
     
     [System.Serializable]
@@ -37,8 +53,8 @@ namespace Scripts.Achievements
             isUnlocked = newIsUnlocked;
         }
         public Achievement() { }
-        
-        protected override void CheckProgress(GameAction _)
+
+        public override void CheckProgress(GameAction _)
         {
             if (isUnlocked) return;
             isUnlocked = true;
@@ -56,7 +72,7 @@ namespace Scripts.Achievements
         }
         public ProgressiveAchievement() { }
 
-        protected override void CheckProgress(GameAction _)
+        public override void CheckProgress(GameAction _)
         {
             if (progress >= goal) return;
             progress++;
@@ -86,8 +102,8 @@ namespace Scripts.Achievements
             isUnlocked = newIsUnlocked;
         }
         public CollectiveAchievement() { }
-        
-        protected override void CheckProgress(GameAction _)
+
+        public override void CheckProgress(GameAction _)
         {
             if (collection.TrueForAll(x => x.isCollected)) return;
             collection.ForEach(x => x.isCollected = true);

@@ -14,7 +14,7 @@ namespace Scripts
       }
       public void UpdateFloatData(float number)
       {
-         floatDataObj.UpdateValue(number);
+         //floatDataObj.UpdateValue(number);
       }
 
       private void OnTriggerEnter(Collider other)

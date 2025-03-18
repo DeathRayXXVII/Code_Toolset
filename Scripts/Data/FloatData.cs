@@ -1,66 +1,104 @@
 using UnityEngine;
-using UnityEngine.Events;
 
-namespace Scripts.Data
+[CreateAssetMenu (fileName = "FloatData", menuName = "Data/Primitive/FloatData")]
+public class FloatData : ScriptableObject
 {
-    //[ExecuteInEditMode]
-    [CreateAssetMenu(menuName = "Single Variables/FloatData")]
-    public class FloatData : ScriptableObject
+    private string _saveKey;
+    
+    [SerializeField] private bool zeroOnEnable;
+    [SerializeField] private float objectValue;
+
+    public float value
     {
-        public float value;
-        public UnityEvent minValueEvent, maxValueEvent, updateValueEvent;
-    
-        public void SetValue (float amount)
-        {
-            value = amount;
-            updateValueEvent.Invoke();
-        }
+        get => objectValue;
+        set => objectValue = value;
+    }
 
-        public void UpdateValue(float amount)
-        {
-            value += amount;
-            updateValueEvent.Invoke();
-        }
-    
+    private void Awake() => _saveKey = name;
 
-        public void IncrementValue()
-        {
-            value ++;
-        }
-        public void CompareValue(FloatData obj)
-        {
-            if (value >= obj.value)
-            {
-            
-            }
-            else
-            {
-                value = obj.value;
-            }
-        }
-    
-        public void UpdateValue(FloatData data)
-        {
-            if (data != null) value += data.value;
-        }
+    private void OnEnable() => value = zeroOnEnable ? 0 : value;
 
-        public void SetValue(FloatData data)
-        {
-            if (data != null) value = data.value;
-        }
-    
-        public void CheckMinValue(float minValue)
-        {
-            if (!(value < minValue)) return;
-            minValueEvent.Invoke();
-            value = minValue;
-        }
+    public void Set(float num) => value = num;
+    public void Set(FloatData otherDataObj) => value = otherDataObj.value;
 
-        public void CheckMaxValue(float maxValue)
+    public void IncrementValue() => ++value;
+    
+    public void DecrementValue() => --value;
+    
+    public void AdjustValue(int num) => value += num;
+
+    public float GetSavedValue()
+    {
+        var key = name;
+        value = (PlayerPrefs.HasKey(key)) ? PlayerPrefs.GetInt(key) : 0;
+        return value;
+    }
+    
+    public void SaveCurrentValue()
+    {
+        PlayerPrefs.SetFloat(_saveKey, value);
+        PlayerPrefs.Save();
+    }
+    
+    public override string ToString() => base.ToString() + $": {value}";
+    
+    public static implicit operator float(FloatData data) => data.value;
+
+    public static FloatData operator --(FloatData data)
+    {
+        data.value--;
+        return data;
+    }
+
+    public static FloatData operator ++(FloatData data)
+    {
+        data.value++;
+        return data;
+    }
+    
+    public static FloatData operator +(FloatData data, int other)
+    {
+        data.value += other;
+        return data;
+    }
+
+    public static FloatData operator -(FloatData data, int other)
+    {
+        data.value -= other;
+        return data;
+    }
+
+    public static FloatData operator *(FloatData data, int scalar)
+    {
+        data.value *= scalar;
+        return data;
+    }
+
+    public static FloatData operator /(FloatData data, int scalar)
+    {
+        data.value /= scalar;
+        return data;
+    }
+    
+    public static bool operator ==(FloatData data, float other) => data != null && Mathf.Approximately(data.value, other);
+    public static bool operator !=(FloatData data, float other) => data != null && !Mathf.Approximately(data.value, other);
+    public static bool operator >(FloatData data, float other) => data.value > other;
+    public static bool operator <(FloatData data, float other) => data.value < other;
+    public static bool operator >=(FloatData data, float other) => data.value >= other;
+    public static bool operator <=(FloatData data, float other) => data.value <= other;
+
+    public override bool Equals(object obj)
+    {
+        switch (obj)
         {
-            if (!(value >= maxValue)) return;
-            maxValueEvent.Invoke();
-            value = maxValue;
+            case FloatData otherData:
+                return Mathf.Approximately(value, otherData.value);
+            case float otherValue:
+                return Mathf.Approximately(value, otherValue);
+            default:
+                return false;
         }
     }
+
+    public override int GetHashCode() => value.GetHashCode();
 }

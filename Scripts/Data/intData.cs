@@ -1,108 +1,143 @@
 using UnityEngine;
-using UnityEngine.Events;
 
-namespace Scripts.Data
+[CreateAssetMenu (fileName = "IntData", menuName = "Data/Primitive/IntData")]
+public class IntData : ScriptableObject
 {
-    [CreateAssetMenu(menuName = "Single Variables/IntData")]
-    public class IntData : ScriptableObject
+    private string _saveKey;
+    
+    [SerializeField] private bool zeroOnEnable;
+    [SerializeField] private int objectValue;
+    
+    public int value
     {
-        public int value;
-        private int currentValue;
-        public UnityEvent decrementEvent, valueChangeEvent,atZeroEvent, compareTrueEvent, enableEvent, atMinValue;
-
-        private void OnEnable()
-        {
-            enableEvent?.Invoke();
-        }
-
-        public void SetValue(int amount)
-        {
-            value = amount;
-            valueChangeEvent.Invoke();
-        }
-        public void UpdateFromCurrentValue()
-        {
-            value = currentValue;
-            valueChangeEvent.Invoke();
-        }
-
-        public void UpdateCurrentValue()
-        {
-            currentValue = value;
-            valueChangeEvent.Invoke();
-        }
+        get => objectValue;
+        set => objectValue = value;
+    }
     
-        public void UpdateValue(int amount)
-        {
-            value += amount;
-            valueChangeEvent.Invoke();
-        }
+    private void Awake()
+    {
+        value = zeroOnEnable ? 0 : value;
+        _saveKey = name;
+    }
+
+    public void Set(int num) => value = num;
+    public void Set(IntData otherDataObj) => value = otherDataObj.value;
     
-        public void IncrementValue()
-        {
-            value++;
-            valueChangeEvent.Invoke();
-        }
-
-        public void DecrementToZero()
-        {
-            if (value > 0)
-            {
-                value--;
-                decrementEvent.Invoke();
-            }
-            if (value == 0){
-                atZeroEvent.Invoke();
-            }
-        }
-
-        public void UpdateValue(Object data)
-        {
-            var newData = data as IntData;
-            if (newData != null) value += newData.value;
-            valueChangeEvent.Invoke();
-        }
+    public void Increment() => ++value;
     
-        public void SetValue(Object data)
-        {
-            var newData = data as IntData;
-            if (newData == null) return;
-            value = newData.value;
-            valueChangeEvent.Invoke();
-        }
-
-        public void CompareValue(IntData data)
-        {
-            if (value < data.value)
-            {
-                value = data.value;
-                valueChangeEvent.Invoke();
-            }
-            if (value == data.value)
-            {
-                compareTrueEvent.Invoke();
-            }
-        }
+    public void Decrement() => --value;
     
-        public void CompareValue(int num)
-        {
-            if (value < num)
-            {
-                value = num;
-            }
-            if (value == num)
-            {
-                compareTrueEvent.Invoke();
-            }
-        }
+    public void AdjustValue(int num) => value += num;
 
-        public void CheckMinValue(int num)
+    public int GetSavedValue()
+    {
+        var key = name;
+        value = (PlayerPrefs.HasKey(key)) ? PlayerPrefs.GetInt(key) : 0;
+        return value;
+    }
+    
+    public void SaveCurrentValue()
+    {
+        PlayerPrefs.SetInt(_saveKey, value);
+        PlayerPrefs.Save();
+    }
+    
+    public override string ToString()
+    {
+        return base.ToString() + $": {value}";
+    }
+    
+    public static implicit operator int(IntData data)
+    {
+        return data.value;
+    }
+    
+    public static implicit operator float(IntData data)
+    {
+        return data.value;
+    }
+
+    public static IntData operator --(IntData data)
+    {
+        data.value--;
+        return data;
+    }
+
+    public static IntData operator ++(IntData data)
+    {
+        data.value++;
+        return data;
+    }
+    
+    public static IntData operator +(IntData data, int other)
+    {
+        data.value += other;
+        return data;
+    }
+
+    public static IntData operator -(IntData data, int other)
+    {
+        data.value -= other;
+        return data;
+    }
+
+    public static IntData operator *(IntData data, int scalar)
+    {
+        data.value *= scalar;
+        return data;
+    }
+
+    public static IntData operator /(IntData data, int scalar)
+    {
+        data.value /= scalar;
+        return data;
+    } 
+    
+    public static bool operator ==(IntData data, int other)
+    {
+        return data != null && data.value == other;
+    }
+
+    public static bool operator !=(IntData data, int other)
+    {
+        return data != null && data.value != other;
+    }
+
+    public static bool operator >(IntData data, int other)
+    {
+        return data.value > other;
+    }
+
+    public static bool operator <(IntData data, int other)
+    {
+        return data.value < other;
+    }
+
+    public static bool operator >=(IntData data, int other)
+    {
+        return data.value >= other;
+    }
+
+    public static bool operator <=(IntData data, int other)
+    {
+        return data.value <= other;
+    }
+
+    public override bool Equals(object obj)
+    {
+        switch (obj)
         {
-            if (value <= num)
-            {
-                value = num;
-                atMinValue.Invoke();
-            }
+            case IntData otherData:
+                return value == otherData.value;
+            case int otherValue:
+                return value == otherValue;
+            default:
+                return false;
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return value.GetHashCode();
     }
 }
