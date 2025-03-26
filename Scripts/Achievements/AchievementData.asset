@@ -26,12 +26,12 @@ MonoBehaviour:
         name: 
         description: 
         isHidden: 0
-        isUnlocked: 0
+        isUnlocked: 1
         lockedIcon: {fileID: 0}
         unlockedIcon: {fileID: 0}
         action: {fileID: 11400000, guid: 0f7e38cfa8de5e24181fecf4e97c8899, type: 2}
         goal: 5
-        progress: 0
+        progress: 5
         progressUpdate: 0
         progressSuffix: 
         notify: 0
@@ -42,7 +42,7 @@ MonoBehaviour:
         name: 
         description: 
         isHidden: 0
-        isUnlocked: 0
+        isUnlocked: 1
         lockedIcon: {fileID: 0}
         unlockedIcon: {fileID: 0}
         action: {fileID: 11400000, guid: 9a2dd3493e2b04a4882c7273e22f418a, type: 2}
@@ -53,7 +53,7 @@ MonoBehaviour:
         name: 
         description: 
         isHidden: 0
-        isUnlocked: 0
+        isUnlocked: 1
         lockedIcon: {fileID: 0}
         unlockedIcon: {fileID: 0}
         action: {fileID: 11400000, guid: 057c8cd2c3c1efb4e994aeefe3ff9d06, type: 2}

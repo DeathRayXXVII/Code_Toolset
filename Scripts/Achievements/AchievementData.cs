@@ -22,16 +22,18 @@ namespace Scripts.Achievements
         public Sprite lockedIcon;
         public Sprite unlockedIcon;
         public GameAction action;
-        
+        //Unity parallel task in manager, refrence level select
         //private void OnEnable() => action.RaiseEvent += CheckProgress;
         //private void OnDisable() => action.RaiseEvent -= CheckProgress;
         
-        private void OnEnable()
+        /*private void OnEnable()
         {
             if (action != null)
             {
                 action.RaiseEvent += CheckProgress;
             }
+
+            Debug.Log($"Action is null: {action == null}");
         }
         
         private void OnDisable()
@@ -40,7 +42,7 @@ namespace Scripts.Achievements
             {
                 action.RaiseEvent -= CheckProgress;
             }
-        }
+        }*/
         
         public abstract void CheckProgress(GameAction _);
     }
